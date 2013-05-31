@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{99111251-3198-4A4F-9182-A8CD95A17A1D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Noise</RootNamespace>
+    <AssemblyName>Libnoise</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interp.cs" />
+    <Compile Include="Latlon.cs" />
+    <Compile Include="MathConsts.cs" />
+    <Compile Include="Misc.cs" />
+    <Compile Include="Module\Abs.cs" />
+    <Compile Include="Module\Add.cs" />
+    <Compile Include="Module\Billow.cs" />
+    <Compile Include="Module\Blend.cs" />
+    <Compile Include="Module\Cache.cs" />
+    <Compile Include="Module\Checkerboard.cs" />
+    <Compile Include="Module\Clamp.cs" />
+    <Compile Include="Module\Const.cs" />
+    <Compile Include="Module\Curve.cs" />
+    <Compile Include="Module\Cylinders.cs" />
+    <Compile Include="Module\Displace.cs" />
+    <Compile Include="Module\Exponent.cs" />
+    <Compile Include="Module\Invert.cs" />
+    <Compile Include="Module\Max.cs" />
+    <Compile Include="Module\Min.cs" />
+    <Compile Include="Module\Module.cs" />
+    <Compile Include="Module\Multiply.cs" />
+    <Compile Include="Module\Perlin.cs" />
+    <Compile Include="Module\Power.cs" />
+    <Compile Include="Module\RidgedMulti.cs" />
+    <Compile Include="Module\RotatePoint.cs" />
+    <Compile Include="Module\ScaleBias.cs" />
+    <Compile Include="NoiseGen.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Completed\basictypes.h" />
+    <Content Include="Completed\exception.h" />
+    <Content Include="Completed\interp.h" />
+    <Content Include="Completed\latlon.cpp" />
+    <Content Include="Completed\latlon.h" />
+    <Content Include="Completed\mathconsts.h" />
+    <Content Include="Completed\misc.h" />
+    <Content Include="Completed\noise.h" />
+    <Content Include="Completed\noisegen.cpp" />
+    <Content Include="Completed\noisegen.h" />
+    <Content Include="Completed\vectortable.h" />
+    <Content Include="Completed\Module\abs.cpp" />
+    <Content Include="Completed\Module\abs.h" />
+    <Content Include="Completed\Module\add.cpp" />
+    <Content Include="Completed\Module\add.h" />
+    <Content Include="Completed\Module\billow.cpp" />
+    <Content Include="Completed\Module\billow.h" />
+    <Content Include="Completed\Module\blend.cpp" />
+    <Content Include="Completed\Module\blend.h" />
+    <Content Include="Completed\Module\cache.cpp" />
+    <Content Include="Completed\Module\cache.h" />
+    <Content Include="Completed\Module\checkerboard.cpp" />
+    <Content Include="Completed\Module\checkerboard.h" />
+    <Content Include="Completed\Module\clamp.cpp" />
+    <Content Include="Completed\Module\clamp.h" />
+    <Content Include="Completed\Module\const.cpp" />
+    <Content Include="Completed\Module\const.h" />
+    <Content Include="Completed\Module\curve.cpp" />
+    <Content Include="Completed\Module\curve.h" />
+    <Content Include="Completed\Module\cylinders.cpp" />
+    <Content Include="Completed\Module\cylinders.h" />
+    <Content Include="Completed\Module\displace.cpp" />
+    <Content Include="Completed\Module\displace.h" />
+    <Content Include="Completed\Module\exponent.cpp" />
+    <Content Include="Completed\Module\exponent.h" />
+    <Content Include="Completed\Module\invert.cpp" />
+    <Content Include="Completed\Module\invert.h" />
+    <Content Include="Completed\Module\max.cpp" />
+    <Content Include="Completed\Module\max.h" />
+    <Content Include="Completed\Module\min.cpp" />
+    <Content Include="Completed\Module\min.h" />
+    <Content Include="Old\Model\cylinder.cpp" />
+    <Content Include="Old\Model\cylinder.h" />
+    <Content Include="Old\Model\line.cpp" />
+    <Content Include="Old\Model\line.h" />
+    <Content Include="Old\Model\model.h" />
+    <Content Include="Old\Model\plane.cpp" />
+    <Content Include="Old\Model\plane.h" />
+    <Content Include="Old\Model\sphere.cpp" />
+    <Content Include="Old\Model\sphere.h" />
+    <Content Include="Completed\Module\module.h" />
+    <Content Include="Completed\Module\modulebase.cpp" />
+    <Content Include="Completed\Module\modulebase.h" />
+    <Content Include="Completed\Module\multiply.cpp" />
+    <Content Include="Completed\Module\multiply.h" />
+    <Content Include="Completed\Module\perlin.cpp" />
+    <Content Include="Completed\Module\perlin.h" />
+    <Content Include="Completed\Module\power.cpp" />
+    <Content Include="Completed\Module\power.h" />
+    <Content Include="Completed\Module\ridgedmulti.cpp" />
+    <Content Include="Completed\Module\ridgedmulti.h" />
+    <Content Include="Completed\Module\rotatepoint.cpp" />
+    <Content Include="Completed\Module\rotatepoint.h" />
+    <Content Include="Completed\Module\scalebias.cpp" />
+    <Content Include="Completed\Module\scalebias.h" />
+    <Content Include="Old\Module\scalepoint.cpp" />
+    <Content Include="Old\Module\scalepoint.h" />
+    <Content Include="Old\Module\select.cpp" />
+    <Content Include="Old\Module\select.h" />
+    <Content Include="Old\Module\spheres.cpp" />
+    <Content Include="Old\Module\spheres.h" />
+    <Content Include="Old\Module\terrace.cpp" />
+    <Content Include="Old\Module\terrace.h" />
+    <Content Include="Old\Module\translatepoint.cpp" />
+    <Content Include="Old\Module\translatepoint.h" />
+    <Content Include="Old\Module\turbulence.cpp" />
+    <Content Include="Old\Module\turbulence.h" />
+    <Content Include="Old\Module\voronoi.cpp" />
+    <Content Include="Old\Module\voronoi.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Completed\Makefile" />
+    <None Include="Completed\Sources" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Completed\Model\" />
+    <Folder Include="Model\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
