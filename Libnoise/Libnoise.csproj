@@ -43,35 +43,39 @@
     <Compile Include="Latlon.cs" />
     <Compile Include="MathConsts.cs" />
     <Compile Include="Misc.cs" />
-    <Compile Include="Module\Abs.cs" />
-    <Compile Include="Module\Add.cs" />
-    <Compile Include="Module\Billow.cs" />
-    <Compile Include="Module\Blend.cs" />
-    <Compile Include="Module\Cache.cs" />
-    <Compile Include="Module\Checkerboard.cs" />
-    <Compile Include="Module\Clamp.cs" />
-    <Compile Include="Module\Const.cs" />
-    <Compile Include="Module\Curve.cs" />
-    <Compile Include="Module\Cylinders.cs" />
-    <Compile Include="Module\Displace.cs" />
-    <Compile Include="Module\Exponent.cs" />
-    <Compile Include="Module\Invert.cs" />
-    <Compile Include="Module\Max.cs" />
-    <Compile Include="Module\Min.cs" />
-    <Compile Include="Module\Module.cs" />
-    <Compile Include="Module\Multiply.cs" />
-    <Compile Include="Module\Perlin.cs" />
-    <Compile Include="Module\Power.cs" />
-    <Compile Include="Module\RidgedMulti.cs" />
-    <Compile Include="Module\RotatePoint.cs" />
-    <Compile Include="Module\ScaleBias.cs" />
-    <Compile Include="Module\ScalePoint.cs" />
-    <Compile Include="Module\Select.cs" />
-    <Compile Include="Module\Spheres.cs" />
-    <Compile Include="Module\Terrace.cs" />
-    <Compile Include="Module\TranslatePoint.cs" />
-    <Compile Include="Module\Turbulence.cs" />
-    <Compile Include="Module\Voronoi.cs" />
+    <Compile Include="Models\Cylinder.cs" />
+    <Compile Include="Models\Line.cs" />
+    <Compile Include="Models\Plane.cs" />
+    <Compile Include="Models\Sphere.cs" />
+    <Compile Include="Modules\Abs.cs" />
+    <Compile Include="Modules\Add.cs" />
+    <Compile Include="Modules\Billow.cs" />
+    <Compile Include="Modules\Blend.cs" />
+    <Compile Include="Modules\Cache.cs" />
+    <Compile Include="Modules\Checkerboard.cs" />
+    <Compile Include="Modules\Clamp.cs" />
+    <Compile Include="Modules\Const.cs" />
+    <Compile Include="Modules\Curve.cs" />
+    <Compile Include="Modules\Cylinders.cs" />
+    <Compile Include="Modules\Displace.cs" />
+    <Compile Include="Modules\Exponent.cs" />
+    <Compile Include="Modules\Invert.cs" />
+    <Compile Include="Modules\Max.cs" />
+    <Compile Include="Modules\Min.cs" />
+    <Compile Include="Modules\Module.cs" />
+    <Compile Include="Modules\Multiply.cs" />
+    <Compile Include="Modules\Perlin.cs" />
+    <Compile Include="Modules\Power.cs" />
+    <Compile Include="Modules\RidgedMulti.cs" />
+    <Compile Include="Modules\RotatePoint.cs" />
+    <Compile Include="Modules\ScaleBias.cs" />
+    <Compile Include="Modules\ScalePoint.cs" />
+    <Compile Include="Modules\Select.cs" />
+    <Compile Include="Modules\Spheres.cs" />
+    <Compile Include="Modules\Terrace.cs" />
+    <Compile Include="Modules\TranslatePoint.cs" />
+    <Compile Include="Modules\Turbulence.cs" />
+    <Compile Include="Modules\Voronoi.cs" />
     <Compile Include="NoiseGen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -117,15 +121,15 @@
     <Content Include="Completed\Module\max.h" />
     <Content Include="Completed\Module\min.cpp" />
     <Content Include="Completed\Module\min.h" />
-    <Content Include="Old\Model\cylinder.cpp" />
-    <Content Include="Old\Model\cylinder.h" />
-    <Content Include="Old\Model\line.cpp" />
-    <Content Include="Old\Model\line.h" />
-    <Content Include="Old\Model\model.h" />
-    <Content Include="Old\Model\plane.cpp" />
-    <Content Include="Old\Model\plane.h" />
-    <Content Include="Old\Model\sphere.cpp" />
-    <Content Include="Old\Model\sphere.h" />
+    <Content Include="Completed\Model\cylinder.cpp" />
+    <Content Include="Completed\Model\cylinder.h" />
+    <Content Include="Completed\Model\line.cpp" />
+    <Content Include="Completed\Model\line.h" />
+    <Content Include="Completed\Model\model.h" />
+    <Content Include="Completed\Model\plane.cpp" />
+    <Content Include="Completed\Model\plane.h" />
+    <Content Include="Completed\Model\sphere.cpp" />
+    <Content Include="Completed\Model\sphere.h" />
     <Content Include="Completed\Module\module.h" />
     <Content Include="Completed\Module\modulebase.cpp" />
     <Content Include="Completed\Module\modulebase.h" />
@@ -160,11 +164,7 @@
     <None Include="Completed\Makefile" />
     <None Include="Completed\Sources" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Completed\Model\" />
-    <Folder Include="Model\" />
-    <Folder Include="Old\Module\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
