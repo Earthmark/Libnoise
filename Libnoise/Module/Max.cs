@@ -15,8 +15,8 @@ namespace Noise.Module
 
 		public Max(Module sourceModule1, Module sourceModule2)
 		{
-			SourceModule2 = sourceModule2;
 			SourceModule1 = sourceModule1;
+			SourceModule2 = sourceModule2;
 		}
 
 		public override double GetValue(double x, double y, double z)

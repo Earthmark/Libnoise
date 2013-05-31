@@ -65,6 +65,13 @@
     <Compile Include="Module\RidgedMulti.cs" />
     <Compile Include="Module\RotatePoint.cs" />
     <Compile Include="Module\ScaleBias.cs" />
+    <Compile Include="Module\ScalePoint.cs" />
+    <Compile Include="Module\Select.cs" />
+    <Compile Include="Module\Spheres.cs" />
+    <Compile Include="Module\Terrace.cs" />
+    <Compile Include="Module\TranslatePoint.cs" />
+    <Compile Include="Module\Turbulence.cs" />
+    <Compile Include="Module\Voronoi.cs" />
     <Compile Include="NoiseGen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -134,20 +141,20 @@
     <Content Include="Completed\Module\rotatepoint.h" />
     <Content Include="Completed\Module\scalebias.cpp" />
     <Content Include="Completed\Module\scalebias.h" />
-    <Content Include="Old\Module\scalepoint.cpp" />
-    <Content Include="Old\Module\scalepoint.h" />
-    <Content Include="Old\Module\select.cpp" />
-    <Content Include="Old\Module\select.h" />
-    <Content Include="Old\Module\spheres.cpp" />
-    <Content Include="Old\Module\spheres.h" />
-    <Content Include="Old\Module\terrace.cpp" />
-    <Content Include="Old\Module\terrace.h" />
-    <Content Include="Old\Module\translatepoint.cpp" />
-    <Content Include="Old\Module\translatepoint.h" />
-    <Content Include="Old\Module\turbulence.cpp" />
-    <Content Include="Old\Module\turbulence.h" />
-    <Content Include="Old\Module\voronoi.cpp" />
-    <Content Include="Old\Module\voronoi.h" />
+    <Content Include="Completed\Module\scalepoint.cpp" />
+    <Content Include="Completed\Module\scalepoint.h" />
+    <Content Include="Completed\Module\select.cpp" />
+    <Content Include="Completed\Module\select.h" />
+    <Content Include="Completed\Module\spheres.cpp" />
+    <Content Include="Completed\Module\spheres.h" />
+    <Content Include="Completed\Module\terrace.cpp" />
+    <Content Include="Completed\Module\terrace.h" />
+    <Content Include="Completed\Module\translatepoint.cpp" />
+    <Content Include="Completed\Module\translatepoint.h" />
+    <Content Include="Completed\Module\turbulence.cpp" />
+    <Content Include="Completed\Module\turbulence.h" />
+    <Content Include="Completed\Module\voronoi.cpp" />
+    <Content Include="Completed\Module\voronoi.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Completed\Makefile" />
@@ -156,6 +163,7 @@
   <ItemGroup>
     <Folder Include="Completed\Model\" />
     <Folder Include="Model\" />
+    <Folder Include="Old\Module\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
