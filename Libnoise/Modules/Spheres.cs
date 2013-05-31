@@ -6,8 +6,6 @@ namespace Noise.Modules
 	{
 		public const double DefaultSpheresFrequency = 1.0;
 
-		public double Frequency { get; set; }
-
 		public Spheres()
 		{
 			Frequency = DefaultSpheresFrequency;
@@ -17,6 +15,8 @@ namespace Noise.Modules
 		{
 			Frequency = frequency;
 		}
+
+		public double Frequency { get; set; }
 
 		public override double GetValue(double x, double y, double z)
 		{

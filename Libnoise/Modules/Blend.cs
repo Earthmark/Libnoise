@@ -6,24 +6,6 @@
 	public class Blend : Module
 	{
 		/// <summary>
-		/// Outputs one of the values to blend.
-		/// </summary>
-		public Module SourceModule1 { get; set; }
-
-		/// <summary>
-		/// Outputs one of the values to blend.
-		/// </summary>
-		public Module SourceModule2 { get; set; }
-
-		/// <summary>
-		/// The control module determines the weight of the blending operation.
-		/// </summary>
-		/// <remarks>
-		/// Negative values weigh the blend towards the output value from <see cref="SourceModule1"/>. Positive values weigh the blend towards the output value from <see cref="SourceModule2"/>.
-		/// </remarks>
-		public Module ControlModule { get; set; }
-
-		/// <summary>
 		/// Creates a new Blend instance with the noise modules as null.
 		/// </summary>
 		public Blend() {}
@@ -40,6 +22,24 @@
 			SourceModule2 = sourceModule2;
 			ControlModule = controlModule;
 		}
+
+		/// <summary>
+		/// Outputs one of the values to blend.
+		/// </summary>
+		public Module SourceModule1 { get; set; }
+
+		/// <summary>
+		/// Outputs one of the values to blend.
+		/// </summary>
+		public Module SourceModule2 { get; set; }
+
+		/// <summary>
+		/// The control module determines the weight of the blending operation.
+		/// </summary>
+		/// <remarks>
+		/// Negative values weigh the blend towards the output value from <see cref="SourceModule1"/>. Positive values weigh the blend towards the output value from <see cref="SourceModule2"/>.
+		/// </remarks>
+		public Module ControlModule { get; set; }
 
 		/// <summary>
 		/// Generates an output value given the coordinates of the specified input value. 

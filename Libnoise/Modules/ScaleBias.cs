@@ -5,10 +5,6 @@
 		public const double DefaultBias = 0.0;
 		public const double DefaultScale = 1.0;
 
-		public double Bias { get; set; }
-		public double Scale { get; set; }
-		public Module ConnectedModule { get; set; }
-
 		public ScaleBias()
 		{
 			Bias = DefaultBias;
@@ -28,6 +24,10 @@
 			Bias = bias;
 			Scale = scale;
 		}
+
+		public double Bias { get; set; }
+		public double Scale { get; set; }
+		public Module ConnectedModule { get; set; }
 
 		public override double GetValue(double x, double y, double z)
 		{

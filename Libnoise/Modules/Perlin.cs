@@ -4,8 +4,6 @@ namespace Noise.Modules
 {
 	public class Perlin : Module
 	{
-		private int octaveCount;
-
 		/// Default frequency for the noise::module::Perlin noise module.
 		public const double DefaultPerlinFrequency = 1.0;
 
@@ -26,6 +24,28 @@ namespace Noise.Modules
 
 		/// Maximum number of octaves for the noise::module::Perlin noise module.
 		public const int PerlinMaxOctave = 30;
+
+		private int octaveCount;
+
+		public Perlin()
+		{
+			Seed = DefaultPerlinSeed;
+			Persistence = DefaultPerlinPersistence;
+			OctaveCount = DefaultPerlinOctaveCount;
+			NoiseQuality = DefaultPerlinQuality;
+			Lacunarity = DefaultPerlinLacunarity;
+			Frequency = DefaultPerlinFrequency;
+		}
+
+		public Perlin(double frequency, double lacunarity, NoiseQuality noiseQuality, int octaveCount, double persistence, int seed)
+		{
+			Seed = seed;
+			Persistence = persistence;
+			OctaveCount = octaveCount;
+			NoiseQuality = noiseQuality;
+			Lacunarity = lacunarity;
+			Frequency = frequency;
+		}
 
 		/// Frequency of the first octave.
 		public double Frequency { get; set; }
@@ -55,26 +75,6 @@ namespace Noise.Modules
 
 		/// Seed value used by the Perlin-noise function.
 		public int Seed { get; set; }
-
-		public Perlin()
-		{
-			Seed = DefaultPerlinSeed;
-			Persistence = DefaultPerlinPersistence;
-			OctaveCount = DefaultPerlinOctaveCount;
-			NoiseQuality = DefaultPerlinQuality;
-			Lacunarity = DefaultPerlinLacunarity;
-			Frequency = DefaultPerlinFrequency;
-		}
-
-		public Perlin(double frequency, double lacunarity, NoiseQuality noiseQuality, int octaveCount, double persistence, int seed)
-		{
-			Seed = seed;
-			Persistence = persistence;
-			OctaveCount = octaveCount;
-			NoiseQuality = noiseQuality;
-			Lacunarity = lacunarity;
-			Frequency = frequency;
-		}
 
 		public override double GetValue(double x, double y, double z)
 		{

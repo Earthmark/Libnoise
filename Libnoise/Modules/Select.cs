@@ -8,6 +8,17 @@
 
 		private double edgeFalloff;
 
+		public Select(Module sourceModule1 = null, Module sourceModule2 = null, Module controlModule = null,
+		              double lowerBound = DefaultSelectLowerBound, double upperBound = DefaultSelectUpperBound,
+		              double edgeFalloff = DefaultSelectEdgeFalloff)
+		{
+			SourceModule1 = sourceModule1;
+			SourceModule2 = sourceModule2;
+			ControlModule = controlModule;
+			this.edgeFalloff = edgeFalloff;
+			SetBounds(lowerBound, upperBound);
+		}
+
 		public double EdgeFalloff
 		{
 			get { return edgeFalloff; }
@@ -25,17 +36,6 @@
 		public Module SourceModule1 { get; set; }
 		public Module SourceModule2 { get; set; }
 		public Module ControlModule { get; set; }
-
-		public Select(Module sourceModule1 = null, Module sourceModule2 = null, Module controlModule = null,
-			double lowerBound = DefaultSelectLowerBound, double upperBound = DefaultSelectUpperBound,
-			double edgeFalloff = DefaultSelectEdgeFalloff)
-		{
-			SourceModule1 = sourceModule1;
-			SourceModule2 = sourceModule2;
-			ControlModule = controlModule;
-			this.edgeFalloff = edgeFalloff;
-			SetBounds(lowerBound, upperBound);
-		}
 
 		private void SetBounds(double lowerBound, double upperBound)
 		{

@@ -8,11 +8,6 @@ namespace Noise.Modules
 	public class Abs : Module
 	{
 		/// <summary>
-		/// The module this noise module is connected to.
-		/// </summary>
-		public Module ConnectedModule { get; set; }
-
-		/// <summary>
 		/// Creates this noise module without setting the ConnectedModule.
 		/// </summary>
 		public Abs() {}
@@ -25,6 +20,11 @@ namespace Noise.Modules
 		{
 			ConnectedModule = connectedModule;
 		}
+
+		/// <summary>
+		/// The module this noise module is connected to.
+		/// </summary>
+		public Module ConnectedModule { get; set; }
 
 		/// <summary>
 		/// Generates an output value given the coordinates of the specified input value. 

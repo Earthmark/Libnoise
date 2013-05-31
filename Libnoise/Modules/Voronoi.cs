@@ -8,11 +8,6 @@ namespace Noise.Modules
 		public const double DefaultVoronoiFrequency = 1.0;
 		public const int DefaultVoronoiSeed = 0;
 
-		public double Displacement { get; set; }
-		public bool EnableDistance { get; set; }
-		public double Frequency { get; set; }
-		public int Seed { get; set; }
-
 		public Voronoi()
 		{
 			Frequency = DefaultVoronoiFrequency;
@@ -28,6 +23,11 @@ namespace Noise.Modules
 			EnableDistance = enableDistance;
 			Seed = seed;
 		}
+
+		public double Displacement { get; set; }
+		public bool EnableDistance { get; set; }
+		public double Frequency { get; set; }
+		public int Seed { get; set; }
 
 		public override double GetValue(double x, double y, double z)
 		{

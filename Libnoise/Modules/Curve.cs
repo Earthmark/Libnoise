@@ -4,27 +4,20 @@ namespace Noise.Modules
 {
 	public struct ControlPoint
 	{
-		public double InputValue { get; set; }
-		public double OutputValue { get; set; }
-
 		public ControlPoint(double input, double output)
 			: this()
 		{
 			InputValue = input;
 			OutputValue = output;
 		}
+
+		public double InputValue { get; set; }
+		public double OutputValue { get; set; }
 	}
 
 	public class Curve : Module
 	{
 		private readonly SortedList<double, double> controlPoints;
-
-		public Module ConnectedModule { get; set; }
-
-		public SortedList<double, double> ControlPoints
-		{
-			get { return controlPoints; }
-		}
 
 		public Curve()
 		{
@@ -61,6 +54,13 @@ namespace Noise.Modules
 			controlPoints = new SortedList<double, double>();
 			foreach (var point in points)
 				AddControlPoint(point);
+		}
+
+		public Module ConnectedModule { get; set; }
+
+		public SortedList<double, double> ControlPoints
+		{
+			get { return controlPoints; }
 		}
 
 		public void AddControlPoint(ControlPoint point)

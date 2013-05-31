@@ -16,44 +16,6 @@
 		/// Noise module that displaces the @a z coordinate.
 		private readonly Perlin zDistortModule;
 
-		public Module SourceModule { get; set; }
-
-		/// The power (scale) of the displacement.
-		public double Power { get; set; }
-
-		public int Roughness
-		{
-			get { return xDistortModule.OctaveCount; }
-			set
-			{
-				xDistortModule.OctaveCount = value;
-				yDistortModule.OctaveCount = value;
-				zDistortModule.OctaveCount = value;
-			}
-		}
-
-		public double Frequency
-		{
-			get { return xDistortModule.Frequency; }
-			set
-			{
-				xDistortModule.Frequency = value;
-				yDistortModule.Frequency = value;
-				zDistortModule.Frequency = value;
-			}
-		}
-
-		public int Seed
-		{
-			get { return xDistortModule.Seed; }
-			set
-			{
-				xDistortModule.Seed = (value);
-				yDistortModule.Seed = (value + 1);
-				zDistortModule.Seed = (value + 2);
-			}
-		}
-
 		public Turbulence()
 		{
 			zDistortModule = new Perlin();
@@ -92,6 +54,44 @@
 			Seed = seed;
 			Frequency = frequency;
 			Roughness = roughness;
+		}
+
+		public Module SourceModule { get; set; }
+
+		/// The power (scale) of the displacement.
+		public double Power { get; set; }
+
+		public int Roughness
+		{
+			get { return xDistortModule.OctaveCount; }
+			set
+			{
+				xDistortModule.OctaveCount = value;
+				yDistortModule.OctaveCount = value;
+				zDistortModule.OctaveCount = value;
+			}
+		}
+
+		public double Frequency
+		{
+			get { return xDistortModule.Frequency; }
+			set
+			{
+				xDistortModule.Frequency = value;
+				yDistortModule.Frequency = value;
+				zDistortModule.Frequency = value;
+			}
+		}
+
+		public int Seed
+		{
+			get { return xDistortModule.Seed; }
+			set
+			{
+				xDistortModule.Seed = (value);
+				yDistortModule.Seed = (value + 1);
+				zDistortModule.Seed = (value + 2);
+			}
 		}
 
 		public override double GetValue(double x, double y, double z)

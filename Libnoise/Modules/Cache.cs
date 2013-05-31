@@ -5,26 +5,15 @@ namespace Noise.Modules
 	public class Cache : Module
 	{
 		private const double Epsilon = 0.0000001;
+		protected double cachedValue;
+
+		private Module connectedModule;
 
 		protected bool isCached;
 
 		protected double xCache;
 		protected double yCache;
 		protected double zCache;
-
-		protected double cachedValue;
-
-		private Module connectedModule;
-
-		public Module ConnectedModule
-		{
-			get { return connectedModule; }
-			set
-			{
-				connectedModule = value;
-				isCached = false;
-			}
-		}
 
 		public Cache()
 		{
@@ -34,6 +23,16 @@ namespace Noise.Modules
 		public Cache(Module connectedModule)
 		{
 			ConnectedModule = connectedModule;
+		}
+
+		public Module ConnectedModule
+		{
+			get { return connectedModule; }
+			set
+			{
+				connectedModule = value;
+				isCached = false;
+			}
 		}
 
 		public override double GetValue(double x, double y, double z)

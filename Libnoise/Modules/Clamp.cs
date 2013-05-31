@@ -5,11 +5,6 @@
 		public const double DefaultClampLowerBound = -1.0;
 		public const double DefaultClampUpperBound = 1.0;
 
-		public Module ConnectedModule { get; set; }
-
-		public double LowerBound { get; set; }
-		public double UpperBound { get; set; }
-
 		public Clamp()
 		{
 			LowerBound = DefaultClampLowerBound;
@@ -35,6 +30,11 @@
 			LowerBound = lowerBound;
 			UpperBound = upperBound;
 		}
+
+		public Module ConnectedModule { get; set; }
+
+		public double LowerBound { get; set; }
+		public double UpperBound { get; set; }
 
 		public override double GetValue(double x, double y, double z)
 		{

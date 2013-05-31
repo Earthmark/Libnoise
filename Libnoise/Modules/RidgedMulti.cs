@@ -18,8 +18,28 @@ namespace Noise.Modules
 		public const int RidgedMaxOctave = 30;
 
 		private readonly double[] spectralWeights;
-		private int octaveCount;
 		private double lacunarity;
+		private int octaveCount;
+
+		public RidgedMulti(double lacunarity, double frequency, NoiseQuality noiseQuality, int octaveCount, int seed)
+		{
+			Seed = seed;
+			OctaveCount = octaveCount;
+			spectralWeights = new double[RidgedMaxOctave];
+			NoiseQuality = noiseQuality;
+			Frequency = frequency;
+			Lacunarity = lacunarity;
+		}
+
+		public RidgedMulti()
+		{
+			Seed = DefaultRidgedSeed;
+			OctaveCount = DefaultRidgedOctaveCount;
+			spectralWeights = new double[RidgedMaxOctave];
+			NoiseQuality = DefaultRidgedQuality;
+			Frequency = DefaultRidgedFrequency;
+			Lacunarity = DefaultRidgedLacunarity;
+		}
 
 		public double Frequency { get; set; }
 
@@ -48,26 +68,6 @@ namespace Noise.Modules
 
 		public int Seed { get; set; }
 
-
-		public RidgedMulti(double lacunarity, double frequency, NoiseQuality noiseQuality, int octaveCount, int seed)
-		{
-			Seed = seed;
-			OctaveCount = octaveCount;
-			spectralWeights = new double[RidgedMaxOctave];
-			NoiseQuality = noiseQuality;
-			Frequency = frequency;
-			Lacunarity = lacunarity;
-		}
-
-		public RidgedMulti()
-		{
-			Seed = DefaultRidgedSeed;
-			OctaveCount = DefaultRidgedOctaveCount;
-			spectralWeights = new double[RidgedMaxOctave];
-			NoiseQuality = DefaultRidgedQuality;
-			Frequency = DefaultRidgedFrequency;
-			Lacunarity = DefaultRidgedLacunarity;
-		}
 
 		private void CalcSpectralWeights()
 		{

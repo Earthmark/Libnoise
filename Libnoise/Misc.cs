@@ -2,18 +2,6 @@
 {
 	public static class Misc
 	{
-		public static int ClampValue(int value, int lowerBound, int upperBound)
-		{
-			return value < lowerBound ? lowerBound : (value > upperBound ? upperBound : value);
-		}
-
-		public static void SwapValues<T>(ref T a, ref T b)
-		{
-			var c = a;
-			a = b;
-			b = c;
-		}
-
 		public static double[] RandomVectors = new[]
 		{
 			-0.763874, -0.596439, -0.246489, 0.0,
@@ -273,5 +261,17 @@
 			0.991353, 0.112814, 0.0670273, 0.0,
 			0.0337884, -0.979891, -0.196654, 0.0
 		};
+
+		public static int ClampValue(int value, int lowerBound, int upperBound)
+		{
+			return value < lowerBound ? lowerBound : (value > upperBound ? upperBound : value);
+		}
+
+		public static void SwapValues<T>(ref T a, ref T b)
+		{
+			var c = a;
+			a = b;
+			b = c;
+		}
 	}
 }

@@ -4,8 +4,6 @@
 	{
 		const double DefaultConstValue = 0.0;
 
-		public double ConstValue { get; set; }
-
 		public Const()
 		{
 			ConstValue = DefaultConstValue;
@@ -15,6 +13,8 @@
 		{
 			ConstValue = constValue;
 		}
+
+		public double ConstValue { get; set; }
 
 		public override double GetValue(double x, double y, double z)
 		{

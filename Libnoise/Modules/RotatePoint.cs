@@ -11,15 +11,37 @@ namespace Noise.Modules
 		private double x1Matrix;
 		private double x2Matrix;
 		private double x3Matrix;
+		private double xAngle;
 		private double y1Matrix;
 		private double y2Matrix;
 		private double y3Matrix;
+		private double yAngle;
 		private double z1Matrix;
 		private double z2Matrix;
 		private double z3Matrix;
-		private double xAngle;
-		private double yAngle;
 		private double zAngle;
+
+		public RotatePoint()
+		{
+			SetAngles(DefaultRotateX, DefaultRotateY, DefaultRotateZ);
+		}
+
+		public RotatePoint(Module connectedModule)
+		{
+			ConnectedModule = connectedModule;
+			SetAngles(DefaultRotateX, DefaultRotateY, DefaultRotateZ);
+		}
+
+		public RotatePoint(double xAngle, double yAngle, double zAngle)
+		{
+			SetAngles(xAngle, yAngle, zAngle);
+		}
+
+		public RotatePoint(Module connectedModule, double xAngle, double yAngle, double zAngle)
+		{
+			ConnectedModule = connectedModule;
+			SetAngles(xAngle, yAngle, zAngle);
+		}
 
 		private double XAngle
 		{
@@ -52,28 +74,6 @@ namespace Noise.Modules
 		}
 
 		public Module ConnectedModule { get; set; }
-
-		public RotatePoint()
-		{
-			SetAngles(DefaultRotateX, DefaultRotateY, DefaultRotateZ);
-		}
-
-		public RotatePoint(Module connectedModule)
-		{
-			ConnectedModule = connectedModule;
-			SetAngles(DefaultRotateX, DefaultRotateY, DefaultRotateZ);
-		}
-
-		public RotatePoint(double xAngle, double yAngle, double zAngle)
-		{
-			SetAngles(xAngle, yAngle, zAngle);
-		}
-
-		public RotatePoint(Module connectedModule, double xAngle, double yAngle, double zAngle)
-		{
-			ConnectedModule = connectedModule;
-			SetAngles(xAngle, yAngle, zAngle);
-		}
 
 		private void SetAngles(double xAng, double yAng, double zAng)
 		{

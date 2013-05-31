@@ -2,11 +2,6 @@
 {
 	public class Displace : Module
 	{
-		public Module DisplaceModuleX { get; set; }
-		public Module DisplaceModuleY { get; set; }
-		public Module DisplaceModuleZ { get; set; }
-		public Module SourceModule { get; set; }
-
 		public Displace() {}
 
 		public Displace(Module sourceModule)
@@ -28,6 +23,11 @@
 			DisplaceModuleY = displaceModuleY;
 			DisplaceModuleZ = displaceModuleZ;
 		}
+
+		public Module DisplaceModuleX { get; set; }
+		public Module DisplaceModuleY { get; set; }
+		public Module DisplaceModuleZ { get; set; }
+		public Module SourceModule { get; set; }
 
 		public void SetDisplaceModules(Module displaceModuleX, Module displaceModuleY, Module displaceModuleZ)
 		{

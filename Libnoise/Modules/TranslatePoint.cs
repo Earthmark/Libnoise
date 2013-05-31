@@ -6,12 +6,6 @@
 		public const double DefaultTranslatePointY = 0.0;
 		public const double DefaultTranslatePointZ = 0.0;
 
-		public double XTranslation { get; set; }
-		public double YTranslation { get; set; }
-		public double ZTranslation { get; set; }
-
-		public Module ConnectedModule { get; set; }
-
 		public TranslatePoint()
 		{
 			XTranslation = DefaultTranslatePointX;
@@ -40,6 +34,12 @@
 			YTranslation = yTranslation;
 			ZTranslation = zTranslation;
 		}
+
+		public double XTranslation { get; set; }
+		public double YTranslation { get; set; }
+		public double ZTranslation { get; set; }
+
+		public Module ConnectedModule { get; set; }
 
 		public void SetTranslation(double xTranslation, double yTranslation, double zTranslation)
 		{

@@ -2,12 +2,12 @@
 {
 	public class Invert : Module
 	{
-		public Module ConnectedModule { get; set; }
-
 		public Invert(Module connectedModule)
 		{
 			ConnectedModule = connectedModule;
 		}
+
+		public Module ConnectedModule { get; set; }
 
 		public override double GetValue(double x, double y, double z)
 		{

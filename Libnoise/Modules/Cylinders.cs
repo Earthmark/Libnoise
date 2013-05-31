@@ -6,8 +6,6 @@ namespace Noise.Modules
 	{
 		public const double DefaultCylindersFrequency = 1.0;
 
-		public double Frequency { get; set; }
-
 		public Cylinders()
 		{
 			Frequency = DefaultCylindersFrequency;
@@ -17,6 +15,8 @@ namespace Noise.Modules
 		{
 			Frequency = frequency;
 		}
+
+		public double Frequency { get; set; }
 
 		public override double GetValue(double x, double y, double z)
 		{

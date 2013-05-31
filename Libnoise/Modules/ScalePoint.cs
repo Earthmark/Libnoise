@@ -8,12 +8,6 @@
 
 		public const double DefaultScalePointZ = 1.0;
 
-		public double XScale { get; set; }
-		public double YScale { get; set; }
-		public double ZScale { get; set; }
-
-		public Module ConnectedModule { get; set; }
-
 		public ScalePoint()
 		{
 			XScale = DefaultScalePointX;
@@ -43,6 +37,12 @@
 			ZScale = zScale;
 			ConnectedModule = connectedModule;
 		}
+
+		public double XScale { get; set; }
+		public double YScale { get; set; }
+		public double ZScale { get; set; }
+
+		public Module ConnectedModule { get; set; }
 
 		void SetScale(double scale)
 		{

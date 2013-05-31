@@ -7,8 +7,6 @@ namespace Noise.Modules
 	/// </summary>
 	public class Billow : Module
 	{
-		private int octaveCount;
-
 		/// <summary>
 		/// Default frequency for the Noise.Module.Billow noise module.
 		/// </summary>
@@ -43,6 +41,42 @@ namespace Noise.Modules
 		/// Maximum number of octaves for the the Noise.Module.Billow noise module.
 		/// </summary>
 		public const int BillowMaxOctave = 30;
+
+		private int octaveCount;
+
+		/// <summary>
+		/// Creates a new Billow instance using the default values.
+		/// </summary>
+		public Billow()
+		{
+			Frequency = DefaultBillowFrequency;
+			Lacunarity = DefaultBillowLacunarity;
+			NoiseQuality = DefaultBillowQuality;
+			OctaveCount = DefaultBillowOctaveCount;
+			Persistence = DefaultBillowPersistence;
+			Seed = DefaultBillowSeed;
+		}
+
+		/// <summary>
+		/// Creates a new Billow instance using the given values.
+		/// </summary>
+		/// <param name="frequency">Frequency of the first octave.</param>
+		/// <param name="lacunarity">Frequency multiplier between successive octaves.</param>
+		/// <param name="noiseQuality">Quality of the billowy noise.</param>
+		/// <param name="octaveCount">Total number of octaves that generate the billowy noise.</param>
+		/// <param name="persistence">Persistence value of the billowy noise.</param>
+		/// <param name="seed">Seed value used by the billowy-noise function.</param>
+		public Billow(double frequency, double lacunarity, NoiseQuality noiseQuality, int octaveCount, double persistence, int seed)
+		{
+			if (octaveCount < 1 || octaveCount > BillowMaxOctave)
+				throw new ArgumentException("Count was too high, above " + BillowMaxOctave, "octaveCount");
+			Frequency = frequency;
+			Lacunarity = lacunarity;
+			NoiseQuality = noiseQuality;
+			OctaveCount = octaveCount;
+			Persistence = persistence;
+			Seed = seed;
+		}
 
 		/// <summary>
 		/// Frequency of the first octave.
@@ -82,40 +116,6 @@ namespace Noise.Modules
 		/// Seed value used by the billowy-noise function.
 		/// </summary>
 		public int Seed { get; set; }
-
-		/// <summary>
-		/// Creates a new Billow instance using the default values.
-		/// </summary>
-		public Billow()
-		{
-			Frequency = DefaultBillowFrequency;
-			Lacunarity = DefaultBillowLacunarity;
-			NoiseQuality = DefaultBillowQuality;
-			OctaveCount = DefaultBillowOctaveCount;
-			Persistence = DefaultBillowPersistence;
-			Seed = DefaultBillowSeed;
-		}
-
-		/// <summary>
-		/// Creates a new Billow instance using the given values.
-		/// </summary>
-		/// <param name="frequency">Frequency of the first octave.</param>
-		/// <param name="lacunarity">Frequency multiplier between successive octaves.</param>
-		/// <param name="noiseQuality">Quality of the billowy noise.</param>
-		/// <param name="octaveCount">Total number of octaves that generate the billowy noise.</param>
-		/// <param name="persistence">Persistence value of the billowy noise.</param>
-		/// <param name="seed">Seed value used by the billowy-noise function.</param>
-		public Billow(double frequency, double lacunarity, NoiseQuality noiseQuality, int octaveCount, double persistence, int seed)
-		{
-			if (octaveCount < 1 || octaveCount > BillowMaxOctave)
-				throw new ArgumentException("Count was too high, above " + BillowMaxOctave, "octaveCount");
-			Frequency = frequency;
-			Lacunarity = lacunarity;
-			NoiseQuality = noiseQuality;
-			OctaveCount = octaveCount;
-			Persistence = persistence;
-			Seed = seed;
-		}
 
 		/// <summary>
 		/// Generates an output value given the coordinates of the specified input value. 

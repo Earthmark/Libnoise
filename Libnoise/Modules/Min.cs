@@ -4,9 +4,6 @@ namespace Noise.Modules
 {
 	public class Min : Module
 	{
-		public Module SourceModule1 { get; set; }
-		public Module SourceModule2 { get; set; }
-
 		public Min() {}
 
 		public Min(Module sourceModule1, Module sourceModule2)
@@ -14,6 +11,9 @@ namespace Noise.Modules
 			SourceModule2 = sourceModule2;
 			SourceModule1 = sourceModule1;
 		}
+
+		public Module SourceModule1 { get; set; }
+		public Module SourceModule2 { get; set; }
 
 		public override double GetValue(double x, double y, double z)
 		{

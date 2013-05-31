@@ -6,16 +6,6 @@
 	public class Add : Module
 	{
 		/// <summary>
-		/// The first module this noise module is connected to.
-		/// </summary>
-		public Module ConnectedModule1 { get; set; }
-
-		/// <summary>
-		/// The second module this noise module is connected to.
-		/// </summary>
-		public Module ConnectedModule2 { get; set; }
-		
-		/// <summary>
 		/// Creates this noise module without setting the ConnectedModule1 or ConnectedModule2.
 		/// </summary>
 		public Add() {}
@@ -30,6 +20,16 @@
 			ConnectedModule1 = connectedModule1;
 			ConnectedModule2 = connectedModule2;
 		}
+
+		/// <summary>
+		/// The first module this noise module is connected to.
+		/// </summary>
+		public Module ConnectedModule1 { get; set; }
+
+		/// <summary>
+		/// The second module this noise module is connected to.
+		/// </summary>
+		public Module ConnectedModule2 { get; set; }
 
 		/// <summary>
 		/// Generates an output value given the coordinates of the specified input value. 

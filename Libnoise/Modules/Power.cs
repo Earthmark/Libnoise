@@ -4,9 +4,6 @@ namespace Noise.Modules
 {
 	public class Power : Module
 	{
-		public Module SourceModuleBase { get; set; }
-		public Module SourceModuleExponent { get; set; }
-
 		public Power() {}
 
 		public Power(Module sourceModuleBase, Module sourceModuleExponent)
@@ -14,6 +11,9 @@ namespace Noise.Modules
 			SourceModuleExponent = sourceModuleExponent;
 			SourceModuleBase = sourceModuleBase;
 		}
+
+		public Module SourceModuleBase { get; set; }
+		public Module SourceModuleExponent { get; set; }
 
 		public override double GetValue(double x, double y, double z)
 		{

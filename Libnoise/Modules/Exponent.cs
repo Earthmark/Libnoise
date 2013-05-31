@@ -6,9 +6,6 @@ namespace Noise.Modules
 	{
 		public const double DefaultPower = 1.0;
 
-		public Module ConnectedModule { get; set; }
-		public double Expon { get; set; }
-
 		public Exponent()
 		{
 			Expon = DefaultPower;
@@ -29,6 +26,9 @@ namespace Noise.Modules
 			ConnectedModule = connectedModule;
 			Expon = expon;
 		}
+
+		public Module ConnectedModule { get; set; }
+		public double Expon { get; set; }
 
 		public override double GetValue(double x, double y, double z)
 		{

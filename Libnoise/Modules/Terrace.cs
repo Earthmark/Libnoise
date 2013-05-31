@@ -7,10 +7,6 @@ namespace Noise.Modules
 	{
 		private readonly List<double> ControlPoints;
 
-		private bool InvertTerraces { get; set; }
-
-		public Module SourceModule { get; set; }
-
 		public Terrace()
 		{
 			ControlPoints = new List<double>();
@@ -34,6 +30,10 @@ namespace Noise.Modules
 			ControlPoints = new List<double>(points);
 			ControlPoints.Sort();
 		}
+
+		private bool InvertTerraces { get; set; }
+
+		public Module SourceModule { get; set; }
 
 		public void AddControlPoints(params double[] points)
 		{
