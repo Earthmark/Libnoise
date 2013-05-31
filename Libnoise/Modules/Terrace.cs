@@ -5,30 +5,30 @@ namespace Noise.Modules
 {
 	public class Terrace : Module
 	{
-		private readonly List<double> ControlPoints;
+		private readonly List<double> controlPoints;
 
 		public Terrace()
 		{
-			ControlPoints = new List<double>();
+			controlPoints = new List<double>();
 		}
 
 		public Terrace(Module sourceModule)
 		{
 			SourceModule = sourceModule;
-			ControlPoints = new List<double>();
+			controlPoints = new List<double>();
 		}
 
 		public Terrace(IEnumerable<double> points)
 		{
-			ControlPoints = new List<double>(points);
-			ControlPoints.Sort();
+			controlPoints = new List<double>(points);
+			controlPoints.Sort();
 		}
 
 		public Terrace(Module sourceModule, IEnumerable<double> points)
 		{
 			SourceModule = sourceModule;
-			ControlPoints = new List<double>(points);
-			ControlPoints.Sort();
+			controlPoints = new List<double>(points);
+			controlPoints.Sort();
 		}
 
 		private bool InvertTerraces { get; set; }
@@ -37,13 +37,13 @@ namespace Noise.Modules
 
 		public void AddControlPoints(params double[] points)
 		{
-			ControlPoints.AddRange(points);
-			ControlPoints.Sort();
+			controlPoints.AddRange(points);
+			controlPoints.Sort();
 		}
 
 		public void ClearAllControlPoints()
 		{
-			ControlPoints.Clear();
+			controlPoints.Clear();
 		}
 
 		public void MakeControlPoints(int controlPointCount)
@@ -72,9 +72,9 @@ namespace Noise.Modules
 			// Find the first element in the control point array that has a value
 			// larger than the output value from the source module.
 			int indexPos;
-			for (indexPos = 0; indexPos < ControlPoints.Count; indexPos++)
+			for (indexPos = 0; indexPos < controlPoints.Count; indexPos++)
 			{
-				if (sourceModuleValue < ControlPoints[indexPos])
+				if (sourceModuleValue < controlPoints[indexPos])
 				{
 					break;
 				}
@@ -82,8 +82,8 @@ namespace Noise.Modules
 
 			// Find the two nearest control points so that we can map their values
 			// onto a quadratic curve.
-			var index0 = Misc.ClampValue(indexPos - 1, 0, ControlPoints.Count - 1);
-			var index1 = Misc.ClampValue(indexPos, 0, ControlPoints.Count - 1);
+			var index0 = Misc.ClampValue(indexPos - 1, 0, controlPoints.Count - 1);
+			var index1 = Misc.ClampValue(indexPos, 0, controlPoints.Count - 1);
 
 			// If some control points are missing (which occurs if the output value from
 			// the source module is greater than the largest value or less than the
@@ -91,13 +91,13 @@ namespace Noise.Modules
 			// control point and exit now.
 			if (index0 == index1)
 			{
-				return ControlPoints[index1];
+				return controlPoints[index1];
 			}
 
 			// Compute the alpha value used for linear interpolation.
-			double value0 = ControlPoints[index0];
-			double value1 = ControlPoints[index1];
-			double alpha = (sourceModuleValue - value0) / (value1 - value0);
+			var value0 = controlPoints[index0];
+			var value1 = controlPoints[index1];
+			var alpha = (sourceModuleValue - value0) / (value1 - value0);
 			if (InvertTerraces)
 			{
 				alpha = 1.0 - alpha;

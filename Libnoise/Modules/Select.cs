@@ -48,7 +48,6 @@
 
 		public override double GetValue(double x, double y, double z)
 		{
-
 			var controlValue = ControlModule.GetValue(x, y, z);
 			if(EdgeFalloff > 0.0)
 			{

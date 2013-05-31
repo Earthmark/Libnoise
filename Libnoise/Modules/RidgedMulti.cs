@@ -4,7 +4,6 @@ namespace Noise.Modules
 {
 	public class RidgedMulti : Module
 	{
-
 		public const double DefaultRidgedFrequency = 1.0;
 
 		public const double DefaultRidgedLacunarity = 2.0;
