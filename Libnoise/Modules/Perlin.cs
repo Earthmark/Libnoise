@@ -39,6 +39,10 @@ namespace Noise.Modules
 
 		public Perlin(double frequency, double lacunarity, NoiseQuality noiseQuality, int octaveCount, double persistence, int seed)
 		{
+			if (octaveCount < 1 || octaveCount > PerlinMaxOctave)
+			{
+				throw new ArgumentException("Count was too high, above " + PerlinMaxOctave, "octaveCount");
+			}
 			Seed = seed;
 			Persistence = persistence;
 			OctaveCount = octaveCount;
@@ -62,7 +66,7 @@ namespace Noise.Modules
 			get { return octaveCount; }
 			set
 			{
-				if(octaveCount < 1 || octaveCount > PerlinMaxOctave)
+				if(value < 1 || value > PerlinMaxOctave)
 				{
 					throw new ArgumentException("Count was too high, above " + PerlinMaxOctave, "value");
 				}
@@ -96,7 +100,7 @@ namespace Noise.Modules
 
 				// Get the coherent-noise value from the input value and add it to the
 				// final result.
-				var localSeed = (Seed + curOctave) & 0x7fffffff;
+				var localSeed = Seed + curOctave;
 				var signal = NoiseGen.GradientCoherentNoise3D(nx, ny, nz, localSeed, NoiseQuality);
 				value += signal * curPersistence;
 

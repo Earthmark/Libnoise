@@ -143,7 +143,7 @@ namespace Noise.Modules
 
 				// Get the coherent-noise value from the input value and add it to the
 				// final result.
-				var seed = (Seed + curOctave) & 0x7fffffff;
+				var seed = Seed + curOctave;
 				var signal = NoiseGen.GradientCoherentNoise3D(nx, ny, nz, seed, NoiseQuality);
 				signal = 2.0 * Math.Abs(signal) - 1.0;
 				value += signal * curPersistence;

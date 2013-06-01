@@ -15,16 +15,16 @@ namespace Noise.Modules
 		/// <summary>
 		/// Creates this noise module, also setting the ConnectedModule.
 		/// </summary>
-		/// <param name="connectedModule">The noise module to connect to this module.</param>
-		public Abs(Module connectedModule)
+		/// <param name="sourceModule">The noise module to connect to this module.</param>
+		public Abs(Module sourceModule)
 		{
-			ConnectedModule = connectedModule;
+			SourceModule = sourceModule;
 		}
 
 		/// <summary>
 		/// The module this noise module is connected to.
 		/// </summary>
-		public Module ConnectedModule { get; set; }
+		public Module SourceModule { get; set; }
 
 		/// <summary>
 		/// Generates an output value given the coordinates of the specified input value. 
@@ -35,7 +35,7 @@ namespace Noise.Modules
 		/// <returns>The output value.</returns>
 		public override double GetValue(double x, double y, double z)
 		{
-			return Math.Abs(ConnectedModule.GetValue(x, y, z));
+			return Math.Abs(SourceModule.GetValue(x, y, z));
 		}
 	}
 }

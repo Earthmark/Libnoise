@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libnoise", "Libnoise\Libnoise.csproj", "{99111251-3198-4A4F-9182-A8CD95A17A1D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Noise", "Libnoise\Noise.csproj", "{99111251-3198-4A4F-9182-A8CD95A17A1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibTest", "LibTest\LibTest.csproj", "{E117B29F-3200-41B9-BA46-130F1D086528}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,16 @@ Global
 		{99111251-3198-4A4F-9182-A8CD95A17A1D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{99111251-3198-4A4F-9182-A8CD95A17A1D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{99111251-3198-4A4F-9182-A8CD95A17A1D}.Release|Win32.ActiveCfg = Release|Any CPU
+		{E117B29F-3200-41B9-BA46-130F1D086528}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E117B29F-3200-41B9-BA46-130F1D086528}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E117B29F-3200-41B9-BA46-130F1D086528}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E117B29F-3200-41B9-BA46-130F1D086528}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E117B29F-3200-41B9-BA46-130F1D086528}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{E117B29F-3200-41B9-BA46-130F1D086528}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E117B29F-3200-41B9-BA46-130F1D086528}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E117B29F-3200-41B9-BA46-130F1D086528}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E117B29F-3200-41B9-BA46-130F1D086528}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E117B29F-3200-41B9-BA46-130F1D086528}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

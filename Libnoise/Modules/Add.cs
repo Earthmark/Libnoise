@@ -13,23 +13,23 @@
 		/// <summary>
 		/// Creates this noise module, also setting the ConnectedModule.
 		/// </summary>
-		/// <param name="connectedModule1">The first noise module to connect to this module.</param>
-		/// <param name="connectedModule2">The second noise module to connect to this module.</param>
-		public Add(Module connectedModule1, Module connectedModule2)
+		/// <param name="sourceModule1">The first noise module to connect to this module.</param>
+		/// <param name="sourceModule2">The second noise module to connect to this module.</param>
+		public Add(Module sourceModule1, Module sourceModule2)
 		{
-			ConnectedModule1 = connectedModule1;
-			ConnectedModule2 = connectedModule2;
+			SourceModule1 = sourceModule1;
+			SourceModule2 = sourceModule2;
 		}
 
 		/// <summary>
 		/// The first module this noise module is connected to.
 		/// </summary>
-		public Module ConnectedModule1 { get; set; }
+		public Module SourceModule1 { get; set; }
 
 		/// <summary>
 		/// The second module this noise module is connected to.
 		/// </summary>
-		public Module ConnectedModule2 { get; set; }
+		public Module SourceModule2 { get; set; }
 
 		/// <summary>
 		/// Generates an output value given the coordinates of the specified input value. 
@@ -40,7 +40,7 @@
 		/// <returns>The output value.</returns>
 		public override double GetValue(double x, double y, double z)
 		{
-			return ConnectedModule1.GetValue(x, y, z) + ConnectedModule2.GetValue(x, y, z);
+			return SourceModule1.GetValue(x, y, z) + SourceModule2.GetValue(x, y, z);
 		}
 	}
 }

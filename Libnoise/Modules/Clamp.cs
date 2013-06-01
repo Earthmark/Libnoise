@@ -36,6 +36,12 @@
 		public double LowerBound { get; set; }
 		public double UpperBound { get; set; }
 
+		public void SetBounds(double lowerBound, double upperBound)
+		{
+			LowerBound = lowerBound;
+			UpperBound = upperBound;
+		}
+
 		public override double GetValue(double x, double y, double z)
 		{
 			var value = ConnectedModule.GetValue(x, y, z);

@@ -7,7 +7,7 @@ namespace Noise.Modules
 		private const double Epsilon = 0.0000001;
 		protected double cachedValue;
 
-		private Module connectedModule;
+		private Module sourceModule;
 
 		protected bool isCached;
 
@@ -15,31 +15,28 @@ namespace Noise.Modules
 		protected double yCache;
 		protected double zCache;
 
-		public Cache()
+		public Cache() {}
+
+		public Cache(Module sourceModule)
 		{
-			
+			SourceModule = sourceModule;
 		}
 
-		public Cache(Module connectedModule)
+		public Module SourceModule
 		{
-			ConnectedModule = connectedModule;
-		}
-
-		public Module ConnectedModule
-		{
-			get { return connectedModule; }
+			get { return sourceModule; }
 			set
 			{
-				connectedModule = value;
+				sourceModule = value;
 				isCached = false;
 			}
 		}
 
 		public override double GetValue(double x, double y, double z)
 		{
-			if (!(isCached && Math.Abs(x - xCache) < Epsilon && Math.Abs(y - yCache) < Epsilon && Math.Abs(z - zCache) < Epsilon))
+			if(!(isCached && Math.Abs(x - xCache) < Epsilon && Math.Abs(y - yCache) < Epsilon && Math.Abs(z - zCache) < Epsilon))
 			{
-				cachedValue = ConnectedModule.GetValue(x, y, z);
+				cachedValue = SourceModule.GetValue(x, y, z);
 				xCache = x;
 				yCache = y;
 				zCache = z;

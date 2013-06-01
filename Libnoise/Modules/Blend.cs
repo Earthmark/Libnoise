@@ -37,7 +37,8 @@
 		/// The control module determines the weight of the blending operation.
 		/// </summary>
 		/// <remarks>
-		/// Negative values weigh the blend towards the output value from <see cref="SourceModule1"/>. Positive values weigh the blend towards the output value from <see cref="SourceModule2"/>.
+		/// Negative values weigh the blend towards the output value from <see cref="SourceModule1"/>.
+		/// Positive values weigh the blend towards the output value from <see cref="SourceModule2"/>.
 		/// </remarks>
 		public Module ControlModule { get; set; }
 

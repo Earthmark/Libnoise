@@ -22,6 +22,9 @@ namespace Noise.Modules
 
 		public RidgedMulti(double lacunarity, double frequency, NoiseQuality noiseQuality, int octaveCount, int seed)
 		{
+			if (octaveCount < 1 || octaveCount > RidgedMaxOctave)
+				throw new ArgumentException("Count was too high, above " + RidgedMaxOctave, "octaveCount");
+				
 			Seed = seed;
 			OctaveCount = octaveCount;
 			spectralWeights = new double[RidgedMaxOctave];
@@ -47,8 +50,8 @@ namespace Noise.Modules
 			get { return lacunarity; }
 			set
 			{
-				CalcSpectralWeights();
 				lacunarity = value;
+				CalcSpectralWeights();
 			}
 		}
 
@@ -67,19 +70,18 @@ namespace Noise.Modules
 
 		public int Seed { get; set; }
 
-
 		private void CalcSpectralWeights()
 		{
 			// This exponent parameter should be user-defined; it may be exposed in a
 			// future version of libnoise.
 			const double h = 1.0;
 
-			var frequen = 1.0;
+			var frequency = 1.0;
 			for(var i = 0; i < RidgedMaxOctave; i++)
 			{
 				// Compute weight for each frequency.
-				spectralWeights[i] = Math.Pow(frequen, -h);
-				frequen *= Lacunarity;
+				spectralWeights[i] = Math.Pow(frequency, -h);
+				frequency *= Lacunarity;
 			}
 		}
 
@@ -99,7 +101,6 @@ namespace Noise.Modules
 
 			for(var curOctave = 0; curOctave < OctaveCount; curOctave++)
 			{
-
 				// Make sure that these floating-point values have the same range as a 32-
 				// bit integer so that we can pass them to the coherent-noise functions.
 				var nx = NoiseGen.MakeInt32Range(x);
@@ -107,8 +108,8 @@ namespace Noise.Modules
 				var nz = NoiseGen.MakeInt32Range(z);
 
 				// Get the coherent-noise value.
-				var lSeed = (Seed + curOctave) & 0x7fffffff;
-				var signal = NoiseGen.GradientCoherentNoise3D(nx, ny, nz, lSeed, NoiseQuality);
+				var seed = (Seed + curOctave) & 0x7fffffff;
+				var signal = NoiseGen.GradientCoherentNoise3D(nx, ny, nz, seed, NoiseQuality);
 
 				// Make the ridges.
 				signal = Math.Abs(signal);
