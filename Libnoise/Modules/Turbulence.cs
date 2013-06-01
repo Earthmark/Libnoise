@@ -7,13 +7,8 @@
 		public const int DefaultTurbulenceRoughness = 3;
 		public const int DefaultTurbulenceSeed = Perlin.DefaultPerlinSeed;
 
-		/// Noise module that displaces the @a x coordinate.
 		private readonly Perlin xDistortModule;
-
-		/// Noise module that displaces the @a y coordinate.
 		private readonly Perlin yDistortModule;
-
-		/// Noise module that displaces the @a z coordinate.
 		private readonly Perlin zDistortModule;
 
 		public Turbulence()

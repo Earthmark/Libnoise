@@ -43,7 +43,7 @@ namespace Noise.Modules
 			SetAngles(xAngle, yAngle, zAngle);
 		}
 
-		private double XAngle
+		public double XAngle
 		{
 			get { return xAngle; }
 			set
@@ -53,7 +53,7 @@ namespace Noise.Modules
 			}
 		}
 
-		private double YAngle
+		public double YAngle
 		{
 			get { return yAngle; }
 			set
@@ -63,7 +63,7 @@ namespace Noise.Modules
 			}
 		}
 
-		private double ZAngle
+		public double ZAngle
 		{
 			get { return zAngle; }
 			set

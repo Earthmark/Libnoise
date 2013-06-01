@@ -44,14 +44,14 @@
 
 		public Module ConnectedModule { get; set; }
 
-		void SetScale(double scale)
+		public void SetScale(double scale)
 		{
 			XScale = scale;
 			YScale = scale;
 			ZScale = scale;
 		}
 
-		void SetScale(double xScale, double yScale, double zScale)
+		public void SetScale(double xScale, double yScale, double zScale)
 		{
 			XScale = xScale;
 			YScale = yScale;

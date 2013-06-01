@@ -37,7 +37,7 @@
 		public Module SourceModule2 { get; set; }
 		public Module ControlModule { get; set; }
 
-		private void SetBounds(double lowerBound, double upperBound)
+		public void SetBounds(double lowerBound, double upperBound)
 		{
 			LowerBound = lowerBound;
 			UpperBound = upperBound;

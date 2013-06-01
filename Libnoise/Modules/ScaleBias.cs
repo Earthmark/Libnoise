@@ -18,11 +18,11 @@
 			Scale = DefaultScale;
 		}
 
-		public ScaleBias(Module connectedModule, double bias, double scale)
+		public ScaleBias(Module connectedModule, double scale, double bias)
 		{
 			ConnectedModule = connectedModule;
-			Bias = bias;
 			Scale = scale;
+			Bias = bias;
 		}
 
 		public double Bias { get; set; }
