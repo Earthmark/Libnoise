@@ -2,6 +2,9 @@
 
 namespace Noise
 {
+	/// <summary>
+	/// A set of globally usefull math constants.
+	/// </summary>
 	public static class MathConsts
 	{
 		/// <summary>

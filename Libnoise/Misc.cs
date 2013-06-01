@@ -1,8 +1,16 @@
-﻿namespace Noise
+﻿using System;
+
+namespace Noise
 {
+	/// <summary>
+	/// Contains miscellaneous helpers and data pieces. 
+	/// </summary>
 	public static class Misc
 	{
-		public static double[] RandomVectors = new[]
+		/// <summary>
+		/// A table made of psudorandom values.
+		/// </summary>
+		public static readonly double[] RandomVectors = new[]
 		{
 			-0.763874, -0.596439, -0.246489, 0.0,
 			0.396055, 0.904518, -0.158073, 0.0,
@@ -262,16 +270,64 @@
 			0.0337884, -0.979891, -0.196654, 0.0
 		};
 
+		/// <summary>
+		/// Clamps a value onto a clamping range.
+		/// </summary>
+		/// <param name="value">The value to clamp.</param>
+		/// <param name="lowerBound">The lower bound of the clamping range.</param>
+		/// <param name="upperBound">The upper bound of the clamping range.</param>
+		/// <returns>
+		/// <para>
+		/// - value if value lies between lowerBound and upperBound.
+		/// </para>
+		/// <para>
+		/// - lowerBound if value is less than lowerBound.
+		/// </para>
+		/// <para>
+		/// - upperBound if value is greater than upperBound.
+		/// </para>
+		/// </returns>
 		public static int ClampValue(int value, int lowerBound, int upperBound)
 		{
 			return value < lowerBound ? lowerBound : (value > upperBound ? upperBound : value);
 		}
 
+		/// <summary>
+		/// Swaps two values.
+		/// </summary>
+		/// <typeparam name="T">The type of varible to swap.</typeparam>
+		/// <param name="a">A variable containing the first value.</param>
+		/// <param name="b">A variable containing the second value.</param>
 		public static void SwapValues<T>(ref T a, ref T b)
 		{
 			var c = a;
 			a = b;
 			b = c;
+		}
+
+		/// <summary>
+		/// Converts latitude/longitude coordinates on a unit sphere into 3D
+		/// Cartesian coordinates.
+		/// </summary>
+		/// <remarks>
+		/// <para>
+		/// lat must range from -90 to +90.
+		/// </para>
+		/// <para>
+		/// lon must range from -180 to +180.
+		/// </para>
+		/// </remarks>
+		/// <param name="lat">The latitude, in degrees.</param>
+		/// <param name="lon">The longitude, in degrees.</param>
+		/// <param name="x">On exit, this parameter contains the x coordinate.</param>
+		/// <param name="y">On exit, this parameter contains the y coordinate.</param>
+		/// <param name="z">On exit, this parameter contains the z coordinate.</param>
+		public static void LatLonToXYZ(double lat, double lon, out double x, out double y, out double z)
+		{
+			var r = Math.Cos(MathConsts.DegToRad * lat);
+			x = r * Math.Cos(MathConsts.DegToRad * lon);
+			y = Math.Sin(MathConsts.DegToRad * lat);
+			z = r * Math.Sin(MathConsts.DegToRad * lon);
 		}
 	}
 }
