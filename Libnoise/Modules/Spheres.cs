@@ -24,10 +24,10 @@ namespace Noise.Modules
 			y *= Frequency;
 			z *= Frequency;
 
-			var distFromCenter = Math.Sqrt(x * x + y * y + z * z);
-			var distFromSmallerSphere = distFromCenter - Math.Floor(distFromCenter);
-			var distFromLargerSphere = 1.0 - distFromSmallerSphere;
-			var nearestDist = Math.Min(distFromSmallerSphere, distFromLargerSphere);
+			double distFromCenter = Math.Sqrt(x * x + y * y + z * z);
+			double distFromSmallerSphere = distFromCenter - Math.Floor(distFromCenter);
+			double distFromLargerSphere = 1.0 - distFromSmallerSphere;
+			double nearestDist = Math.Min(distFromSmallerSphere, distFromLargerSphere);
 			return 1.0 - (nearestDist * 4.0); // Puts it in the -1.0 to +1.0 range.
 		}
 	}

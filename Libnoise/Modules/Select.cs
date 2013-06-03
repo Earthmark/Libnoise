@@ -2,22 +2,51 @@
 {
 	public class Select : Module
 	{
-		private const double DefaultSelectEdgeFalloff = 0.0;
-		private const double DefaultSelectLowerBound = -1.0;
-		private const double DefaultSelectUpperBound = 1.0;
+		public const double DefaultSelectEdgeFalloff = 0.0;
+		public const double DefaultSelectLowerBound = -1.0;
+		public const double DefaultSelectUpperBound = 1.0;
 
-		private double edgeFalloff;
+		private double backEdgeFalloff;
 
 		public Select()
 		{
 			LowerBound = DefaultSelectLowerBound;
 			UpperBound = DefaultSelectUpperBound;
-			edgeFalloff = DefaultSelectEdgeFalloff;
+			backEdgeFalloff = DefaultSelectEdgeFalloff;
 		}
 
-		public Select(Module sourceModule1 = null, Module sourceModule2 = null, Module controlModule = null,
-		              double lowerBound = DefaultSelectLowerBound, double upperBound = DefaultSelectUpperBound,
-		              double edgeFalloff = DefaultSelectEdgeFalloff)
+		public Select(double lowerBound, double upperBound)
+		{
+			SetBounds(lowerBound, upperBound);
+			EdgeFalloff = DefaultSelectEdgeFalloff;
+		}
+
+		public Select(double lowerBound, double upperBound, double edgeFalloff)
+		{
+			SetBounds(lowerBound, upperBound);
+			EdgeFalloff = edgeFalloff;
+		}
+
+		public Select(Module sourceModule1, Module sourceModule2, Module controlModule)
+		{
+			SourceModule1 = sourceModule1;
+			SourceModule2 = sourceModule2;
+			ControlModule = controlModule;
+			LowerBound = DefaultSelectLowerBound;
+			UpperBound = DefaultSelectUpperBound;
+			backEdgeFalloff = DefaultSelectEdgeFalloff;
+		}
+
+		public Select(Module sourceModule1, Module sourceModule2, Module controlModule, double lowerBound, double upperBound)
+		{
+			SourceModule1 = sourceModule1;
+			SourceModule2 = sourceModule2;
+			ControlModule = controlModule;
+			SetBounds(lowerBound, upperBound);
+			EdgeFalloff = DefaultSelectEdgeFalloff;
+		}
+
+		public Select(Module sourceModule1, Module sourceModule2, Module controlModule, double lowerBound, double upperBound, double edgeFalloff)
 		{
 			SourceModule1 = sourceModule1;
 			SourceModule2 = sourceModule2;
@@ -28,12 +57,12 @@
 
 		public double EdgeFalloff
 		{
-			get { return edgeFalloff; }
+			get { return backEdgeFalloff; }
 			set
 			{
 				// Make sure that the edge falloff curves do not overlap.
 				var boundSize = UpperBound - LowerBound;
-				edgeFalloff = (value > boundSize / 2) ? boundSize / 2 : value;
+				backEdgeFalloff = (value > boundSize / 2) ? boundSize / 2 : value;
 			}
 		}
 

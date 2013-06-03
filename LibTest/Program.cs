@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibNoise;
+using LibNoise.Modfiers;
 using LibNoise.Modifiers;
-using Noise.Modules;
 using Billow = LibNoise.Billow;
 using Math = System.Math;
-using Perlin = Noise.Modules.Perlin;
-using Select = LibNoise.Modifiers.Select;
 
 namespace LibTest
 {
@@ -17,11 +15,8 @@ namespace LibTest
 	{
 		static void Main(string[] args)
 		{
-			Module noise = GetTestModule();
-			IModule noise2 = GetTestModule2();
-
-			noise = new ScaleBias(noise, 0.5, 0.5);
-			noise2 = new ScaleBiasOutput(noise2) {Bias = 0.5, Scale = 0.5};
+			var noise = GetTestModule();
+			var noise2 = GetTestModule2();
 
 			var random = new Random();
 			for(var i = 0; i < 10000; i++)
@@ -32,82 +27,42 @@ namespace LibTest
 				var val1 = noise.GetValue(x, y, z);
 				var val2 = noise2.GetValue(x, y, z);
 
-				Console.Write(Math.Abs(val1 - val2) < 0.0001);
+				if (Math.Abs(val1 - val2) > 0.0001)
+					Console.WriteLine("error");
 			}
+			Console.WriteLine("Done");
 		}
 
-		public static IModule GetTestModule2()
+		private static IModule GetTestModule2()
 		{
-			var baseFlatTerrain = new Billow
-			{
-				Frequency = 5.0f
-			};
+			var baseFlatTerrain = new Billow();
 
-			var flatTerrain = new ScaleBiasOutput(baseFlatTerrain)
-			{
-				Scale = 16.0f,
-				Bias = -0.25f
-			};
+			var flatTerrain = new ScaleBiasOutput(baseFlatTerrain);
 
 			var mountainTerrain = new RidgedMultifractal();
 
-			var terrainType = new LibNoise.Perlin
-			{
-				Persistence = 0.25f,
-				Frequency = 0.015f,
-				Lacunarity = 1.25f,
-				OctaveCount = 8,
-				NoiseQuality = NoiseQuality.Standard,
-				Seed = 0
-			};
-			
-			//noise = new ScaleOutput(terrainType, Amplitude);
-			//noise = new Add(new Constant(TerrainGenerator.MinimumGroundHeight), noise);
+			var terrainType = new Voronoi();
 
-			var ter = new Select(terrainType, flatTerrain, mountainTerrain)
-			{
-				EdgeFalloff = 0.525f
-			};
-			ter.SetBounds(0.0, 1000.0);
-
-			return ter;
+			var mod = new Terrace(terrainType);
+			mod.ControlPoints.Add(3);
+			mod.ControlPoints.Add(22);
+			return mod;
 		}
 
-		public static Module GetTestModule()
+		private static Noise.Modules.Module GetTestModule()
 		{
-			var baseFlatTerrain = new Noise.Modules.Billow
-			{
-				Frequency = 5.0f
-			};
+			var baseFlatTerrain = new Noise.Modules.Billow();
 
-			var flatTerrain = new ScaleBias(baseFlatTerrain)
-			{
-				Scale = 16.0f,
-				Bias = -0.25f
-			};
+			var flatTerrain = new Noise.Modules.ScaleBias(baseFlatTerrain);
 
-			var mountainTerrain = new RidgedMulti();
+			var mountainTerrain = new Noise.Modules.RidgedMulti();
 
-			var terrainType = new Perlin
-			{
-				Persistence = 0.25f,
-				Frequency = 0.015f,
-				Lacunarity = 1.25f,
-				OctaveCount = 8,
-				NoiseQuality = Noise.NoiseQuality.Standard,
-				Seed = 0
-			};
+			var terrainType = new Noise.Modules.Voronoi();
 
-			//noise = new ScaleOutput(terrainType, Amplitude);
-			//noise = new Add(new Constant(TerrainGenerator.MinimumGroundHeight), noise);
-
-			var ter = new Noise.Modules.Select(terrainType, flatTerrain, mountainTerrain)
-			{
-				EdgeFalloff = 0.525f
-			};
-			ter.SetBounds(0.0, 1000.0);
-
-			return ter;
+			var mod = new Noise.Modules.Terrace(terrainType);
+			mod.AddControlPoint(3);
+			mod.AddControlPoint(22);
+			return mod;
 		}
 	}
 }
