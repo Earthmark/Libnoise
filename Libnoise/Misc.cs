@@ -289,7 +289,9 @@ namespace Noise
 		/// </returns>
 		public static int ClampValue(int value, int lowerBound, int upperBound)
 		{
-			return value < lowerBound ? lowerBound : (value > upperBound ? upperBound : value);
+			value = Math.Max(lowerBound, value);
+			value = Math.Min(upperBound, value);
+			return value;
 		}
 
 		/// <summary>

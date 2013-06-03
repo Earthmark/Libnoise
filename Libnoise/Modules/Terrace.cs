@@ -120,7 +120,7 @@ namespace Noise.Modules
 			// the control point; the control points must be sorted by value within
 			// that array.
 			double[] newControlPoints = new double[controlPoints.Length + 1];
-			for (int i = 0; i < controlPoints.Length - 1; i++)
+			for (int i = 0; i < controlPoints.Length; i++)
 			{
 				if(i < insertionPos)
 				{

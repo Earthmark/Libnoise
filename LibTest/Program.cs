@@ -46,6 +46,7 @@ namespace LibTest
 			var mod = new Terrace(terrainType);
 			mod.ControlPoints.Add(3);
 			mod.ControlPoints.Add(22);
+			mod.GetValue(0, 0, 0);
 			return mod;
 		}
 
