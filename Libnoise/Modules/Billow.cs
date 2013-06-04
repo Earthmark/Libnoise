@@ -45,7 +45,7 @@ namespace Noise.Modules
 		private int octaveCount;
 
 		/// <summary>
-		/// Creates a new Billow instance using the default values.
+		/// Creates a new <see cref="Billow"/> instance using the default values.
 		/// </summary>
 		public Billow()
 		{
@@ -58,7 +58,7 @@ namespace Noise.Modules
 		}
 
 		/// <summary>
-		/// Creates a new Billow instance using the given values.
+		/// Creates a new <see cref="Billow"/> instance using the given values.
 		/// </summary>
 		/// <param name="frequency">Frequency of the first octave.</param>
 		/// <param name="lacunarity">Frequency multiplier between successive octaves.</param>

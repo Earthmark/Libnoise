@@ -6,39 +6,39 @@
 	public class Blend : Module
 	{
 		/// <summary>
-		/// Creates a new Blend instance with the noise modules as null.
+		/// Creates a new <see cref="Blend"/> <see cref="Module"/> without setting the NoiseModule1 or NoiseModule2.
 		/// </summary>
 		public Blend() {}
 
 		/// <summary>
-		/// Creates a new Blend instance with the specified noise modules.
+		/// Creates a new <see cref="Blend"/> <see cref="Module"/>, also setting the NoiseModule1 or NoiseModule2.
 		/// </summary>
-		/// <param name="sourceModule1">Outputs one of the values to blend.</param>
-		/// <param name="sourceModule2">Outputs one of the values to blend.</param>
-		/// <param name="controlModule">The control module determines the weight of the blending operation. See <see cref="ControlModule"/> for further usage.</param>
-		public Blend(Module sourceModule1, Module sourceModule2, Module controlModule)
+		/// <param name="noiseModule1">The first <see cref="Module"/> to connect to this <see cref="Blend"/> <see cref="Module"/>.</param>
+		/// <param name="noiseModule2">The second <see cref="Module"/> to connect to this <see cref="Blend"/> <see cref="Module"/>.</param>
+		/// <param name="controlModule">The control <see cref="Module"/> determines the weight of the blending operation. See <see cref="ControlModule"/> for further usage.</param>
+		public Blend(Module noiseModule1, Module noiseModule2, Module controlModule)
 		{
-			SourceModule1 = sourceModule1;
-			SourceModule2 = sourceModule2;
+			NoiseModule1 = noiseModule1;
+			NoiseModule2 = noiseModule2;
 			ControlModule = controlModule;
 		}
 
 		/// <summary>
 		/// Outputs one of the values to blend.
 		/// </summary>
-		public Module SourceModule1 { get; set; }
+		public Module NoiseModule1 { get; set; }
 
 		/// <summary>
 		/// Outputs one of the values to blend.
 		/// </summary>
-		public Module SourceModule2 { get; set; }
+		public Module NoiseModule2 { get; set; }
 
 		/// <summary>
 		/// The control module determines the weight of the blending operation.
 		/// </summary>
 		/// <remarks>
-		/// Negative values weigh the blend towards the output value from <see cref="SourceModule1"/>.
-		/// Positive values weigh the blend towards the output value from <see cref="SourceModule2"/>.
+		/// Negative values weigh the blend towards the output value from <see cref="NoiseModule1"/>.
+		/// Positive values weigh the blend towards the output value from <see cref="NoiseModule2"/>.
 		/// </remarks>
 		public Module ControlModule { get; set; }
 
@@ -51,8 +51,8 @@
 		/// <returns>The output value.</returns>
 		public override double GetValue(double x, double y, double z)
 		{
-			var v0 = SourceModule1.GetValue(x, y, z);
-			var v1 = SourceModule2.GetValue(x, y, z);
+			var v0 = NoiseModule1.GetValue(x, y, z);
+			var v1 = NoiseModule2.GetValue(x, y, z);
 			var alpha = (ControlModule.GetValue(x, y, z) + 1.0) / 2.0;
 			return Interp.LinearInterp(v0, v1, alpha);
 		}

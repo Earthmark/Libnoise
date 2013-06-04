@@ -33,6 +33,21 @@ namespace Noise.Modules
 				AddControlPoint(point);
 		}
 
+		public Terrace(params double[] points)
+		{
+			controlPoints = new double[0];
+			foreach (var point in points)
+				AddControlPoint(point);
+		}
+
+		public Terrace(Module sourceModule, params double[] points)
+		{
+			controlPoints = new double[0];
+			SourceModule = sourceModule;
+			foreach (var point in points)
+				AddControlPoint(point);
+		}
+
 		private bool InvertTerraces { get; set; }
 
 		public Module SourceModule { get; set; }
@@ -46,24 +61,27 @@ namespace Noise.Modules
 			InsertAtPos(insertionPos, value);
 		}
 
+		public void MakeControlPoints(int controlPointCount)
+		{
+			if (controlPointCount < 2)
+			{
+				throw new InvalidOperationException("Not enough control points.");
+			}
+
+			ClearAllControlPoints();
+
+			double terraceStep = 2.0 / ((double)controlPointCount - 1.0);
+			double curValue = -1.0;
+			for (int i = 0; i < (int)controlPointCount; i++)
+			{
+				AddControlPoint(curValue);
+				curValue += terraceStep;
+			}
+		}
+
 		public void ClearAllControlPoints()
 		{
 			controlPoints = null;
-		}
-
-		public int FindInsertionPos(double value)
-		{
-			int insertionPos;
-			for(insertionPos = 0; insertionPos < controlPoints.Length; insertionPos++)
-			{
-				if(value < controlPoints[insertionPos])
-				{
-					// We found the array index in which to insert the new control point.
-					// Exit now.
-					break;
-				}
-			}
-			return insertionPos;
 		}
 
 		public override double GetValue(double x, double y, double z)
@@ -113,7 +131,7 @@ namespace Noise.Modules
 			return Interp.LinearInterp(value0, value1, alpha);
 		}
 
-		public void InsertAtPos(int insertionPos, double value)
+		private void InsertAtPos(int insertionPos, double value)
 		{
 			// Make room for the new control point at the specified position within
 			// the control point array.  The position is determined by the value of
@@ -138,22 +156,19 @@ namespace Noise.Modules
 			controlPoints[insertionPos] = value;
 		}
 
-		public void MakeControlPoints(int controlPointCount)
+		private int FindInsertionPos(double value)
 		{
-			if(controlPointCount < 2)
+			int insertionPos;
+			for (insertionPos = 0; insertionPos < controlPoints.Length; insertionPos++)
 			{
-				throw new InvalidOperationException("Not enough control points.");
+				if (value < controlPoints[insertionPos])
+				{
+					// We found the array index in which to insert the new control point.
+					// Exit now.
+					break;
+				}
 			}
-
-			ClearAllControlPoints();
-
-			double terraceStep = 2.0 / ((double) controlPointCount - 1.0);
-			double curValue = -1.0;
-			for(int i = 0; i < (int) controlPointCount; i++)
-			{
-				AddControlPoint(curValue);
-				curValue += terraceStep;
-			}
+			return insertionPos;
 		}
 	}
 }

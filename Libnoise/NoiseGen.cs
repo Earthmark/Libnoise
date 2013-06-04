@@ -40,11 +40,12 @@
 	{
 		// These constants control certain parameters that all coherent-noise
 		// functions require.
+
+		// Constants used by the original version of libnoise.
+		// Because XNoiseGen is not relatively prime to the other values, and
+		// ZNoiseGen is close to 256 (the number of random gradient vectors),
+		// patterns show up in high-frequency coherent noise.
 #if NOISE_VERSION1
-	// Constants used by the original version of libnoise.
-	// Because X_NOISE_GEN is not relatively prime to the other values, and
-	// Z_NOISE_GEN is close to 256 (the number of random gradient vectors),
-	// patterns show up in high-frequency coherent noise.
 		const int XNoiseGen = 1;
 		const int YNoiseGen = 31337;
 		const int ZNoiseGen = 263;
@@ -64,10 +65,13 @@
 		/// three-dimensional input value.
 		/// </summary>
 		/// <remarks>
+		/// <para>
 		/// The return value ranges from -1.0 to +1.0.
-		///
+		/// </para>
+		/// <para>
 		/// For an explanation of the difference between gradient noise and
 		/// value noise, see the comments for the <see cref="GradientNoise3D"/> function.
+		/// </para>
 		/// </remarks>
 		/// <param name="x">The x coordinate of the input value.</param>
 		/// <param name="y">The y coordinate of the input value.</param>
@@ -215,11 +219,14 @@
 		/// three-dimensional input value.
 		/// </summary>
 		/// <remarks>
+		/// <para>
 		/// The return value ranges from 0 to 2147483647.
-		///
+		/// </para>
+		/// <para>
 		/// A noise function differs from a random-number generator because it
 		/// always returns the same output value if the same input value is passed
 		/// to it.
+		/// </para>
 		/// </remarks>
 		/// <param name="x">The integer x coordinate of the input value.</param>
 		/// <param name="y">The integer y coordinate of the input value.</param>

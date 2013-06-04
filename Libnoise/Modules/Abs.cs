@@ -3,39 +3,42 @@
 namespace Noise.Modules
 {
 	/// <summary>
-	/// Noise module that outputs the absolute value of the output value from a noise module.
+	/// A <see cref="Module"/> that outputs the absolute value of the output value from a <see cref="Module"/>.
 	/// </summary>
 	public class Abs : Module
 	{
 		/// <summary>
-		/// Creates this noise module without setting the ConnectedModule.
+		/// Creates a <see cref="Module"/> without setting the NoiseModule.
 		/// </summary>
 		public Abs() {}
 
 		/// <summary>
-		/// Creates this noise module, also setting the ConnectedModule.
+		/// Creates a <see cref="Module"/>, while also setting the NoiseModule.
 		/// </summary>
-		/// <param name="sourceModule">The noise module to connect to this module.</param>
-		public Abs(Module sourceModule)
+		/// <param name="noiseModule">The <see cref="Module"/> to connect to this <see cref="Abs"/> noise <see cref="Module"/>.</param>
+		public Abs(Module noiseModule)
 		{
-			SourceModule = sourceModule;
+			NoiseModule = noiseModule;
 		}
 
 		/// <summary>
-		/// The module this noise module is connected to.
+		/// The noise <see cref="Module"/> this <see cref="Abs"/> noise <see cref="Module"/> is connected to.
 		/// </summary>
-		public Module SourceModule { get; set; }
+		public Module NoiseModule { get; set; }
 
 		/// <summary>
 		/// Generates an output value given the coordinates of the specified input value. 
 		/// </summary>
+		/// <exception cref="NullReferenceException">NoiseModule was not set to an instance.</exception>
 		/// <param name="x">The x coordinate of the input value.</param>
 		/// <param name="y">The y coordinate of the input value.</param>
 		/// <param name="z">The z coordinate of the input value.</param>
 		/// <returns>The output value.</returns>
 		public override double GetValue(double x, double y, double z)
 		{
-			return Math.Abs(SourceModule.GetValue(x, y, z));
+			if(NoiseModule == null)
+				throw new NullReferenceException("NoiseModule was not set to an object.");
+			return Math.Abs(NoiseModule.GetValue(x, y, z));
 		}
 	}
 }

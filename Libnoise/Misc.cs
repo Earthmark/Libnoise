@@ -8,9 +8,12 @@ namespace Noise
 	public static class Misc
 	{
 		/// <summary>
-		/// A table made of psudorandom values.
+		/// A table made of psudorandom values, seperated into sets of 4. Each W chord is 0.
 		/// </summary>
 		public static readonly double[] RandomVectors = new[]
+
+			#region RandomVecs
+
 		{
 			-0.763874, -0.596439, -0.246489, 0.0,
 			0.396055, 0.904518, -0.158073, 0.0,
@@ -270,9 +273,12 @@ namespace Noise
 			0.0337884, -0.979891, -0.196654, 0.0
 		};
 
+		#endregion
+
 		/// <summary>
 		/// Clamps a value onto a clamping range.
 		/// </summary>
+		/// <exception cref="ArgumentException">Thrown if the <paramref name="lowerBound"/> is greater than the <paramref name="upperBound"/>.</exception>
 		/// <param name="value">The value to clamp.</param>
 		/// <param name="lowerBound">The lower bound of the clamping range.</param>
 		/// <param name="upperBound">The upper bound of the clamping range.</param>
@@ -289,6 +295,8 @@ namespace Noise
 		/// </returns>
 		public static int ClampValue(int value, int lowerBound, int upperBound)
 		{
+			if(lowerBound > upperBound)
+				throw new ArgumentException("lowerBound is greater than upperBound");
 			value = Math.Max(lowerBound, value);
 			value = Math.Min(upperBound, value);
 			return value;

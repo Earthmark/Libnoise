@@ -8,12 +8,13 @@ using LibNoise.Modfiers;
 using LibNoise.Modifiers;
 using Billow = LibNoise.Billow;
 using Math = System.Math;
+using Voronoi = LibNoise.Voronoi;
 
 namespace LibTest
 {
-	class Program
+	internal class Program
 	{
-		static void Main(string[] args)
+		private static void Main(string[] args)
 		{
 			var noise = GetTestModule();
 			var noise2 = GetTestModule2();
@@ -27,7 +28,7 @@ namespace LibTest
 				var val1 = noise.GetValue(x, y, z);
 				var val2 = noise2.GetValue(x, y, z);
 
-				if (Math.Abs(val1 - val2) > 0.0001)
+				if(Math.Abs(val1 - val2) > 0.0001)
 					Console.WriteLine("error");
 			}
 			Console.WriteLine("Done");
@@ -43,10 +44,11 @@ namespace LibTest
 
 			var terrainType = new Voronoi();
 
-			var mod = new Terrace(terrainType);
-			mod.ControlPoints.Add(3);
-			mod.ControlPoints.Add(22);
-			mod.GetValue(0, 0, 0);
+			var mod = new CurveOutput(terrainType);
+			mod.ControlPoints.Add(new CurveControlPoint {Input = 1, Output = 1});
+			mod.ControlPoints.Add(new CurveControlPoint {Input = 2, Output = 2});
+			mod.ControlPoints.Add(new CurveControlPoint {Input = 3, Output = 2});
+			mod.ControlPoints.Add(new CurveControlPoint {Input = 4, Output = 1});
 			return mod;
 		}
 
@@ -60,9 +62,11 @@ namespace LibTest
 
 			var terrainType = new Noise.Modules.Voronoi();
 
-			var mod = new Noise.Modules.Terrace(terrainType);
-			mod.AddControlPoint(3);
-			mod.AddControlPoint(22);
+			var mod = new Noise.Modules.Curve(terrainType);
+			mod.AddControlPoint(new Noise.Modules.ControlPoint(1, 1));
+			mod.AddControlPoint(new Noise.Modules.ControlPoint(2, 2));
+			mod.AddControlPoint(new Noise.Modules.ControlPoint(3, 2));
+			mod.AddControlPoint(new Noise.Modules.ControlPoint(4, 1));
 			return mod;
 		}
 	}
