@@ -30,7 +30,7 @@
 			ZScale = zScale;
 		}
 
-		public ScalePoint(double xScale, double yScale, double zScale, Module connectedModule)
+		public ScalePoint(Module connectedModule, double xScale, double yScale, double zScale)
 		{
 			XScale = xScale;
 			YScale = yScale;

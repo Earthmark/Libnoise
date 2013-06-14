@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E117B29F-3200-41B9-BA46-130F1D086528}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{E43ED525-1494-4698-9D5F-59F1B4E54278}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LibTest</RootNamespace>
-    <AssemblyName>LibTest</AssemblyName>
+    <RootNamespace>Noiselib</RootNamespace>
+    <AssemblyName>Noiselib</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -31,14 +29,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>LibTest.Program</StartupObject>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="libnoise, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\libnoise.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,20 +39,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Interp.cs" />
+    <Compile Include="MathConsts.cs" />
+    <Compile Include="Misc.cs" />
+    <Compile Include="Generators\Billow.cs" />
+    <Compile Include="Generators\Checkerboard.cs" />
+    <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\Line.cs" />
+    <Compile Include="Modules\Curve.cs" />
+    <Compile Include="Modules\Cylinders.cs" />
+    <Compile Include="Modules\Generic.cs" />
+    <Compile Include="Generators\Perlin.cs" />
+    <Compile Include="Generators\RidgedMulti.cs" />
+    <Compile Include="Generators\Spheres.cs" />
+    <Compile Include="Modules\Terrace.cs" />
+    <Compile Include="Modules\Turbulence.cs" />
+    <Compile Include="Generators\Voronoi.cs" />
+    <Compile Include="NoiseGen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Libnoise\Libnoise.csproj">
-      <Project>{99111251-3198-4a4f-9182-a8cd95a17a1d}</Project>
-      <Name>Libnoise</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="libnoise.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

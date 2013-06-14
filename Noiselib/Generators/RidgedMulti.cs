@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Noise.Modules
+namespace Noiselib.Generators
 {
-	public class RidgedMulti : Module
+	public sealed class RidgedMulti
 	{
 		public const double DefaultRidgedFrequency = 1.0;
 
@@ -85,7 +85,7 @@ namespace Noise.Modules
 			}
 		}
 
-		public override double GetValue(double x, double y, double z)
+		public double GetValue(double x, double y, double z)
 		{
 			x *= Frequency;
 			y *= Frequency;
