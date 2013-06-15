@@ -1,4 +1,5 @@
 ﻿using System;
+using Noiselib.Modules;
 
 namespace Noiselib.Generators
 {
@@ -39,7 +40,7 @@ namespace Noiselib.Generators
 
 		public Perlin(double frequency, double lacunarity, NoiseQuality noiseQuality, int octaveCount, double persistence, int seed)
 		{
-			if (octaveCount < 1 || octaveCount > PerlinMaxOctave)
+			if(octaveCount < 1 || octaveCount > PerlinMaxOctave)
 			{
 				throw new ArgumentException("Count was too high, above " + PerlinMaxOctave, "octaveCount");
 			}
@@ -79,6 +80,11 @@ namespace Noiselib.Generators
 
 		/// Seed value used by the Perlin-noise function.
 		public int Seed { get; set; }
+
+		public double this[double x, double y, double z]
+		{
+			get { return GetValue(x, y, z); }
+		}
 
 		public double GetValue(double x, double y, double z)
 		{

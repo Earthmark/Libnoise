@@ -1,4 +1,5 @@
 ﻿using System;
+using Noiselib.Modules;
 
 namespace Noiselib.Generators
 {
@@ -68,7 +69,7 @@ namespace Noiselib.Generators
 		/// <param name="seed">Seed value used by the billowy-noise function.</param>
 		public Billow(double frequency, double lacunarity, NoiseQuality noiseQuality, int octaveCount, double persistence, int seed)
 		{
-			if (octaveCount < 1 || octaveCount > BillowMaxOctave)
+			if(octaveCount < 1 || octaveCount > BillowMaxOctave)
 				throw new ArgumentException("Count was too high, above " + BillowMaxOctave, "octaveCount");
 			Frequency = frequency;
 			Lacunarity = lacunarity;
@@ -101,8 +102,8 @@ namespace Noiselib.Generators
 			get { return octaveCount; }
 			set
 			{
-				if (value < 1 || value > BillowMaxOctave)
-					throw new ArgumentException("Count was too high, above " + BillowMaxOctave, "value"); 
+				if(value < 1 || value > BillowMaxOctave)
+					throw new ArgumentException("Count was too high, above " + BillowMaxOctave, "value");
 				octaveCount = value;
 			}
 		}
@@ -123,7 +124,11 @@ namespace Noiselib.Generators
 		/// <param name="x">The x coordinate of the input value.</param>
 		/// <param name="y">The y coordinate of the input value.</param>
 		/// <param name="z">The z coordinate of the input value.</param>
-		/// <returns>The output value.</returns>
+		public double this[double x, double y, double z]
+		{
+			get { return GetValue(x, y, z); }
+		}
+
 		public double GetValue(double x, double y, double z)
 		{
 			var value = 0.0;

@@ -2,6 +2,14 @@
 
 namespace Noiselib.Modules
 {
+	/// <summary>
+	/// Defines a generic function header for linking to a noise generation method.
+	/// </summary>
+	/// <param name="x">The input x chord.</param>
+	/// <param name="y">The input y chord.</param>
+	/// <param name="z">The input z chord.</param>
+	public delegate double Module(double x, double y, double z);
+
 	public static class Generic
 	{
 		[Obsolete("Use Math.Abs(value) instead.")]

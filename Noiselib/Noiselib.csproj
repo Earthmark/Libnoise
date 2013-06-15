@@ -28,6 +28,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Noiselib.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -44,8 +45,10 @@
     <Compile Include="Misc.cs" />
     <Compile Include="Generators\Billow.cs" />
     <Compile Include="Generators\Checkerboard.cs" />
-    <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\Cylinder.cs" />
     <Compile Include="Models\Line.cs" />
+    <Compile Include="Models\Plane.cs" />
+    <Compile Include="Models\Sphere.cs" />
     <Compile Include="Modules\Curve.cs" />
     <Compile Include="Modules\Cylinders.cs" />
     <Compile Include="Modules\Generic.cs" />

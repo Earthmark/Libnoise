@@ -1,4 +1,5 @@
 ﻿using System;
+using Noiselib.Modules;
 
 namespace Noiselib.Generators
 {
@@ -32,9 +33,9 @@ namespace Noiselib.Generators
 
 		public RidgedMulti(double lacunarity, double frequency, NoiseQuality noiseQuality, int octaveCount, int seed)
 		{
-			if (octaveCount < 1 || octaveCount > RidgedMaxOctave)
+			if(octaveCount < 1 || octaveCount > RidgedMaxOctave)
 				throw new ArgumentException("Count was too high, above " + RidgedMaxOctave, "octaveCount");
-				
+
 			Seed = seed;
 			OctaveCount = octaveCount;
 			spectralWeights = new double[RidgedMaxOctave];
@@ -83,6 +84,11 @@ namespace Noiselib.Generators
 				spectralWeights[i] = Math.Pow(frequency, -h);
 				frequency *= Lacunarity;
 			}
+		}
+
+		public double this[double x, double y, double z]
+		{
+			get { return GetValue(x, y, z); }
 		}
 
 		public double GetValue(double x, double y, double z)

@@ -1,4 +1,5 @@
 ﻿using System;
+using Noiselib.Modules;
 
 namespace Noiselib.Generators
 {
@@ -28,6 +29,11 @@ namespace Noiselib.Generators
 		public bool EnableDistance { get; set; }
 		public double Frequency { get; set; }
 		public int Seed { get; set; }
+
+		public double this[double x, double y, double z]
+		{
+			get { return GetValue(x, y, z); }
+		}
 
 		public double GetValue(double x, double y, double z)
 		{

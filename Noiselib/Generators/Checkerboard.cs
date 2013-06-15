@@ -1,4 +1,6 @@
-﻿namespace Noiselib.Generators
+﻿using Noiselib.Modules;
+
+namespace Noiselib.Generators
 {
 	public sealed class Checkerboard
 	{
@@ -22,12 +24,17 @@
 		/// <param name="y">The y coordinate of the input value.</param>
 		/// <param name="z">The z coordinate of the input value.</param>
 		/// <returns>The output value.</returns>
-		public double GetValue(double x, double y, double z)
+		public double this[double x, double y, double z]
+		{
+			get { return GetValue(x, y, z); }
+		}
+
+		public static double GetValue(double x, double y, double z)
 		{
 			//Relies on truncation.
-			var ix = (int)NoiseGen.MakeInt32Range(x);
-			var iy = (int)NoiseGen.MakeInt32Range(y);
-			var iz = (int)NoiseGen.MakeInt32Range(z);
+			var ix = (int) NoiseGen.MakeInt32Range(x);
+			var iy = (int) NoiseGen.MakeInt32Range(y);
+			var iz = (int) NoiseGen.MakeInt32Range(z);
 			return (ix & 1 ^ iy & 1 ^ iz & 1) != 0 ? -1.0 : 1.0;
 		}
 	}

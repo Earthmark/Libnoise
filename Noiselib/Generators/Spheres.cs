@@ -1,4 +1,5 @@
 ﻿using System;
+using Noiselib.Modules;
 
 namespace Noiselib.Generators
 {
@@ -18,16 +19,21 @@ namespace Noiselib.Generators
 
 		public double Frequency { get; set; }
 
+		public double this[double x, double y, double z]
+		{
+			get { return GetValue(x, y, z); }
+		}
+
 		public double GetValue(double x, double y, double z)
 		{
 			x *= Frequency;
 			y *= Frequency;
 			z *= Frequency;
 
-			double distFromCenter = Math.Sqrt(x * x + y * y + z * z);
-			double distFromSmallerSphere = distFromCenter - Math.Floor(distFromCenter);
-			double distFromLargerSphere = 1.0 - distFromSmallerSphere;
-			double nearestDist = Math.Min(distFromSmallerSphere, distFromLargerSphere);
+			var distFromCenter = Math.Sqrt(x * x + y * y + z * z);
+			var distFromSmallerSphere = distFromCenter - Math.Floor(distFromCenter);
+			var distFromLargerSphere = 1.0 - distFromSmallerSphere;
+			var nearestDist = Math.Min(distFromSmallerSphere, distFromLargerSphere);
 			return 1.0 - (nearestDist * 4.0); // Puts it in the -1.0 to +1.0 range.
 		}
 	}

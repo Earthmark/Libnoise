@@ -1,11 +1,13 @@
-﻿namespace Noiselib.Models
+﻿using Noiselib.Modules;
+
+namespace Noiselib.Models
 {
 	/// <summary>
 	/// Model that defines the displacement of a line segment.
 	/// </summary>
 	/// <remarks>
 	/// <para>
-	/// This model returns an output value from a noise module given the
+	/// This model returns an output value from a noise method given the
 	/// one-dimensional coordinate of an input value located on a line
 	/// segment, which can be used as displacements.
 	/// </para>
@@ -26,6 +28,15 @@
 		public Line() {}
 
 		/// <summary>
+		/// Constructor, binds a method to the line.
+		/// </summary>
+		/// <param name="sourceMethod">The method to encapsulate.</param>
+		public Line(Module sourceMethod)
+		{
+			SourceMethod = sourceMethod;
+		}
+
+		/// <summary>
 		/// Constructor, Sets the start and end points.
 		/// </summary>
 		/// <param name="startX">The x coordinate of the start position.</param>
@@ -43,6 +54,92 @@
 			EndY = endY;
 			EndZ = endZ;
 		}
+
+		/// <summary>
+		/// Constructor, binds a method, as well as sets the start and end points.
+		/// </summary>
+		/// <param name="sourceMethod">The method to encapsulate.</param>
+		/// <param name="startX">The x coordinate of the start position.</param>
+		/// <param name="startY">The y coordinate of the start position.</param>
+		/// <param name="startZ">The z coordinate of the start position.</param>
+		/// <param name="endX">The x coordinate of the end position.</param>
+		/// <param name="endY">The y coordinate of the end position.</param>
+		/// <param name="endZ">The z coordinate of the end position.</param>
+		public Line(Module sourceMethod, double startX, double startY, double startZ, double endX, double endY, double endZ)
+		{
+			SourceMethod = sourceMethod;
+			StartX = startX;
+			StartY = startY;
+			StartZ = startZ;
+			EndX = endX;
+			EndY = endY;
+			EndZ = endZ;
+		}
+
+		/// <summary>
+		/// Constructor, binds a method as well as sets the attenuate flag.
+		/// </summary>
+		/// <param name="sourceMethod">The method to encapsulate.</param>
+		/// <param name="attenuate">Returns a flag indicating whether the output value is to be attenuated</param>
+		public Line(Module sourceMethod, bool attenuate)
+		{
+			Attenuate = attenuate;
+			SourceMethod = sourceMethod;
+		}
+
+		/// <summary>
+		/// Constructor, sets the start and end points as well as setting the attenuate flag.
+		/// </summary>
+		/// <param name="startX">The x coordinate of the start position.</param>
+		/// <param name="startY">The y coordinate of the start position.</param>
+		/// <param name="startZ">The z coordinate of the start position.</param>
+		/// <param name="endX">The x coordinate of the end position.</param>
+		/// <param name="endY">The y coordinate of the end position.</param>
+		/// <param name="endZ">The z coordinate of the end position.</param>
+		/// <param name="attenuate">Returns a flag indicating whether the output value is to be attenuated</param>
+		public Line(double startX, double startY, double startZ, double endX, double endY, double endZ, bool attenuate)
+		{
+			Attenuate = attenuate;
+			StartX = startX;
+			StartY = startY;
+			StartZ = startZ;
+			EndX = endX;
+			EndY = endY;
+			EndZ = endZ;
+		}
+
+		/// <summary>
+		/// Constructor, binds a method as well as setting the start and end points, while also setting the attenuate flag.
+		/// </summary>
+		/// <param name="sourceMethod">The method to encapsulate.</param>
+		/// <param name="startX">The x coordinate of the start position.</param>
+		/// <param name="startY">The y coordinate of the start position.</param>
+		/// <param name="startZ">The z coordinate of the start position.</param>
+		/// <param name="endX">The x coordinate of the end position.</param>
+		/// <param name="endY">The y coordinate of the end position.</param>
+		/// <param name="endZ">The z coordinate of the end position.</param>
+		/// <param name="attenuate">Returns a flag indicating whether the output value is to be attenuated</param>
+		public Line(Module sourceMethod, double startX, double startY, double startZ, double endX, double endY, double endZ, bool attenuate)
+		{
+			Attenuate = attenuate;
+			SourceMethod = sourceMethod;
+			StartX = startX;
+			StartY = startY;
+			StartZ = startZ;
+			EndX = endX;
+			EndY = endY;
+			EndZ = endZ;
+		}
+
+		/// <summary>
+		/// A flag that specifies whether the value is to be attenuated
+		/// (moved toward 0.0) as the ends of the line segment are approached.
+		/// </summary>
+		public bool Attenuate { get; set; }
+		/// <summary>
+		/// The noise module that is encapsulated.
+		/// </summary>
+		public Module SourceMethod { get; set; }
 
 		/// <summary>
 		/// x coordinate of the start of the line segment.
@@ -99,7 +196,7 @@
 		}
 
 		/// <summary>
-		/// Returns the output value from the noise module given the
+		/// Returns the output value from the noise method given the
 		/// one-dimensional coordinate of the specified input value located
 		/// on the line segment.
 		/// </summary>
@@ -115,21 +212,16 @@
 		/// extrapolated along the line that this segment is part of.
 		/// </para>
 		/// </remarks>
-		/// <param name="value">The input value from the noise generator.</param>
 		/// <param name="p">The distance along the line segment (ranges from 0.0 to 1.0)</param>
-		/// <param name="x">The output x value.</param>
-		/// <param name="y">The output y value.</param>
-		/// <param name="z">The output z value.</param>
-		public void GetValue(double value, double p, out double x, out double y, out double z)
+		/// <returns>The output value from the noise method.</returns>
+		public double GetValue(double p)
 		{
-			x = (EndX - StartX) * p + StartX;
-			y = (EndY - StartY) * p + StartY;
-			z = (EndZ - StartZ) * p + StartZ;
-		}
+			var x = (EndX - StartX) * p + StartX;
+			var y = (EndY - StartY) * p + StartY;
+			var z = (EndZ - StartZ) * p + StartZ;
+			var value = SourceMethod(x, y, z);
 
-		public static double AttenuatePass(double value, double p)
-		{
-			return p * (1.0 - p) * 4 * value;
+			return Attenuate ? p * (1.0 - p) * 4 * value : value;
 		}
 	}
 }
