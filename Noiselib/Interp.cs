@@ -1,4 +1,7 @@
-﻿namespace Noiselib
+﻿using System;
+using Noiselib.Generators;
+
+namespace Noiselib
 {
 	/// <summary>
 	/// A class containing different interpolation styles.

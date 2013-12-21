@@ -6,7 +6,7 @@ namespace Noiselib.Generators
 	/// <summary>
 	/// Noise module that outputs three-dimensional "billowy" noise.
 	/// </summary>
-	public sealed class Billow
+	public sealed class Billow : IModule
 	{
 		/// <summary>
 		/// Default frequency for the Noise.Module.Billow noise module.
@@ -69,7 +69,7 @@ namespace Noiselib.Generators
 		/// <param name="seed">Seed value used by the billowy-noise function.</param>
 		public Billow(double frequency, double lacunarity, NoiseQuality noiseQuality, int octaveCount, double persistence, int seed)
 		{
-			if(octaveCount < 1 || octaveCount > BillowMaxOctave)
+			if (octaveCount < 1 || octaveCount > BillowMaxOctave)
 				throw new ArgumentException("Count was too high, above " + BillowMaxOctave, "octaveCount");
 			Frequency = frequency;
 			Lacunarity = lacunarity;
@@ -102,7 +102,7 @@ namespace Noiselib.Generators
 			get { return octaveCount; }
 			set
 			{
-				if(value < 1 || value > BillowMaxOctave)
+				if (value < 1 || value > BillowMaxOctave)
 					throw new ArgumentException("Count was too high, above " + BillowMaxOctave, "value");
 				octaveCount = value;
 			}
@@ -138,7 +138,7 @@ namespace Noiselib.Generators
 			y *= Frequency;
 			z *= Frequency;
 
-			for(var curOctave = 0; curOctave < OctaveCount; curOctave++)
+			for (var curOctave = 0; curOctave < OctaveCount; curOctave++)
 			{
 				// Make sure that these floating-point values have the same range as a 32-
 				// bit integer so that we can pass them to the coherent-noise functions.
