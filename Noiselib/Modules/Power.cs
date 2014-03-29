@@ -15,9 +15,9 @@ namespace Noiselib.Modules
 		public Module SourceModuleBase { get; set; }
 		public Module SourceModuleExponent { get; set; }
 
-		public override double GetValue(double x, double y, double z)
+		public override double this[double x, double y, double z]
 		{
-			return Math.Pow(SourceModuleBase.GetValue(x, y, z), SourceModuleExponent.GetValue(x, y, z));
+			get { return Math.Pow(SourceModuleBase[x, y, z], SourceModuleExponent[x, y, z]); }
 		}
 	}
 }

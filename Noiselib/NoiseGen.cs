@@ -1,40 +1,40 @@
 ﻿namespace Noiselib
 {
 	/// <summary>
-	/// Enumerates the noise quality.
+	///      Enumerates the noise quality.
 	/// </summary>
 	public enum NoiseQuality
 	{
 		/// <summary>
-		/// Generates coherent noise quickly.  When a coherent-noise function with
-		/// this quality setting is used to generate a bump-map image, there are
-		/// noticeable "creasing" artifacts in the resulting image.  This is
-		/// because the derivative of that function is discontinuous at integer
-		/// boundaries.
+		///      Generates coherent noise quickly.  When a coherent-noise function with
+		///      this quality setting is used to generate a bump-map image, there are
+		///      noticeable "creasing" artifacts in the resulting image.  This is
+		///      because the derivative of that function is discontinuous at integer
+		///      boundaries.
 		/// </summary>
 		Fast = 0,
 
 		/// <summary>
-		/// Generates standard-quality coherent noise.  When a coherent-noise
-		/// function with this quality setting is used to generate a bump-map
-		/// image, there are some minor "creasing" artifacts in the resulting
-		/// image.  This is because the second derivative of that function is
-		/// discontinuous at integer boundaries.
+		///      Generates standard-quality coherent noise.  When a coherent-noise
+		///      function with this quality setting is used to generate a bump-map
+		///      image, there are some minor "creasing" artifacts in the resulting
+		///      image.  This is because the second derivative of that function is
+		///      discontinuous at integer boundaries.
 		/// </summary>
 		Standard = 1,
 
 		/// <summary>
-		/// Generates the best-quality coherent noise.  When a coherent-noise
-		/// function with this quality setting is used to generate a bump-map
-		/// image, there are no "creasing" artifacts in the resulting image.  This
-		/// is because the first and second derivatives of that function are
-		/// continuous at integer boundaries.
+		///      Generates the best-quality coherent noise.  When a coherent-noise
+		///      function with this quality setting is used to generate a bump-map
+		///      image, there are no "creasing" artifacts in the resulting image.  This
+		///      is because the first and second derivatives of that function are
+		///      continuous at integer boundaries.
 		/// </summary>
 		Best = 2
 	}
 
 	/// <summary>
-	/// The container for noise generation methods.
+	///      The container for noise generation methods.
 	/// </summary>
 	public static class NoiseGen
 	{
@@ -61,17 +61,17 @@
 #endif
 
 		/// <summary>
-		/// Generates a gradient-coherent-noise value from the coordinates of a
-		/// three-dimensional input value.
+		///      Generates a gradient-coherent-noise value from the coordinates of a
+		///      three-dimensional input value.
 		/// </summary>
 		/// <remarks>
-		/// <para>
-		/// The return value ranges from -1.0 to +1.0.
-		/// </para>
-		/// <para>
-		/// For an explanation of the difference between gradient noise and
-		/// value noise, see the comments for the <see cref="GradientNoise3D"/> function.
-		/// </para>
+		///      <para>
+		///           The return value ranges from -1.0 to +1.0.
+		///      </para>
+		///      <para>
+		///           For an explanation of the difference between gradient noise and
+		///           value noise, see the comments for the <see cref="GradientNoise3D" /> function.
+		///      </para>
 		/// </remarks>
 		/// <param name="x">The x coordinate of the input value.</param>
 		/// <param name="y">The y coordinate of the input value.</param>
@@ -83,12 +83,12 @@
 		{
 			// Create a unit-length cube aligned along an integer boundary.  This cube
 			// surrounds the input point.
-			var x0 = (x > 0.0 ? (int) x : (int) x - 1);
-			var x1 = x0 + 1;
-			var y0 = (y > 0.0 ? (int) y : (int) y - 1);
-			var y1 = y0 + 1;
-			var z0 = (z > 0.0 ? (int) z : (int) z - 1);
-			var z1 = z0 + 1;
+			int x0 = (x > 0.0 ? (int)x : (int)x - 1);
+			int x1 = x0 + 1;
+			int y0 = (y > 0.0 ? (int)y : (int)y - 1);
+			int y1 = y0 + 1;
+			int z0 = (z > 0.0 ? (int)z : (int)z - 1);
+			int z1 = z0 + 1;
 
 			// Map the difference between the coordinates of the input value and the
 			// coordinates of the cube's outer-lower-left vertex onto an S-curve.
@@ -116,70 +116,68 @@
 			// the coherent-noise value at the input point, interpolate these eight
 			// noise values using the S-curve value as the interpolant (trilinear
 			// interpolation.)
-			var n0 = GradientNoise3D(x, y, z, x0, y0, z0, seed);
-			var n1 = GradientNoise3D(x, y, z, x1, y0, z0, seed);
-			var ix0 = Interp.LinearInterp(n0, n1, xs);
+			double n0 = GradientNoise3D(x, y, z, x0, y0, z0, seed);
+			double n1 = GradientNoise3D(x, y, z, x1, y0, z0, seed);
+			double ix0 = Interp.LinearInterp(n0, n1, xs);
 			n0 = GradientNoise3D(x, y, z, x0, y1, z0, seed);
 			n1 = GradientNoise3D(x, y, z, x1, y1, z0, seed);
-			var ix1 = Interp.LinearInterp(n0, n1, xs);
-			var iy0 = Interp.LinearInterp(ix0, ix1, ys);
+			double ix1 = Interp.LinearInterp(n0, n1, xs);
+			double iy0 = Interp.LinearInterp(ix0, ix1, ys);
 			n0 = GradientNoise3D(x, y, z, x0, y0, z1, seed);
 			n1 = GradientNoise3D(x, y, z, x1, y0, z1, seed);
 			ix0 = Interp.LinearInterp(n0, n1, xs);
 			n0 = GradientNoise3D(x, y, z, x0, y1, z1, seed);
 			n1 = GradientNoise3D(x, y, z, x1, y1, z1, seed);
 			ix1 = Interp.LinearInterp(n0, n1, xs);
-			var iy1 = Interp.LinearInterp(ix0, ix1, ys);
+			double iy1 = Interp.LinearInterp(ix0, ix1, ys);
 
 			return Interp.LinearInterp(iy0, iy1, zs);
 		}
 
 		/// <summary>
-		/// Generates a gradient-noise value from the coordinates of a
-		/// three-dimensional input value and the integer coordinates of a
-		/// nearby three-dimensional value.
+		///      Generates a gradient-noise value from the coordinates of a
+		///      three-dimensional input value and the integer coordinates of a
+		///      nearby three-dimensional value.
 		/// </summary>
 		/// <remarks>
-		/// <para>
-		/// The difference between <paramref name="fx"/> and <paramref name="ix"/> must be less than or equal to one.
-		/// </para>
-		/// <para>
-		/// The difference between <paramref name="fy"/> and <paramref name="iy"/> must be less than or equal to one.
-		/// </para>
-		/// <para>
-		/// The difference between <paramref name="fz"/> and <paramref name="iz"/> must be less than or equal to one.
-		/// </para>
-		///
-		/// <para>
-		/// A gradient-noise function generates better-quality noise than a
-		/// value-noise function.  Most noise modules use gradient noise for
-		/// this reason, although it takes much longer to calculate.
-		/// </para>
-		/// <para>
-		/// The return value ranges from -1.0 to +1.0.
-		///	</para>
-		/// 
-		/// <para>
-		/// This function generates a gradient-noise value by performing the
-		/// following steps:
-		///	</para>
-		/// <para>
-		/// - It first calculates a random normalized vector based on the
-		///   nearby integer value passed to this function.
-		/// </para>
-		/// <para>
-		/// - It then calculates a new value by adding this vector to the
-		///   nearby integer value passed to this function.
-		/// </para>
-		/// <para>
-		/// - It then calculates the dot product of the above-generated value
-		///   and the floating-point input value passed to this function.
-		/// </para>
-		/// <para>
-		/// A noise function differs from a random-number generator because it
-		/// always returns the same output value if the same input value is passed
-		/// to it.
-		/// </para>
+		///      <para>
+		///           The difference between <paramref name="fx" /> and <paramref name="ix" /> must be less than or equal to one.
+		///      </para>
+		///      <para>
+		///           The difference between <paramref name="fy" /> and <paramref name="iy" /> must be less than or equal to one.
+		///      </para>
+		///      <para>
+		///           The difference between <paramref name="fz" /> and <paramref name="iz" /> must be less than or equal to one.
+		///      </para>
+		///      <para>
+		///           A gradient-noise function generates better-quality noise than a
+		///           value-noise function.  Most noise modules use gradient noise for
+		///           this reason, although it takes much longer to calculate.
+		///      </para>
+		///      <para>
+		///           The return value ranges from -1.0 to +1.0.
+		///      </para>
+		///      <para>
+		///           This function generates a gradient-noise value by performing the
+		///           following steps:
+		///      </para>
+		///      <para>
+		///           - It first calculates a random normalized vector based on the
+		///           nearby integer value passed to this function.
+		///      </para>
+		///      <para>
+		///           - It then calculates a new value by adding this vector to the
+		///           nearby integer value passed to this function.
+		///      </para>
+		///      <para>
+		///           - It then calculates the dot product of the above-generated value
+		///           and the floating-point input value passed to this function.
+		///      </para>
+		///      <para>
+		///           A noise function differs from a random-number generator because it
+		///           always returns the same output value if the same input value is passed
+		///           to it.
+		///      </para>
 		/// </remarks>
 		/// <param name="fx">The floating-point x coordinate of the input value.</param>
 		/// <param name="fy">The floating-point y coordinate of the input value.</param>
@@ -194,19 +192,19 @@
 			// Randomly generate a gradient vector given the integer coordinates of the
 			// input value.  This implementation generates a random number and uses it
 			// as an index into a normalized-vector lookup table.
-			var vectorIndex = (XNoiseGen * ix + YNoiseGen * iy + ZNoiseGen * iz + SeedNoiseGen * seed) & 0xffffffff;
+			long vectorIndex = (XNoiseGen * ix + YNoiseGen * iy + ZNoiseGen * iz + SeedNoiseGen * seed) & 0xffffffff;
 			vectorIndex ^= (vectorIndex >> ShiftNoiseGen);
 			vectorIndex &= 0xff;
 
-			var xvGradient = Misc.RandomVectors[(vectorIndex << 2)];
-			var yvGradient = Misc.RandomVectors[(vectorIndex << 2) + 1];
-			var zvGradient = Misc.RandomVectors[(vectorIndex << 2) + 2];
+			double xvGradient = Misc.RandomVectors[(vectorIndex << 2)];
+			double yvGradient = Misc.RandomVectors[(vectorIndex << 2) + 1];
+			double zvGradient = Misc.RandomVectors[(vectorIndex << 2) + 2];
 
 			// Set up us another vector equal to the distance between the two vectors
 			// passed to this function.
-			var xvPoint = (fx - ix);
-			var yvPoint = (fy - iy);
-			var zvPoint = (fz - iz);
+			double xvPoint = (fx - ix);
+			double yvPoint = (fy - iy);
+			double zvPoint = (fz - iz);
 
 			// Now compute the dot product of the gradient vector with the distance
 			// vector.  The resulting value is gradient noise.  Apply a scaling value
@@ -215,18 +213,18 @@
 		}
 
 		/// <summary>
-		/// Generates an integer-noise value from the coordinates of a
-		/// three-dimensional input value.
+		///      Generates an integer-noise value from the coordinates of a
+		///      three-dimensional input value.
 		/// </summary>
 		/// <remarks>
-		/// <para>
-		/// The return value ranges from 0 to 2147483647.
-		/// </para>
-		/// <para>
-		/// A noise function differs from a random-number generator because it
-		/// always returns the same output value if the same input value is passed
-		/// to it.
-		/// </para>
+		///      <para>
+		///           The return value ranges from 0 to 2147483647.
+		///      </para>
+		///      <para>
+		///           A noise function differs from a random-number generator because it
+		///           always returns the same output value if the same input value is passed
+		///           to it.
+		///      </para>
 		/// </remarks>
 		/// <param name="x">The integer x coordinate of the input value.</param>
 		/// <param name="y">The integer y coordinate of the input value.</param>
@@ -237,26 +235,24 @@
 		{
 			// All constants are primes and must remain prime in order for this noise
 			// function to work correctly.
-			var n = (XNoiseGen * x + YNoiseGen * y + ZNoiseGen * z + SeedNoiseGen * seed) & 0x7fffffff;
+			int n = (XNoiseGen * x + YNoiseGen * y + ZNoiseGen * z + SeedNoiseGen * seed) & 0x7fffffff;
 			n = (n >> 13) ^ n;
 			return (n * (n * n * 60493 + 19990303) + 1376312589) & 0x7fffffff;
 		}
 
 		/// <summary>
-		/// Modifies a floating-point value so that it can be stored in a
-		/// int32 variable.
+		///      Modifies a floating-point value so that it can be stored in a
+		///      int32 variable.
 		/// </summary>
 		/// <remarks>
-		/// This function does not modify n.
-		///
-		/// In libnoise, the noise-generating algorithms are all integer-based;
-		/// they use variables of type int32.  Before calling a noise
-		/// function, pass the x, y, and z coordinates to this function to
-		/// ensure that these coordinates can be cast to a int32 value.
-		///
-		/// Although you could do a straight cast from double to int32, the
-		/// resulting value may differ between platforms.  By using this function,
-		/// you ensure that the resulting value is identical between platforms.
+		///      This function does not modify n.
+		///      In libnoise, the noise-generating algorithms are all integer-based;
+		///      they use variables of type int32.  Before calling a noise
+		///      function, pass the x, y, and z coordinates to this function to
+		///      ensure that these coordinates can be cast to a int32 value.
+		///      Although you could do a straight cast from double to int32, the
+		///      resulting value may differ between platforms.  By using this function,
+		///      you ensure that the resulting value is identical between platforms.
 		/// </remarks>
 		/// <param name="n">A floating-point number.</param>
 		/// <returns>The modified floating-point number.</returns>
@@ -274,14 +270,13 @@
 		}
 
 		/// <summary>
-		/// Generates a value-coherent-noise value from the coordinates of a
-		/// three-dimensional input value.
+		///      Generates a value-coherent-noise value from the coordinates of a
+		///      three-dimensional input value.
 		/// </summary>
 		/// <remarks>
-		/// The return value ranges from -1.0 to +1.0.
-		///
-		/// For an explanation of the difference between gradient noise and
-		/// value noise, see the comments for the <see cref="GradientNoise3D"/> function.
+		///      The return value ranges from -1.0 to +1.0.
+		///      For an explanation of the difference between gradient noise and
+		///      value noise, see the comments for the <see cref="GradientNoise3D" /> function.
 		/// </remarks>
 		/// <param name="x">The x coordinate of the input value.</param>
 		/// <param name="y">The y coordinate of the input value.</param>
@@ -293,12 +288,12 @@
 		{
 			// Create a unit-length cube aligned along an integer boundary.  This cube
 			// surrounds the input point.
-			var x0 = (x > 0.0 ? (int) x : (int) x - 1);
-			var x1 = x0 + 1;
-			var y0 = (y > 0.0 ? (int) y : (int) y - 1);
-			var y1 = y0 + 1;
-			var z0 = (z > 0.0 ? (int) z : (int) z - 1);
-			var z1 = z0 + 1;
+			int x0 = (x > 0.0 ? (int)x : (int)x - 1);
+			int x1 = x0 + 1;
+			int y0 = (y > 0.0 ? (int)y : (int)y - 1);
+			int y1 = y0 + 1;
+			int z0 = (z > 0.0 ? (int)z : (int)z - 1);
+			int z1 = z0 + 1;
 
 			// Map the difference between the coordinates of the input value and the
 			// coordinates of the cube's outer-lower-left vertex onto an S-curve.
@@ -326,33 +321,32 @@
 			// the coherent-noise value at the input point, interpolate these eight
 			// noise values using the S-curve value as the interpolant (trilinear
 			// interpolation.)
-			var n0 = ValueNoise3D(x0, y0, z0, seed);
-			var n1 = ValueNoise3D(x1, y0, z0, seed);
-			var ix0 = Interp.LinearInterp(n0, n1, xs);
+			double n0 = ValueNoise3D(x0, y0, z0, seed);
+			double n1 = ValueNoise3D(x1, y0, z0, seed);
+			double ix0 = Interp.LinearInterp(n0, n1, xs);
 			n0 = ValueNoise3D(x0, y1, z0, seed);
 			n1 = ValueNoise3D(x1, y1, z0, seed);
-			var ix1 = Interp.LinearInterp(n0, n1, xs);
-			var iy0 = Interp.LinearInterp(ix0, ix1, ys);
+			double ix1 = Interp.LinearInterp(n0, n1, xs);
+			double iy0 = Interp.LinearInterp(ix0, ix1, ys);
 			n0 = ValueNoise3D(x0, y0, z1, seed);
 			n1 = ValueNoise3D(x1, y0, z1, seed);
 			ix0 = Interp.LinearInterp(n0, n1, xs);
 			n0 = ValueNoise3D(x0, y1, z1, seed);
 			n1 = ValueNoise3D(x1, y1, z1, seed);
 			ix1 = Interp.LinearInterp(n0, n1, xs);
-			var iy1 = Interp.LinearInterp(ix0, ix1, ys);
+			double iy1 = Interp.LinearInterp(ix0, ix1, ys);
 			return Interp.LinearInterp(iy0, iy1, zs);
 		}
 
 		/// <summary>
-		/// Generates a value-noise value from the coordinates of a
-		/// three-dimensional input value.
+		///      Generates a value-noise value from the coordinates of a
+		///      three-dimensional input value.
 		/// </summary>
 		/// <remarks>
-		/// The return value ranges from -1.0 to +1.0.
-		///
-		/// A noise function differs from a random-number generator because it
-		/// always returns the same output value if the same input value is passed
-		/// to it.
+		///      The return value ranges from -1.0 to +1.0.
+		///      A noise function differs from a random-number generator because it
+		///      always returns the same output value if the same input value is passed
+		///      to it.
 		/// </remarks>
 		/// <param name="x">The x coordinate of the input value.</param>
 		/// <param name="y">The y coordinate of the input value.</param>

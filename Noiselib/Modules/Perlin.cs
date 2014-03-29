@@ -39,7 +39,7 @@ namespace Noiselib.Modules
 
 		public Perlin(double frequency, double lacunarity, NoiseQuality noiseQuality, int octaveCount, double persistence, int seed)
 		{
-			if (octaveCount < 1 || octaveCount > PerlinMaxOctave)
+			if(octaveCount < 1 || octaveCount > PerlinMaxOctave)
 			{
 				throw new ArgumentException("Count was too high, above " + PerlinMaxOctave, "octaveCount");
 			}
@@ -80,38 +80,40 @@ namespace Noiselib.Modules
 		/// Seed value used by the Perlin-noise function.
 		public int Seed { get; set; }
 
-		public override double GetValue(double x, double y, double z)
+		public override double this[double x, double y, double z]
 		{
-			var value = 0.0;
-			var curPersistence = 1.0;
-
-			x *= Frequency;
-			y *= Frequency;
-			z *= Frequency;
-
-			for(var curOctave = 0; curOctave < OctaveCount; curOctave++)
+			get
 			{
+				double value = 0.0;
+				double curPersistence = 1.0;
 
-				// Make sure that these floating-point values have the same range as a 32-
-				// bit integer so that we can pass them to the coherent-noise functions.
-				var nx = NoiseGen.MakeInt32Range(x);
-				var ny = NoiseGen.MakeInt32Range(y);
-				var nz = NoiseGen.MakeInt32Range(z);
+				x *= Frequency;
+				y *= Frequency;
+				z *= Frequency;
 
-				// Get the coherent-noise value from the input value and add it to the
-				// final result.
-				var localSeed = Seed + curOctave;
-				var signal = NoiseGen.GradientCoherentNoise3D(nx, ny, nz, localSeed, NoiseQuality);
-				value += signal * curPersistence;
+				for(int curOctave = 0; curOctave < OctaveCount; curOctave++)
+				{
+					// Make sure that these floating-point values have the same range as a 32-
+					// bit integer so that we can pass them to the coherent-noise functions.
+					double nx = NoiseGen.MakeInt32Range(x);
+					double ny = NoiseGen.MakeInt32Range(y);
+					double nz = NoiseGen.MakeInt32Range(z);
 
-				// Prepare the next octave.
-				x *= Lacunarity;
-				y *= Lacunarity;
-				z *= Lacunarity;
-				curPersistence *= Persistence;
+					// Get the coherent-noise value from the input value and add it to the
+					// final result.
+					int localSeed = Seed + curOctave;
+					double signal = NoiseGen.GradientCoherentNoise3D(nx, ny, nz, localSeed, NoiseQuality);
+					value += signal * curPersistence;
+
+					// Prepare the next octave.
+					x *= Lacunarity;
+					y *= Lacunarity;
+					z *= Lacunarity;
+					curPersistence *= Persistence;
+				}
+
+				return value;
 			}
-
-			return value;
 		}
 	}
 }

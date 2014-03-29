@@ -75,14 +75,25 @@ namespace Noiselib.Modules
 
 		public Module ConnectedModule { get; set; }
 
+		public override double this[double x, double y, double z]
+		{
+			get
+			{
+				double nx = (x1Matrix * x) + (y1Matrix * y) + (z1Matrix * z);
+				double ny = (x2Matrix * x) + (y2Matrix * y) + (z2Matrix * z);
+				double nz = (x3Matrix * x) + (y3Matrix * y) + (z3Matrix * z);
+				return ConnectedModule[nx, ny, nz];
+			}
+		}
+
 		private void SetAngles(double xAng, double yAng, double zAng)
 		{
-			var xCos = Math.Cos(xAng * MathConsts.DegToRad);
-			var yCos = Math.Cos(yAng * MathConsts.DegToRad);
-			var zCos = Math.Cos(zAng * MathConsts.DegToRad);
-			var xSin = Math.Sin(xAng * MathConsts.DegToRad);
-			var ySin = Math.Sin(yAng * MathConsts.DegToRad);
-			var zSin = Math.Sin(zAng * MathConsts.DegToRad);
+			double xCos = Math.Cos(xAng * MathConsts.DegToRad);
+			double yCos = Math.Cos(yAng * MathConsts.DegToRad);
+			double zCos = Math.Cos(zAng * MathConsts.DegToRad);
+			double xSin = Math.Sin(xAng * MathConsts.DegToRad);
+			double ySin = Math.Sin(yAng * MathConsts.DegToRad);
+			double zSin = Math.Sin(zAng * MathConsts.DegToRad);
 
 			x1Matrix = ySin * xSin * zSin + yCos * zCos;
 			y1Matrix = xCos * zSin;
@@ -97,14 +108,6 @@ namespace Noiselib.Modules
 			XAngle = xAng;
 			YAngle = yAng;
 			ZAngle = zAng;
-		}
-
-		public override double GetValue(double x, double y, double z)
-		{
-			var nx = (x1Matrix * x) + (y1Matrix * y) + (z1Matrix * z);
-			var ny = (x2Matrix * x) + (y2Matrix * y) + (z2Matrix * z);
-			var nz = (x3Matrix * x) + (y3Matrix * y) + (z3Matrix * z);
-			return ConnectedModule.GetValue(nx, ny, nz);
 		}
 	}
 }

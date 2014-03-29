@@ -15,14 +15,11 @@ namespace Noise.Modules
 		public Module SourceModule1 { get; set; }
 		public Module SourceModule2 { get; set; }
 
-		public override double this[double x, double y, double z]
+		public override double GetValue(double x, double y, double z)
 		{
-			get
-			{
-				var v0 = SourceModule1[x, y, z];
-				var v1 = SourceModule2[x, y, z];
-				return Math.Min(v0, v1);
-			}
+			double v0 = SourceModule1.GetValue(x, y, z);
+			double v1 = SourceModule2.GetValue(x, y, z);
+			return Math.Min(v0, v1);
 		}
 	}
 }

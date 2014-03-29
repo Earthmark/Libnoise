@@ -18,17 +18,20 @@ namespace Noiselib.Modules
 
 		public double Frequency { get; set; }
 
-		public override double GetValue(double x, double y, double z)
+		public override double this[double x, double y, double z]
 		{
-			x *= Frequency;
-			y *= Frequency;
-			z *= Frequency;
+			get
+			{
+				x *= Frequency;
+				y *= Frequency;
+				z *= Frequency;
 
-			double distFromCenter = Math.Sqrt(x * x + y * y + z * z);
-			double distFromSmallerSphere = distFromCenter - Math.Floor(distFromCenter);
-			double distFromLargerSphere = 1.0 - distFromSmallerSphere;
-			double nearestDist = Math.Min(distFromSmallerSphere, distFromLargerSphere);
-			return 1.0 - (nearestDist * 4.0); // Puts it in the -1.0 to +1.0 range.
+				double distFromCenter = Math.Sqrt(x * x + y * y + z * z);
+				double distFromSmallerSphere = distFromCenter - Math.Floor(distFromCenter);
+				double distFromLargerSphere = 1.0 - distFromSmallerSphere;
+				double nearestDist = Math.Min(distFromSmallerSphere, distFromLargerSphere);
+				return 1.0 - (nearestDist * 4.0); // Puts it in the -1.0 to +1.0 range.
+			}
 		}
 	}
 }

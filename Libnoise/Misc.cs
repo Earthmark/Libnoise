@@ -3,12 +3,12 @@
 namespace Noise
 {
 	/// <summary>
-	/// Contains miscellaneous helpers and data pieces. 
+	///      Contains miscellaneous helpers and data pieces.
 	/// </summary>
 	public static class Misc
 	{
 		/// <summary>
-		/// A table made of psudorandom values, seperated into sets of 4. Each W chord is 0.
+		///      A table made of psudorandom values, seperated into sets of 4. Each W chord is 0.
 		/// </summary>
 		public static readonly double[] RandomVectors =
 
@@ -276,56 +276,61 @@ namespace Noise
 		#endregion
 
 		/// <summary>
-		/// Clamps a value onto a clamping range.
+		///      Clamps a value onto a clamping range.
 		/// </summary>
-		/// <exception cref="ArgumentException">Thrown if the <paramref name="lowerBound"/> is greater than the <paramref name="upperBound"/>.</exception>
+		/// <exception cref="ArgumentException">
+		///      Thrown if the <paramref name="lowerBound" /> is greater than the
+		///      <paramref name="upperBound" />.
+		/// </exception>
 		/// <param name="value">The value to clamp.</param>
 		/// <param name="lowerBound">The lower bound of the clamping range.</param>
 		/// <param name="upperBound">The upper bound of the clamping range.</param>
 		/// <returns>
-		/// <para>
-		/// - value if value lies between lowerBound and upperBound.
-		/// </para>
-		/// <para>
-		/// - lowerBound if value is less than lowerBound.
-		/// </para>
-		/// <para>
-		/// - upperBound if value is greater than upperBound.
-		/// </para>
+		///      <para>
+		///           - value if value lies between lowerBound and upperBound.
+		///      </para>
+		///      <para>
+		///           - lowerBound if value is less than lowerBound.
+		///      </para>
+		///      <para>
+		///           - upperBound if value is greater than upperBound.
+		///      </para>
 		/// </returns>
 		public static int ClampValue(int value, int lowerBound, int upperBound)
 		{
 			if(lowerBound > upperBound)
+			{
 				throw new ArgumentException("lowerBound is greater than upperBound");
+			}
 			value = Math.Max(lowerBound, value);
 			value = Math.Min(upperBound, value);
 			return value;
 		}
 
 		/// <summary>
-		/// Swaps two values.
+		///      Swaps two values.
 		/// </summary>
 		/// <typeparam name="T">The type of varible to swap.</typeparam>
 		/// <param name="a">A variable containing the first value.</param>
 		/// <param name="b">A variable containing the second value.</param>
 		public static void SwapValues<T>(ref T a, ref T b)
 		{
-			var c = a;
+			T c = a;
 			a = b;
 			b = c;
 		}
 
 		/// <summary>
-		/// Converts latitude/longitude coordinates on a unit sphere into 3D
-		/// Cartesian coordinates.
+		///      Converts latitude/longitude coordinates on a unit sphere into 3D
+		///      Cartesian coordinates.
 		/// </summary>
 		/// <remarks>
-		/// <para>
-		/// lat must range from -90 to +90.
-		/// </para>
-		/// <para>
-		/// lon must range from -180 to +180.
-		/// </para>
+		///      <para>
+		///           lat must range from -90 to +90.
+		///      </para>
+		///      <para>
+		///           lon must range from -180 to +180.
+		///      </para>
 		/// </remarks>
 		/// <param name="lat">The latitude, in degrees.</param>
 		/// <param name="lon">The longitude, in degrees.</param>
@@ -334,7 +339,7 @@ namespace Noise
 		/// <param name="z">On exit, this parameter contains the z coordinate.</param>
 		public static void LatLonToXYZ(double lat, double lon, out double x, out double y, out double z)
 		{
-			var r = Math.Cos(MathConsts.DegToRad * lat);
+			double r = Math.Cos(MathConsts.DegToRad * lat);
 			x = r * Math.Cos(MathConsts.DegToRad * lon);
 			y = Math.Sin(MathConsts.DegToRad * lat);
 			z = r * Math.Sin(MathConsts.DegToRad * lon);

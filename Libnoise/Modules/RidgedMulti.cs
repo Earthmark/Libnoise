@@ -33,7 +33,9 @@ namespace Noise.Modules
 		public RidgedMulti(double lacunarity, double frequency, NoiseQuality noiseQuality, int octaveCount, int seed)
 		{
 			if(octaveCount < 1 || octaveCount > RidgedMaxOctave)
+			{
 				throw new ArgumentException("Count was too high, above " + RidgedMaxOctave, "octaveCount");
+			}
 
 			Seed = seed;
 			OctaveCount = octaveCount;
@@ -63,7 +65,9 @@ namespace Noise.Modules
 			set
 			{
 				if(value < 1 || value > RidgedMaxOctave)
+				{
 					throw new ArgumentException("Count was too high, above " + RidgedMaxOctave, "value");
+				}
 				octaveCount = value;
 			}
 		}
@@ -76,8 +80,8 @@ namespace Noise.Modules
 			// future version of libnoise.
 			const double h = 1.0;
 
-			var frequency = 1.0;
-			for(var i = 0; i < RidgedMaxOctave; i++)
+			double frequency = 1.0;
+			for(int i = 0; i < RidgedMaxOctave; i++)
 			{
 				// Compute weight for each frequency.
 				spectralWeights[i] = Math.Pow(frequency, -h);
@@ -85,68 +89,65 @@ namespace Noise.Modules
 			}
 		}
 
-		public override double this[double x, double y, double z]
+		public override double GetValue(double x, double y, double z)
 		{
-			get
+			x *= Frequency;
+			y *= Frequency;
+			z *= Frequency;
+
+			double value = 0.0;
+			double weight = 1.0;
+
+			// These parameters should be user-defined; they may be exposed in a
+			// future version of libnoise.
+			const double offset = 1.0;
+			const double gain = 2.0;
+
+			for(int curOctave = 0; curOctave < OctaveCount; curOctave++)
 			{
-				x *= Frequency;
-				y *= Frequency;
-				z *= Frequency;
+				// Make sure that these floating-point values have the same range as a 32-
+				// bit integer so that we can pass them to the coherent-noise functions.
+				double nx = NoiseGen.MakeInt32Range(x);
+				double ny = NoiseGen.MakeInt32Range(y);
+				double nz = NoiseGen.MakeInt32Range(z);
 
-				var value = 0.0;
-				var weight = 1.0;
+				// Get the coherent-noise value.
+				int seed = (Seed + curOctave) & 0x7fffffff;
+				double signal = NoiseGen.GradientCoherentNoise3D(nx, ny, nz, seed, NoiseQuality);
 
-				// These parameters should be user-defined; they may be exposed in a
-				// future version of libnoise.
-				const double offset = 1.0;
-				const double gain = 2.0;
+				// Make the ridges.
+				signal = Math.Abs(signal);
+				signal = offset - signal;
 
-				for(var curOctave = 0; curOctave < OctaveCount; curOctave++)
+				// Square the signal to increase the sharpness of the ridges.
+				signal *= signal;
+
+				// The weighting from the previous octave is applied to the signal.
+				// Larger values have higher weights, producing sharp points along the
+				// ridges.
+				signal *= weight;
+
+				// Weight successive contributions by the previous signal.
+				weight = signal * gain;
+				if(weight > 1.0)
 				{
-					// Make sure that these floating-point values have the same range as a 32-
-					// bit integer so that we can pass them to the coherent-noise functions.
-					var nx = NoiseGen.MakeInt32Range(x);
-					var ny = NoiseGen.MakeInt32Range(y);
-					var nz = NoiseGen.MakeInt32Range(z);
-
-					// Get the coherent-noise value.
-					var seed = (Seed + curOctave) & 0x7fffffff;
-					var signal = NoiseGen.GradientCoherentNoise3D(nx, ny, nz, seed, NoiseQuality);
-
-					// Make the ridges.
-					signal = Math.Abs(signal);
-					signal = offset - signal;
-
-					// Square the signal to increase the sharpness of the ridges.
-					signal *= signal;
-
-					// The weighting from the previous octave is applied to the signal.
-					// Larger values have higher weights, producing sharp points along the
-					// ridges.
-					signal *= weight;
-
-					// Weight successive contributions by the previous signal.
-					weight = signal * gain;
-					if(weight > 1.0)
-					{
-						weight = 1.0;
-					}
-					if(weight < 0.0)
-					{
-						weight = 0.0;
-					}
-
-					// Add the signal to the output value.
-					value += (signal * spectralWeights[curOctave]);
-
-					// Go to the next octave.
-					x *= Lacunarity;
-					y *= Lacunarity;
-					z *= Lacunarity;
+					weight = 1.0;
+				}
+				if(weight < 0.0)
+				{
+					weight = 0.0;
 				}
 
-				return (value * 1.25) - 1.0;
+				// Add the signal to the output value.
+				value += (signal * spectralWeights[curOctave]);
+
+				// Go to the next octave.
+				x *= Lacunarity;
+				y *= Lacunarity;
+				z *= Lacunarity;
 			}
+
+			return (value * 1.25) - 1.0;
 		}
 	}
 }

@@ -36,20 +36,17 @@
 			DisplaceModuleZ = displaceModuleZ;
 		}
 
-		public override double this[double x, double y, double z]
+		public override double GetValue(double x, double y, double z)
 		{
-			get
-			{
-				// Get the output values from the three displacement modules.  Add each
-				// value to the corresponding coordinate in the input value.
-				var xDisplace = x + (DisplaceModuleX[x, y, z]);
-				var yDisplace = y + (DisplaceModuleY[x, y, z]);
-				var zDisplace = z + (DisplaceModuleZ[x, y, z]);
+			// Get the output values from the three displacement modules.  Add each
+			// value to the corresponding coordinate in the input value.
+			double xDisplace = x + (DisplaceModuleX.GetValue(x, y, z));
+			double yDisplace = y + (DisplaceModuleY.GetValue(x, y, z));
+			double zDisplace = z + (DisplaceModuleZ.GetValue(x, y, z));
 
-				// Retrieve the output value using the offsetted input value instead of
-				// the original input value.
-				return SourceModule[xDisplace, yDisplace, zDisplace];
-			}
+			// Retrieve the output value using the offsetted input value instead of
+			// the original input value.
+			return SourceModule.GetValue(xDisplace, yDisplace, zDisplace);
 		}
 	}
 }

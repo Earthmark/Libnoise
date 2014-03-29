@@ -3,17 +3,17 @@
 namespace Noise.Modules
 {
 	/// <summary>
-	/// A noise module that retrieves the sum of the two output values from two other source modules.
+	///      A noise module that retrieves the sum of the two output values from two other source modules.
 	/// </summary>
 	public class Add : Module
 	{
 		/// <summary>
-		/// Creates a new add module, without setting the NoiseModule1 or NoiseModule2.
+		///      Creates a new add module, without setting the NoiseModule1 or NoiseModule2.
 		/// </summary>
 		public Add() {}
 
 		/// <summary>
-		/// Creates a new add module, also setting the NoiseModule1 or NoiseModule2.
+		///      Creates a new add module, also setting the NoiseModule1 or NoiseModule2.
 		/// </summary>
 		/// <param name="noiseModule1">The first module to connect to this add module is connected to.</param>
 		/// <param name="noiseModule2">The second module this add module is connected to.</param>
@@ -24,31 +24,30 @@ namespace Noise.Modules
 		}
 
 		/// <summary>
-		/// The first module this add module is connected to.
+		///      The first module this add module is connected to.
 		/// </summary>
 		public Module NoiseModule1 { get; set; }
 
 		/// <summary>
-		/// The second module this add module is connected to.
+		///      The second module this add module is connected to.
 		/// </summary>
 		public Module NoiseModule2 { get; set; }
 
 		/// <summary>
-		/// Generates an output value given the coordinates of the specified input value. 
+		///      Generates an output value given the coordinates of the specified input value.
 		/// </summary>
 		/// <exception cref="NullReferenceException">Thrown if NoiseModule1 or NoiseModule2 are null.</exception>
 		/// <param name="x">The x coordinate of the input value.</param>
 		/// <param name="y">The y coordinate of the input value.</param>
 		/// <param name="z">The z coordinate of the input value.</param>
 		/// <returns>The output value.</returns>
-		public override double this[double x, double y, double z]
+		public override double GetValue(double x, double y, double z)
 		{
-			get
+			if(NoiseModule1 == null || NoiseModule2 == null)
 			{
-				if(NoiseModule1 == null || NoiseModule2 == null)
-					throw new NullReferenceException("NoiseModule1 or NoiseModule2 are null.");
-				return NoiseModule1[x, y, z] + NoiseModule2[x, y, z];
+				throw new NullReferenceException("NoiseModule1 or NoiseModule2 are null.");
 			}
+			return NoiseModule1.GetValue(x, y, z) + NoiseModule2.GetValue(x, y, z);
 		}
 	}
 }

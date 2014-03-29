@@ -20,6 +20,7 @@
 			YTranslation = DefaultTranslatePointY;
 			ZTranslation = DefaultTranslatePointZ;
 		}
+
 		public TranslatePoint(double xTranslation, double yTranslation, double zTranslation)
 		{
 			XTranslation = xTranslation;
@@ -55,9 +56,9 @@
 			ZTranslation = translation;
 		}
 
-		public override double this[double x, double y, double z]
+		public override double GetValue(double x, double y, double z)
 		{
-			get { return ConnectedModule[x + XTranslation, y + YTranslation, z + ZTranslation]; }
+			return ConnectedModule.GetValue(x + XTranslation, y + YTranslation, z + ZTranslation);
 		}
 	}
 }

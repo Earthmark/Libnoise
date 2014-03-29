@@ -30,10 +30,13 @@ namespace Noiselib.Modules
 		public Module ConnectedModule { get; set; }
 		public double Expon { get; set; }
 
-		public override double GetValue(double x, double y, double z)
+		public override double this[double x, double y, double z]
 		{
-			var value = ConnectedModule.GetValue(x, y, z);
-			return (Math.Pow(Math.Abs((value + 1.0) / 2.0), Expon) * 2.0 - 1.0);
+			get
+			{
+				double value = ConnectedModule[x, y, z];
+				return (Math.Pow(Math.Abs((value + 1.0) / 2.0), Expon) * 2.0 - 1.0);
+			}
 		}
 	}
 }

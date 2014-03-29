@@ -9,9 +9,9 @@
 
 		public Module ConnectedModule { get; set; }
 
-		public override double GetValue(double x, double y, double z)
+		public override double this[double x, double y, double z]
 		{
-			return -(ConnectedModule.GetValue(x, y, z));
+			get { return -(ConnectedModule[x, y, z]); }
 		}
 	}
 }

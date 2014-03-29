@@ -44,6 +44,11 @@
 
 		public Module ConnectedModule { get; set; }
 
+		public override double this[double x, double y, double z]
+		{
+			get { return ConnectedModule[x * XScale, y * YScale, z * ZScale]; }
+		}
+
 		public void SetScale(double scale)
 		{
 			XScale = scale;
@@ -56,11 +61,6 @@
 			XScale = xScale;
 			YScale = yScale;
 			ZScale = zScale;
-		}
-
-		public override double GetValue(double x, double y, double z)
-		{
-			return ConnectedModule.GetValue(x * XScale, y * YScale, z * ZScale);
 		}
 	}
 }

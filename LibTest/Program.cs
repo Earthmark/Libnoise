@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LibNoise;
-using LibNoise.Modfiers;
-using LibNoise.Modifiers;
-using Billow = LibNoise.Billow;
-using Math = System.Math;
-using Voronoi = LibNoise.Voronoi;
-
-namespace LibTest
+﻿namespace LibTest
 {
 	internal class Program
 	{

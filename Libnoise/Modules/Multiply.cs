@@ -13,9 +13,9 @@
 		public Module SourceModule1 { get; set; }
 		public Module SourceModule2 { get; set; }
 
-		public override double this[double x, double y, double z]
+		public override double GetValue(double x, double y, double z)
 		{
-			get { return SourceModule1[x, y, z] * SourceModule2[x, y, z]; }
+			return SourceModule1.GetValue(x, y, z) * SourceModule2.GetValue(x, y, z);
 		}
 	}
 }
