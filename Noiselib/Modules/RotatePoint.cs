@@ -86,6 +86,21 @@ namespace Noiselib.Modules
 			}
 		}
 
+		public override double this[double x, double y]
+		{
+			get { throw new NotImplementedException("This implementation is not complete."); }
+		}
+
+		/// <summary>
+		///      Generates an output value given the coordinates of the specified input value.
+		/// </summary>
+		/// <param name="x">The x coordinate of the input value.</param>
+		/// <returns>The output value.</returns>
+		public override double this[double x]
+		{
+			get { throw new NotImplementedException("This implementation is not complete."); }
+		}
+
 		private void SetAngles(double xAng, double yAng, double zAng)
 		{
 			double xCos = Math.Cos(xAng * MathConsts.DegToRad);
@@ -108,11 +123,6 @@ namespace Noiselib.Modules
 			XAngle = xAng;
 			YAngle = yAng;
 			ZAngle = zAng;
-		}
-
-		public override double this[double x, double y]
-		{
-			get { throw new NotImplementedException("This implementation is not complete."); }
 		}
 	}
 }

@@ -48,5 +48,24 @@ namespace Noiselib.Modules
 				return 1.0 - (nearestDist * 4.0); // Puts it in the -1.0 to +1.0 range.}
 			}
 		}
+
+		/// <summary>
+		///      Generates an output value given the coordinates of the specified input value.
+		/// </summary>
+		/// <param name="x">The x coordinate of the input value.</param>
+		/// <returns>The output value.</returns>
+		public override double this[double x]
+		{
+			get
+			{
+				x *= Frequency;
+
+				double distFromCenter = x;
+				double distFromSmallerSphere = distFromCenter - Math.Floor(distFromCenter);
+				double distFromLargerSphere = 1.0 - distFromSmallerSphere;
+				double nearestDist = Math.Min(distFromSmallerSphere, distFromLargerSphere);
+				return 1.0 - (nearestDist * 4.0); // Puts it in the -1.0 to +1.0 range.}}
+			}
+		}
 	}
 }

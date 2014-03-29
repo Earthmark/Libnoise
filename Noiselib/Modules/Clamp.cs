@@ -81,6 +81,38 @@ namespace Noiselib.Modules
 		/// </summary>
 		public double UpperBound { get; set; }
 
+		public override double this[double x, double y, double z]
+		{
+			get
+			{
+				double value = SourceModule[x, y, z];
+				return value < LowerBound ? LowerBound : (value > UpperBound ? UpperBound : value);
+			}
+		}
+
+		public override double this[double x, double y]
+		{
+			get
+			{
+				double value = SourceModule[x, y];
+				return value < LowerBound ? LowerBound : (value > UpperBound ? UpperBound : value);
+			}
+		}
+
+		/// <summary>
+		///      Generates an output value given the coordinates of the specified input value.
+		/// </summary>
+		/// <param name="x">The x coordinate of the input value.</param>
+		/// <returns>The output value.</returns>
+		public override double this[double x]
+		{
+			get
+			{
+				double value = SourceModule[x];
+				return value < LowerBound ? LowerBound : (value > UpperBound ? UpperBound : value);
+			}
+		}
+
 		/// <summary>
 		///      Sets the lower and upper bounds of the clamping range.
 		/// </summary>
@@ -102,24 +134,6 @@ namespace Noiselib.Modules
 			}
 			LowerBound = lowerBound;
 			UpperBound = upperBound;
-		}
-
-		public override double this[double x, double y, double z]
-		{
-			get
-			{
-				double value = SourceModule[x, y, z];
-				return value < LowerBound ? LowerBound : (value > UpperBound ? UpperBound : value);
-			}
-		}
-
-		public override double this[double x, double y]
-		{
-			get
-			{
-				double value = SourceModule[x, y];
-				return value < LowerBound ? LowerBound : (value > UpperBound ? UpperBound : value);
-			}
 		}
 	}
 }

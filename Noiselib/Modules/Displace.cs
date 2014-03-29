@@ -45,13 +45,6 @@
 			}
 		}
 
-		public void SetDisplaceModules(Module displaceModuleX, Module displaceModuleY, Module displaceModuleZ)
-		{
-			DisplaceModuleX = displaceModuleX;
-			DisplaceModuleY = displaceModuleY;
-			DisplaceModuleZ = displaceModuleZ;
-		}
-
 		public override double this[double x, double y]
 		{
 			get
@@ -65,6 +58,32 @@
 				// the original input value.
 				return SourceModule[xDisplace, yDisplace];
 			}
+		}
+
+		/// <summary>
+		///      Generates an output value given the coordinates of the specified input value.
+		/// </summary>
+		/// <param name="x">The x coordinate of the input value.</param>
+		/// <returns>The output value.</returns>
+		public override double this[double x]
+		{
+			get
+			{
+				// Get the output values from the three displacement modules.  Add each
+				// value to the corresponding coordinate in the input value.
+				double xDisplace = x + (DisplaceModuleX[x]);
+
+				// Retrieve the output value using the offsetted input value instead of
+				// the original input value.
+				return SourceModule[xDisplace];
+			}
+		}
+
+		public void SetDisplaceModules(Module displaceModuleX, Module displaceModuleY, Module displaceModuleZ)
+		{
+			DisplaceModuleX = displaceModuleX;
+			DisplaceModuleY = displaceModuleY;
+			DisplaceModuleZ = displaceModuleZ;
 		}
 	}
 }

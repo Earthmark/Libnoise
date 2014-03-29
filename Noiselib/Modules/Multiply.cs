@@ -28,5 +28,10 @@
 		{
 			get { return SourceModule1[x, y] * SourceModule2[x, y]; }
 		}
+
+		public override double this[double x]
+		{
+			get { return SourceModule1[x] * SourceModule2[x]; }
+		}
 	}
 }

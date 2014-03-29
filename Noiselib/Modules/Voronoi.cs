@@ -166,5 +166,62 @@ namespace Noiselib.Modules
 					(int)(Math.Floor(yCandidate))));
 			}
 		}
+
+		/// <summary>
+		///      Generates an output value given the coordinates of the specified input value.
+		/// </summary>
+		/// <param name="x">The x coordinate of the input value.</param>
+		/// <returns>The output value.</returns>
+		public override double this[double x]
+		{
+			get
+			{
+				// This method could be more efficient by caching the seed values.  Fix
+				// later.
+
+				x *= Frequency;
+
+				int xInt = (x > 0.0 ? (int)x : (int)x - 1);
+
+				double minDist = 2147483647.0;
+				double xCandidate = 0;
+
+				// Inside each unit cube, there is a seed point at a random position.  Go
+				// through each of the nearby cubes until we find a cube with a seed point
+				// that is closest to the specified position.
+				for(int xCur = xInt - 2; xCur <= xInt + 2; xCur++)
+				{
+					// Calculate the position and distance to the seed point inside of
+					// this unit cube.
+					double xPos = xCur + NoiseGen.ValueNoise2D(xCur, Seed);
+					double xDist = xPos - x;
+					double dist = xDist * xDist;
+
+					if(dist < minDist)
+					{
+						// This seed point is closer to any others found so far, so record
+						// this seed point.
+						minDist = dist;
+						xCandidate = xPos;
+					}
+				}
+
+				double value;
+				if(EnableDistance)
+				{
+					// Determine the distance to the nearest seed point.
+					double xDist = xCandidate - x;
+					value = xDist * MathConsts.Sqrt3 - 1.0;
+				}
+				else
+				{
+					value = 0.0;
+				}
+
+				// Return the calculated distance with the displacement value applied.
+				return value + (Displacement * NoiseGen.ValueNoise1D(
+					(int)(Math.Floor(xCandidate))));
+			}
+		}
 	}
 }

@@ -120,11 +120,32 @@ namespace Noiselib.Modules
 		{
 			get
 			{
+				throw new NotImplementedException();
 				if(!(IsCached && Math.Abs(x - XCache) < Epsilon && Math.Abs(y - YCache) < Epsilon))
 				{
 					CachedValue = SourceModule[x, y];
 					XCache = x;
 					YCache = y;
+				}
+				IsCached = true;
+				return CachedValue;
+			}
+		}
+
+		/// <summary>
+		///      Generates an output value given the coordinates of the specified input value.
+		/// </summary>
+		/// <param name="x">The x coordinate of the input value.</param>
+		/// <returns>The output value.</returns>
+		public override double this[double x]
+		{
+			get
+			{
+				throw new NotImplementedException();
+				if(!(IsCached && Math.Abs(x - XCache) < Epsilon))
+				{
+					CachedValue = SourceModule[x];
+					XCache = x;
 				}
 				IsCached = true;
 				return CachedValue;

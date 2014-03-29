@@ -1,7 +1,7 @@
 ﻿namespace Noiselib.Modules
 {
 	/// <summary>
-	/// mod * scale + bias
+	///      mod * scale + bias
 	/// </summary>
 	public class ScaleBias : Module
 	{
@@ -40,6 +40,16 @@
 		public override double this[double x, double y]
 		{
 			get { return ConnectedModule[x, y] * Scale + Bias; }
+		}
+
+		/// <summary>
+		///      Generates an output value given the coordinates of the specified input value.
+		/// </summary>
+		/// <param name="x">The x coordinate of the input value.</param>
+		/// <returns>The output value.</returns>
+		public override double this[double x]
+		{
+			get { return ConnectedModule[x] * Scale + Bias; }
 		}
 	}
 }

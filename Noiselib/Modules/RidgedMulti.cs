@@ -138,21 +138,6 @@ namespace Noiselib.Modules
 			}
 		}
 
-		private void CalcSpectralWeights()
-		{
-			// This exponent parameter should be user-defined; it may be exposed in a
-			// future version of libnoise.
-			const double h = 1.0;
-
-			double frequency = 1.0;
-			for(int i = 0; i < RidgedMaxOctave; i++)
-			{
-				// Compute weight for each frequency.
-				spectralWeights[i] = Math.Pow(frequency, -h);
-				frequency *= Lacunarity;
-			}
-		}
-
 		public override double this[double x, double y]
 		{
 			get
@@ -177,7 +162,7 @@ namespace Noiselib.Modules
 
 					// Get the coherent-noise value.
 					int seed = (Seed + curOctave) & 0x7fffffff;
-					double signal = NoiseGen.GradientCoherentNoise3D(nx, ny, seed, NoiseQuality);
+					double signal = NoiseGen.GradientCoherentNoise2D(nx, ny, seed, NoiseQuality);
 
 					// Make the ridges.
 					signal = Math.Abs(signal);
@@ -211,6 +196,84 @@ namespace Noiselib.Modules
 				}
 
 				return (value * 1.25) - 1.0;
+			}
+		}
+
+		/// <summary>
+		///      Generates an output value given the coordinates of the specified input value.
+		/// </summary>
+		/// <param name="x">The x coordinate of the input value.</param>
+		/// <returns>The output value.</returns>
+		public override double this[double x]
+		{
+			get
+			{
+				x *= Frequency;
+
+				double value = 0.0;
+				double weight = 1.0;
+
+				// These parameters should be user-defined; they may be exposed in a
+				// future version of libnoise.
+				const double offset = 1.0;
+				const double gain = 2.0;
+
+				for(int curOctave = 0; curOctave < OctaveCount; curOctave++)
+				{
+					// Make sure that these floating-point values have the same range as a 32-
+					// bit integer so that we can pass them to the coherent-noise functions.
+					double nx = NoiseGen.MakeInt32Range(x);
+
+					// Get the coherent-noise value.
+					int seed = (Seed + curOctave) & 0x7fffffff;
+					double signal = NoiseGen.GradientCoherentNoise1D(nx, seed, NoiseQuality);
+
+					// Make the ridges.
+					signal = Math.Abs(signal);
+					signal = offset - signal;
+
+					// Square the signal to increase the sharpness of the ridges.
+					signal *= signal;
+
+					// The weighting from the previous octave is applied to the signal.
+					// Larger values have higher weights, producing sharp points along the
+					// ridges.
+					signal *= weight;
+
+					// Weight successive contributions by the previous signal.
+					weight = signal * gain;
+					if(weight > 1.0)
+					{
+						weight = 1.0;
+					}
+					if(weight < 0.0)
+					{
+						weight = 0.0;
+					}
+
+					// Add the signal to the output value.
+					value += (signal * spectralWeights[curOctave]);
+
+					// Go to the next octave.
+					x *= Lacunarity;
+				}
+
+				return (value * 1.25) - 1.0;
+			}
+		}
+
+		private void CalcSpectralWeights()
+		{
+			// This exponent parameter should be user-defined; it may be exposed in a
+			// future version of libnoise.
+			const double h = 1.0;
+
+			double frequency = 1.0;
+			for(int i = 0; i < RidgedMaxOctave; i++)
+			{
+				// Compute weight for each frequency.
+				spectralWeights[i] = Math.Pow(frequency, -h);
+				frequency *= Lacunarity;
 			}
 		}
 	}

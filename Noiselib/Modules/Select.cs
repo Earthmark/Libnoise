@@ -124,15 +124,6 @@
 			}
 		}
 
-		public void SetBounds(double lowerBound, double upperBound)
-		{
-			LowerBound = lowerBound;
-			UpperBound = upperBound;
-
-			// Make sure that the edge falloff curves do not overlap.
-			EdgeFalloff = EdgeFalloff;
-		}
-
 		public override double this[double x, double y]
 		{
 			get
@@ -182,6 +173,71 @@
 				}
 				return SourceModule2[x, y];
 			}
+		}
+
+		/// <summary>
+		///      Generates an output value given the coordinates of the specified input value.
+		/// </summary>
+		/// <param name="x">The x coordinate of the input value.</param>
+		/// <returns>The output value.</returns>
+		public override double this[double x]
+		{
+			get
+			{
+				double controlValue = ControlModule[x];
+				if(EdgeFalloff > 0.0)
+				{
+					if(controlValue < (LowerBound - EdgeFalloff))
+					{
+						// The output value from the control module is below the selector
+						// threshold; return the output value from the first source module.
+						return SourceModule1[x];
+					}
+					if(controlValue < (LowerBound + EdgeFalloff))
+					{
+						// The output value from the control module is near the lower end of the
+						// selector threshold and within the smooth curve. Interpolate between
+						// the output values from the first and second source modules.
+						double lowerCurve = (LowerBound - EdgeFalloff);
+						double upperCurve = (LowerBound + EdgeFalloff);
+						double alpha = Interp.SCurve3((controlValue - lowerCurve) / (upperCurve - lowerCurve));
+						return Interp.LinearInterp(SourceModule1[x], SourceModule2[x], alpha);
+					}
+					if(controlValue < (UpperBound - EdgeFalloff))
+					{
+						// The output value from the control module is within the selector
+						// threshold; return the output value from the second source module.
+						return SourceModule2[x];
+					}
+					if(controlValue < (UpperBound + EdgeFalloff))
+					{
+						// The output value from the control module is near the upper end of the
+						// selector threshold and within the smooth curve. Interpolate between
+						// the output values from the first and second source modules.
+						double lowerCurve = (UpperBound - EdgeFalloff);
+						double upperCurve = (UpperBound + EdgeFalloff);
+						double alpha = Interp.SCurve3((controlValue - lowerCurve) / (upperCurve - lowerCurve));
+						return Interp.LinearInterp(SourceModule2[x], SourceModule1[x], alpha);
+					}
+					// Output value from the control module is above the selector threshold;
+					// return the output value from the first source module.
+					return SourceModule1[x];
+				}
+				if(controlValue < LowerBound || controlValue > UpperBound)
+				{
+					return SourceModule1[x];
+				}
+				return SourceModule2[x];
+			}
+		}
+
+		public void SetBounds(double lowerBound, double upperBound)
+		{
+			LowerBound = lowerBound;
+			UpperBound = upperBound;
+
+			// Make sure that the edge falloff curves do not overlap.
+			EdgeFalloff = EdgeFalloff;
 		}
 	}
 }

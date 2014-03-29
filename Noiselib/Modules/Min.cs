@@ -34,5 +34,20 @@ namespace Noiselib.Modules
 				return Math.Min(v0, v1);
 			}
 		}
+
+		/// <summary>
+		///      Generates an output value given the coordinates of the specified input value.
+		/// </summary>
+		/// <param name="x">The x coordinate of the input value.</param>
+		/// <returns>The output value.</returns>
+		public override double this[double x]
+		{
+			get
+			{
+				double v0 = SourceModule1[x];
+				double v1 = SourceModule2[x];
+				return Math.Min(v0, v1);
+			}
+		}
 	}
 }

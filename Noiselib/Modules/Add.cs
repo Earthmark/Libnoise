@@ -64,5 +64,22 @@ namespace Noiselib.Modules
 				return NoiseModule1[x, y] + NoiseModule2[x, y];
 			}
 		}
+
+		/// <summary>
+		///      Generates an output value given the coordinates of the specified input value.
+		/// </summary>
+		/// <param name="x">The x coordinate of the input value.</param>
+		/// <returns>The output value.</returns>
+		public override double this[double x]
+		{
+			get
+			{
+				if(NoiseModule1 == null || NoiseModule2 == null)
+				{
+					throw new NullReferenceException("NoiseModule1 or NoiseModule2 are null.");
+				}
+				return NoiseModule1[x] + NoiseModule2[x];
+			}
+		}
 	}
 }

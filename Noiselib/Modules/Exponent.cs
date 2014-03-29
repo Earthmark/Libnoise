@@ -47,5 +47,19 @@ namespace Noiselib.Modules
 				return (Math.Pow(Math.Abs((value + 1.0) / 2.0), Expon) * 2.0 - 1.0);
 			}
 		}
+
+		/// <summary>
+		///      Generates an output value given the coordinates of the specified input value.
+		/// </summary>
+		/// <param name="x">The x coordinate of the input value.</param>
+		/// <returns>The output value.</returns>
+		public override double this[double x]
+		{
+			get
+			{
+				double value = ConnectedModule[x];
+				return (Math.Pow(Math.Abs((value + 1.0) / 2.0), Expon) * 2.0 - 1.0);
+			}
+		}
 	}
 }

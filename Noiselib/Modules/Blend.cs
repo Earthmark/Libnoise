@@ -80,5 +80,21 @@
 				return Interp.LinearInterp(v0, v1, alpha);
 			}
 		}
+
+		/// <summary>
+		///      Generates an output value given the coordinates of the specified input value.
+		/// </summary>
+		/// <param name="x">The x coordinate of the input value.</param>
+		/// <returns>The output value.</returns>
+		public override double this[double x]
+		{
+			get
+			{
+				double v0 = NoiseModule1[x];
+				double v1 = NoiseModule2[x];
+				double alpha = (ControlModule[x] + 1.0) / 2.0;
+				return Interp.LinearInterp(v0, v1, alpha);
+			}
+		}
 	}
 }
