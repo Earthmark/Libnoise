@@ -135,6 +135,66 @@
 		}
 
 		/// <summary>
+		///      Generates a gradient-coherent-noise value from the coordinates of a
+		///      three-dimensional input value.
+		/// </summary>
+		/// <remarks>
+		///      <para>
+		///           The return value ranges from -1.0 to +1.0.
+		///      </para>
+		///      <para>
+		///           For an explanation of the difference between gradient noise and
+		///           value noise, see the comments for the <see cref="GradientNoise3D" /> function.
+		///      </para>
+		/// </remarks>
+		/// <param name="x">The x coordinate of the input value.</param>
+		/// <param name="y">The y coordinate of the input value.</param>
+		/// <param name="z">The z coordinate of the input value.</param>
+		/// <param name="seed">The random number seed.</param>
+		/// <param name="noiseQuality">The quality of the coherent-noise.</param>
+		/// <returns>The generated gradient-coherent-noise value.</returns>
+		public static double GradientCoherentNoise3D(double x, double y, int seed = 0, NoiseQuality noiseQuality = NoiseQuality.Standard)
+		{
+			// Create a unit-length cube aligned along an integer boundary.  This cube
+			// surrounds the input point.
+			int x0 = (x > 0.0 ? (int)x : (int)x - 1);
+			int x1 = x0 + 1;
+			int y0 = (y > 0.0 ? (int)y : (int)y - 1);
+			int y1 = y0 + 1;
+
+			// Map the difference between the coordinates of the input value and the
+			// coordinates of the cube's outer-lower-left vertex onto an S-curve.
+			double xs = 0, ys = 0;
+			switch(noiseQuality)
+			{
+				case NoiseQuality.Fast:
+					xs = (x - x0);
+					ys = (y - y0);
+					break;
+				case NoiseQuality.Standard:
+					xs = Interp.SCurve3(x - x0);
+					ys = Interp.SCurve3(y - y0);
+					break;
+				case NoiseQuality.Best:
+					xs = Interp.SCurve5(x - x0);
+					ys = Interp.SCurve5(y - y0);
+					break;
+			}
+
+			// Now calculate the noise values at each vertex of the cube.  To generate
+			// the coherent-noise value at the input point, interpolate these eight
+			// noise values using the S-curve value as the interpolant (trilinear
+			// interpolation.)
+			double n0 = GradientNoise3D(x, y, x0, y0, seed);
+			double n1 = GradientNoise3D(x, y, x1, y0, seed);
+			double ix0 = Interp.LinearInterp(n0, n1, xs);
+			n0 = GradientNoise3D(x, y, x0, y1, seed);
+			n1 = GradientNoise3D(x, y, x1, y1, seed);
+			double ix1 = Interp.LinearInterp(n0, n1, xs);
+			return Interp.LinearInterp(ix0, ix1, ys);
+		}
+
+		/// <summary>
 		///      Generates a gradient-noise value from the coordinates of a
 		///      three-dimensional input value and the integer coordinates of a
 		///      nearby three-dimensional value.
@@ -213,6 +273,83 @@
 		}
 
 		/// <summary>
+		///      Generates a gradient-noise value from the coordinates of a
+		///      three-dimensional input value and the integer coordinates of a
+		///      nearby three-dimensional value.
+		/// </summary>
+		/// <remarks>
+		///      <para>
+		///           The difference between <paramref name="fx" /> and <paramref name="ix" /> must be less than or equal to one.
+		///      </para>
+		///      <para>
+		///           The difference between <paramref name="fy" /> and <paramref name="iy" /> must be less than or equal to one.
+		///      </para>
+		///      <para>
+		///           The difference between <paramref name="fz" /> and <paramref name="iz" /> must be less than or equal to one.
+		///      </para>
+		///      <para>
+		///           A gradient-noise function generates better-quality noise than a
+		///           value-noise function.  Most noise modules use gradient noise for
+		///           this reason, although it takes much longer to calculate.
+		///      </para>
+		///      <para>
+		///           The return value ranges from -1.0 to +1.0.
+		///      </para>
+		///      <para>
+		///           This function generates a gradient-noise value by performing the
+		///           following steps:
+		///      </para>
+		///      <para>
+		///           - It first calculates a random normalized vector based on the
+		///           nearby integer value passed to this function.
+		///      </para>
+		///      <para>
+		///           - It then calculates a new value by adding this vector to the
+		///           nearby integer value passed to this function.
+		///      </para>
+		///      <para>
+		///           - It then calculates the dot product of the above-generated value
+		///           and the floating-point input value passed to this function.
+		///      </para>
+		///      <para>
+		///           A noise function differs from a random-number generator because it
+		///           always returns the same output value if the same input value is passed
+		///           to it.
+		///      </para>
+		/// </remarks>
+		/// <param name="fx">The floating-point x coordinate of the input value.</param>
+		/// <param name="fy">The floating-point y coordinate of the input value.</param>
+		/// <param name="fz">The floating-point z coordinate of the input value.</param>
+		/// <param name="ix">The integer x coordinate of a nearby value.</param>
+		/// <param name="iy">The integer y coordinate of a nearby value.</param>
+		/// <param name="iz">The integer z coordinate of a nearby value.</param>
+		/// <param name="seed">The random number seed.</param>
+		/// <returns>The generated gradient-noise value.</returns>
+		public static double GradientNoise3D(double fx, double fy, int ix, int iy, int seed = 0)
+		{
+			// Randomly generate a gradient vector given the integer coordinates of the
+			// input value.  This implementation generates a random number and uses it
+			// as an index into a normalized-vector lookup table.
+			long vectorIndex = (XNoiseGen * ix + YNoiseGen * iy + SeedNoiseGen * seed) & 0xffffffff;
+			vectorIndex ^= (vectorIndex >> ShiftNoiseGen);
+			vectorIndex &= 0xff;
+
+			double xvGradient = Misc.RandomVectors[(vectorIndex << 2)];
+			double yvGradient = Misc.RandomVectors[(vectorIndex << 2) + 1];
+
+			// Set up us another vector equal to the distance between the two vectors
+			// passed to this function.
+			double xvPoint = (fx - ix);
+			double yvPoint = (fy - iy);
+
+			// Now compute the dot product of the gradient vector with the distance
+			// vector.  The resulting value is gradient noise.  Apply a scaling value
+			// so that this noise value ranges from -1.0 to 1.0.
+			//TODO: Verify bounds
+			return ((xvGradient * xvPoint) + (yvGradient * yvPoint)) * 2.12;
+		}
+
+		/// <summary>
 		///      Generates an integer-noise value from the coordinates of a
 		///      three-dimensional input value.
 		/// </summary>
@@ -236,6 +373,33 @@
 			// All constants are primes and must remain prime in order for this noise
 			// function to work correctly.
 			int n = (XNoiseGen * x + YNoiseGen * y + ZNoiseGen * z + SeedNoiseGen * seed) & 0x7fffffff;
+			n = (n >> 13) ^ n;
+			return (n * (n * n * 60493 + 19990303) + 1376312589) & 0x7fffffff;
+		}
+
+		/// <summary>
+		///      Generates an integer-noise value from the coordinates of a
+		///      three-dimensional input value.
+		/// </summary>
+		/// <remarks>
+		///      <para>
+		///           The return value ranges from 0 to 2147483647.
+		///      </para>
+		///      <para>
+		///           A noise function differs from a random-number generator because it
+		///           always returns the same output value if the same input value is passed
+		///           to it.
+		///      </para>
+		/// </remarks>
+		/// <param name="x">The integer x coordinate of the input value.</param>
+		/// <param name="y">The integer y coordinate of the input value.</param>
+		/// <param name="seed">A random number seed.</param>
+		/// <returns>The generated integer-noise value.</returns>
+		public static int IntValueNoise2D(int x, int y, int seed = 0)
+		{
+			// All constants are primes and must remain prime in order for this noise
+			// function to work correctly.
+			int n = (XNoiseGen * x + YNoiseGen * y + SeedNoiseGen * seed) & 0x7fffffff;
 			n = (n >> 13) ^ n;
 			return (n * (n * n * 60493 + 19990303) + 1376312589) & 0x7fffffff;
 		}
@@ -356,6 +520,26 @@
 		public static double ValueNoise3D(int x, int y, int z, int seed = 0)
 		{
 			return 1.0 - (IntValueNoise3D(x, y, z, seed) / 1073741824.0);
+		}
+
+		/// <summary>
+		///      Generates a value-noise value from the coordinates of a
+		///      three-dimensional input value.
+		/// </summary>
+		/// <remarks>
+		///      The return value ranges from -1.0 to +1.0.
+		///      A noise function differs from a random-number generator because it
+		///      always returns the same output value if the same input value is passed
+		///      to it.
+		/// </remarks>
+		/// <param name="x">The x coordinate of the input value.</param>
+		/// <param name="y">The y coordinate of the input value.</param>
+		/// <param name="z">The z coordinate of the input value.</param>
+		/// <param name="seed">A random number seed.</param>
+		/// <returns>The generated value-noise value.</returns>
+		public static double ValueNoise2D(int x, int y, int seed = 0)
+		{
+			return 1.0 - (IntValueNoise2D(x, y, seed) / 1073741824.0);
 		}
 	}
 }

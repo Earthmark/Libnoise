@@ -45,5 +45,17 @@ namespace Noiselib.Modules
 				return Math.Abs(NoiseModule[x, y, z]);
 			}
 		}
+
+		public override double this[double x, double y]
+		{
+			get
+			{
+				if(NoiseModule == null)
+				{
+					throw new NullReferenceException("NoiseModule was not set to an object.");
+				}
+				return Math.Abs(NoiseModule[x, y]);
+			}
+		}
 	}
 }

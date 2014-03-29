@@ -165,5 +165,40 @@ namespace Noiselib.Modules
 				return value;
 			}
 		}
+
+		public override double this[double x, double y]
+		{
+			get
+			{
+				double value = 0.0;
+				double curPersistence = 1.0;
+
+				x *= Frequency;
+				y *= Frequency;
+
+				for(int curOctave = 0; curOctave < OctaveCount; curOctave++)
+				{
+					// Make sure that these floating-point values have the same range as a 32-
+					// bit integer so that we can pass them to the coherent-noise functions.
+					double nx = NoiseGen.MakeInt32Range(x);
+					double ny = NoiseGen.MakeInt32Range(y);
+
+					// Get the coherent-noise value from the input value and add it to the
+					// final result.
+					int seed = Seed + curOctave;
+					double signal = NoiseGen.GradientCoherentNoise3D(nx, ny, seed, NoiseQuality);
+					signal = 2.0 * Math.Abs(signal) - 1.0;
+					value += signal * curPersistence;
+
+					// Prepare the next octave.
+					x *= Lacunarity;
+					y *= Lacunarity;
+					curPersistence *= Persistence;
+				}
+				value += 0.5;
+
+				return value;
+			}
+		}
 	}
 }

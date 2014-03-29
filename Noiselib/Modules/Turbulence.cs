@@ -118,5 +118,29 @@
 				return SourceModule[xDistort, yDistort, zDistort];
 			}
 		}
+
+		public override double this[double x, double y]
+		{
+			get
+			{
+				// Get the values from the three noise::module::Perlin noise modules and
+				// add each value to each coordinate of the input value.  There are also
+				// some offsets added to the coordinates of the input values.  This prevents
+				// the distortion modules from returning zero if the (x, y, z) coordinates,
+				// when multiplied by the frequency, are near an integer boundary.  This is
+				// due to a property of gradient coherent noise, which returns zero at
+				// integer boundaries.
+				double x0 = x + (12414.0 / 65536.0);
+				double y0 = y + (65124.0 / 65536.0);
+				double x1 = x + (26519.0 / 65536.0);
+				double y1 = y + (18128.0 / 65536.0);
+				double xDistort = x + (xDistortModule[x0, y0] * Power);
+				double yDistort = y + (yDistortModule[x1, y1] * Power);
+
+				// Retrieve the output value at the offsetted input value instead of the
+				// original input value.
+				return SourceModule[xDistort, yDistort];
+			}
+		}
 	}
 }

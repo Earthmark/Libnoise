@@ -20,5 +20,10 @@
 		{
 			get { return ConstValue; }
 		}
+
+		public override double this[double x, double y]
+		{
+			get { return ConstValue; }
+		}
 	}
 }

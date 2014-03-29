@@ -62,5 +62,10 @@
 			YScale = yScale;
 			ZScale = zScale;
 		}
+
+		public override double this[double x, double y]
+		{
+			get { return ConnectedModule[x * XScale, y * YScale]; }
+		}
 	}
 }

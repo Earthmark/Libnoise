@@ -24,5 +24,15 @@ namespace Noiselib.Modules
 				return Math.Min(v0, v1);
 			}
 		}
+
+		public override double this[double x, double y]
+		{
+			get
+			{
+				double v0 = SourceModule1[x, y];
+				double v1 = SourceModule2[x, y];
+				return Math.Min(v0, v1);
+			}
+		}
 	}
 }

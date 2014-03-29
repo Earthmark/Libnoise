@@ -47,6 +47,17 @@
 			get { return ConnectedModule[x + XTranslation, y + YTranslation, z + ZTranslation]; }
 		}
 
+		/// <summary>
+		///      Generates an output value given the coordinates of the specified input value.
+		/// </summary>
+		/// <param name="x">The x coordinate of the input value.</param>
+		/// <param name="y">The y coordinate of the input value.</param>
+		/// <returns>The output value.</returns>
+		public override double this[double x, double y]
+		{
+			get { return ConnectedModule[x + XTranslation, y + YTranslation]; }
+		}
+
 		public void SetTranslation(double xTranslation, double yTranslation, double zTranslation)
 		{
 			XTranslation = xTranslation;

@@ -38,5 +38,14 @@ namespace Noiselib.Modules
 				return (Math.Pow(Math.Abs((value + 1.0) / 2.0), Expon) * 2.0 - 1.0);
 			}
 		}
+
+		public override double this[double x, double y]
+		{
+			get
+			{
+				double value = ConnectedModule[x, y];
+				return (Math.Pow(Math.Abs((value + 1.0) / 2.0), Expon) * 2.0 - 1.0);
+			}
+		}
 	}
 }

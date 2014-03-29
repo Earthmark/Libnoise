@@ -13,5 +13,10 @@
 		{
 			get { return -(ConnectedModule[x, y, z]); }
 		}
+
+		public override double this[double x, double y]
+		{
+			get { return -(ConnectedModule[x, y]); }
+		}
 	}
 }

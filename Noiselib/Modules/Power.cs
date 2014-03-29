@@ -19,5 +19,16 @@ namespace Noiselib.Modules
 		{
 			get { return Math.Pow(SourceModuleBase[x, y, z], SourceModuleExponent[x, y, z]); }
 		}
+
+		/// <summary>
+		///      Generates an output value given the coordinates of the specified input value.
+		/// </summary>
+		/// <param name="x">The x coordinate of the input value.</param>
+		/// <param name="y">The y coordinate of the input value.</param>
+		/// <returns>The output value.</returns>
+		public override double this[double x, double y]
+		{
+			get { return Math.Pow(SourceModuleBase[x, y], SourceModuleExponent[x, y]); }
+		}
 	}
 }

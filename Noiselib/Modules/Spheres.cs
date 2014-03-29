@@ -33,5 +33,20 @@ namespace Noiselib.Modules
 				return 1.0 - (nearestDist * 4.0); // Puts it in the -1.0 to +1.0 range.
 			}
 		}
+
+		public override double this[double x, double y]
+		{
+			get
+			{
+				x *= Frequency;
+				y *= Frequency;
+
+				double distFromCenter = Math.Sqrt(x * x + y * y);
+				double distFromSmallerSphere = distFromCenter - Math.Floor(distFromCenter);
+				double distFromLargerSphere = 1.0 - distFromSmallerSphere;
+				double nearestDist = Math.Min(distFromSmallerSphere, distFromLargerSphere);
+				return 1.0 - (nearestDist * 4.0); // Puts it in the -1.0 to +1.0 range.}
+			}
+		}
 	}
 }

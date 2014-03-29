@@ -115,5 +115,20 @@ namespace Noiselib.Modules
 				return CachedValue;
 			}
 		}
+
+		public override double this[double x, double y]
+		{
+			get
+			{
+				if(!(IsCached && Math.Abs(x - XCache) < Epsilon && Math.Abs(y - YCache) < Epsilon))
+				{
+					CachedValue = SourceModule[x, y];
+					XCache = x;
+					YCache = y;
+				}
+				IsCached = true;
+				return CachedValue;
+			}
+		}
 	}
 }

@@ -52,5 +52,17 @@ namespace Noiselib.Modules
 				return NoiseModule1[x, y, z] + NoiseModule2[x, y, z];
 			}
 		}
+
+		public override double this[double x, double y]
+		{
+			get
+			{
+				if(NoiseModule1 == null || NoiseModule2 == null)
+				{
+					throw new NullReferenceException("NoiseModule1 or NoiseModule2 are null.");
+				}
+				return NoiseModule1[x, y] + NoiseModule2[x, y];
+			}
+		}
 	}
 }

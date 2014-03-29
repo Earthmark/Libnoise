@@ -1,5 +1,8 @@
 ﻿namespace Noiselib.Modules
 {
+	/// <summary>
+	/// mod * scale + bias
+	/// </summary>
 	public class ScaleBias : Module
 	{
 		public const double DefaultBias = 0.0;
@@ -32,6 +35,11 @@
 		public override double this[double x, double y, double z]
 		{
 			get { return ConnectedModule[x, y, z] * Scale + Bias; }
+		}
+
+		public override double this[double x, double y]
+		{
+			get { return ConnectedModule[x, y] * Scale + Bias; }
 		}
 	}
 }

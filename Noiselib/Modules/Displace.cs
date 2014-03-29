@@ -51,5 +51,20 @@
 			DisplaceModuleY = displaceModuleY;
 			DisplaceModuleZ = displaceModuleZ;
 		}
+
+		public override double this[double x, double y]
+		{
+			get
+			{
+				// Get the output values from the three displacement modules.  Add each
+				// value to the corresponding coordinate in the input value.
+				double xDisplace = x + (DisplaceModuleX[x, y]);
+				double yDisplace = y + (DisplaceModuleY[x, y]);
+
+				// Retrieve the output value using the offsetted input value instead of
+				// the original input value.
+				return SourceModule[xDisplace, yDisplace];
+			}
+		}
 	}
 }

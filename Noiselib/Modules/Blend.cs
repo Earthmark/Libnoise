@@ -69,5 +69,16 @@
 				return Interp.LinearInterp(v0, v1, alpha);
 			}
 		}
+
+		public override double this[double x, double y]
+		{
+			get
+			{
+				double v0 = NoiseModule1[x, y];
+				double v1 = NoiseModule2[x, y];
+				double alpha = (ControlModule[x, y] + 1.0) / 2.0;
+				return Interp.LinearInterp(v0, v1, alpha);
+			}
+		}
 	}
 }

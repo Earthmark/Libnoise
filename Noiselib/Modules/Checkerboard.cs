@@ -37,5 +37,21 @@ namespace Noiselib.Modules
 				return (ix & 1 ^ iy & 1 ^ iz & 1) != 0 ? -1.0 : 1.0;
 			}
 		}
+
+		/// <summary>
+		///      Generates an output value given the coordinates of the specified input value.
+		/// </summary>
+		/// <param name="x">The x coordinate of the input value.</param>
+		/// <param name="y">The y coordinate of the input value.</param>
+		/// <returns>The output value.</returns>
+		public override double this[double x, double y]
+		{
+			get
+			{
+				var ix = (int)(Math.Floor(NoiseGen.MakeInt32Range(x)));
+				var iy = (int)(Math.Floor(NoiseGen.MakeInt32Range(y)));
+				return (ix & 1 ^ iy & 1) != 0 ? -1.0 : 1.0;
+			}
+		}
 	}
 }

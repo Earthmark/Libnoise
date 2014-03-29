@@ -109,5 +109,10 @@ namespace Noiselib.Modules
 			YAngle = yAng;
 			ZAngle = zAng;
 		}
+
+		public override double this[double x, double y]
+		{
+			get { throw new NotImplementedException("This implementation is not complete."); }
+		}
 	}
 }
