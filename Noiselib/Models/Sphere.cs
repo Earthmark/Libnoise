@@ -7,7 +7,7 @@ namespace Noiselib.Models
 	/// </summary>
 	/// <remarks>
 	/// <para>
-	/// This model returns an output value from a noise method given the
+	/// This model returns an output value from a noise module given the
 	/// coordinates of an input value located on the surface of a sphere.
 	/// </para>
 	/// <para>
@@ -27,26 +27,26 @@ namespace Noiselib.Models
 	public class Sphere
 	{
 		/// <summary>
-		/// Constructor, does not bind a method.
+		/// Constructor, does not bind a module.
 		/// </summary>
 		public Sphere() {}
 
 		/// <summary>
-		/// Constructor, binds a source method.
+		/// Constructor, binds a source module.
 		/// </summary>
-		/// <param name="sourceMethod">The method to encapsulate.</param>
-		public Sphere(Module sourceMethod)
+		/// <param name="sourceModule">The module to encapsulate.</param>
+		public Sphere(Module sourceModule)
 		{
-			SourceMethod = sourceMethod;
+			SourceModule = sourceModule;
 		}
 
 		/// <summary>
-		/// The encapsulated method.
+		/// The encapsulated module.
 		/// </summary>
-		public Module SourceMethod { get; set; }
+		public Module SourceModule { get; set; }
 
 		/// <summary>
-		/// Returns the output value from the noise method given the
+		/// Returns the output value from the noise module given the
 		/// (latitude, longitude) coordinates of the specified input value
 		/// located on the surface of the sphere.
 		/// </summary>
@@ -62,12 +62,12 @@ namespace Noiselib.Models
 		/// </remarks>
 		/// <param name="lat">The latitude of the input value, in degrees.</param>
 		/// <param name="lon">The longitude of the input value, in degrees.</param>
-		/// <returns>The output value from the noise method.</returns>
+		/// <returns>The output value from the noise module.</returns>
 		public double GetValue(double lat, double lon)
 		{
 			double x, y, z;
 			Misc.LatLonToXYZ(lat, lon, out x, out y, out z);
-			return SourceMethod(x, y, z);
+			return SourceModule.GetValue(x, y, z);
 		}
 	}
 }

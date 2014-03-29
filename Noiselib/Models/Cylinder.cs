@@ -26,23 +26,23 @@ namespace Noiselib.Models
 	public class Cylinder
 	{
 		/// <summary>
-		/// Basic constructor, does not connect method.
+		/// Basic constructor, does not connect module.
 		/// </summary>
 		public Cylinder() {}
 
 		/// <summary>
-		/// Basic constructor, does connect to a method.
+		/// Basic constructor, does connect to a module.
 		/// </summary>
-		/// <param name="sourceMethod">The method to encapsulate.</param>
-		public Cylinder(Module sourceMethod)
+		/// <param name="sourceModule">The module to encapsulate.</param>
+		public Cylinder(Module sourceModule)
 		{
-			SourceMethod = sourceMethod;
+			SourceModule = sourceModule;
 		}
 
 		/// <summary>
-		/// The encapsulated method.
+		/// The encapsulated module.
 		/// </summary>
-		public Module SourceMethod { get; set; }
+		public Module SourceModule { get; set; }
 
 		/// <summary>
 		/// Returns the output value from the noise module given the
@@ -56,13 +56,13 @@ namespace Noiselib.Models
 		/// </remarks>
 		/// <param name="angle">The angle around the cylinder's center, in degrees.</param>
 		/// <param name="height">The height along the y axis.</param>
-		/// <returns>The output value from the noise method.</returns>
+		/// <returns>The output value from the noise module.</returns>
 		public double GetValue(double angle, double height)
 		{
 			var x = Math.Cos(angle * MathConsts.DegToRad);
 			var y = height;
 			var z = Math.Sin(angle * MathConsts.DegToRad);
-			return SourceMethod(x, y, z);
+			return SourceModule.GetValue(x, y, z);
 		}
 	}
 }

@@ -16,9 +16,9 @@
 
 		public double ConstValue { get; set; }
 
-		public override double GetValue(double x, double y, double z)
+		public override double this[double x, double y, double z]
 		{
-			return ConstValue;
+			get { return ConstValue; }
 		}
 	}
 }

@@ -219,7 +219,7 @@ namespace Noise.Models
 			var x = (EndX - StartX) * p + StartX;
 			var y = (EndY - StartY) * p + StartY;
 			var z = (EndZ - StartZ) * p + StartZ;
-			var value = SourceModule.GetValue(x, y, z);
+			var value = SourceModule[x, y, z];
 
 			return Attenuate ? p * (1.0 - p) * 4 * value : value;
 		}

@@ -55,9 +55,9 @@
 			ZTranslation = translation;
 		}
 
-		public override double GetValue(double x, double y, double z)
+		public override double this[double x, double y, double z]
 		{
-			return ConnectedModule.GetValue(x + XTranslation, y + YTranslation, z + ZTranslation);
+			get { return ConnectedModule[x + XTranslation, y + YTranslation, z + ZTranslation]; }
 		}
 	}
 }

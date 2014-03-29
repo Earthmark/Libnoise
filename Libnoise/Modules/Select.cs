@@ -82,52 +82,55 @@
 			EdgeFalloff = EdgeFalloff;
 		}
 
-		public override double GetValue(double x, double y, double z)
+		public override double this[double x, double y, double z]
 		{
-			var controlValue = ControlModule.GetValue(x, y, z);
-			if(EdgeFalloff > 0.0)
+			get
 			{
-				if(controlValue < (LowerBound - EdgeFalloff))
+				var controlValue = ControlModule[x, y, z];
+				if(EdgeFalloff > 0.0)
 				{
-					// The output value from the control module is below the selector
-					// threshold; return the output value from the first source module.
-					return SourceModule1.GetValue(x, y, z);
+					if(controlValue < (LowerBound - EdgeFalloff))
+					{
+						// The output value from the control module is below the selector
+						// threshold; return the output value from the first source module.
+						return SourceModule1[x, y, z];
+					}
+					if(controlValue < (LowerBound + EdgeFalloff))
+					{
+						// The output value from the control module is near the lower end of the
+						// selector threshold and within the smooth curve. Interpolate between
+						// the output values from the first and second source modules.
+						var lowerCurve = (LowerBound - EdgeFalloff);
+						var upperCurve = (LowerBound + EdgeFalloff);
+						var alpha = Interp.SCurve3((controlValue - lowerCurve) / (upperCurve - lowerCurve));
+						return Interp.LinearInterp(SourceModule1[x, y, z], SourceModule2[x, y, z], alpha);
+					}
+					if(controlValue < (UpperBound - EdgeFalloff))
+					{
+						// The output value from the control module is within the selector
+						// threshold; return the output value from the second source module.
+						return SourceModule2[x, y, z];
+					}
+					if(controlValue < (UpperBound + EdgeFalloff))
+					{
+						// The output value from the control module is near the upper end of the
+						// selector threshold and within the smooth curve. Interpolate between
+						// the output values from the first and second source modules.
+						var lowerCurve = (UpperBound - EdgeFalloff);
+						var upperCurve = (UpperBound + EdgeFalloff);
+						var alpha = Interp.SCurve3((controlValue - lowerCurve) / (upperCurve - lowerCurve));
+						return Interp.LinearInterp(SourceModule2[x, y, z], SourceModule1[x, y, z], alpha);
+					}
+					// Output value from the control module is above the selector threshold;
+					// return the output value from the first source module.
+					return SourceModule1[x, y, z];
 				}
-				if(controlValue < (LowerBound + EdgeFalloff))
+				if(controlValue < LowerBound || controlValue > UpperBound)
 				{
-					// The output value from the control module is near the lower end of the
-					// selector threshold and within the smooth curve. Interpolate between
-					// the output values from the first and second source modules.
-					var lowerCurve = (LowerBound - EdgeFalloff);
-					var upperCurve = (LowerBound + EdgeFalloff);
-					var alpha = Interp.SCurve3((controlValue - lowerCurve) / (upperCurve - lowerCurve));
-					return Interp.LinearInterp(SourceModule1.GetValue(x, y, z), SourceModule2.GetValue(x, y, z), alpha);
+					return SourceModule1[x, y, z];
 				}
-				if(controlValue < (UpperBound - EdgeFalloff))
-				{
-					// The output value from the control module is within the selector
-					// threshold; return the output value from the second source module.
-					return SourceModule2.GetValue(x, y, z);
-				}
-				if(controlValue < (UpperBound + EdgeFalloff))
-				{
-					// The output value from the control module is near the upper end of the
-					// selector threshold and within the smooth curve. Interpolate between
-					// the output values from the first and second source modules.
-					var lowerCurve = (UpperBound - EdgeFalloff);
-					var upperCurve = (UpperBound + EdgeFalloff);
-					var alpha = Interp.SCurve3((controlValue - lowerCurve) / (upperCurve - lowerCurve));
-					return Interp.LinearInterp(SourceModule2.GetValue(x, y, z), SourceModule1.GetValue(x, y, z), alpha);
-				}
-				// Output value from the control module is above the selector threshold;
-				// return the output value from the first source module.
-				return SourceModule1.GetValue(x, y, z);
+				return SourceModule2[x, y, z];
 			}
-			if(controlValue < LowerBound || controlValue > UpperBound)
-			{
-				return SourceModule1.GetValue(x, y, z);
-			}
-			return SourceModule2.GetValue(x, y, z);
 		}
 	}
 }

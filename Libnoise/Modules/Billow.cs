@@ -68,7 +68,7 @@ namespace Noise.Modules
 		/// <param name="seed">Seed value used by the billowy-noise function.</param>
 		public Billow(double frequency, double lacunarity, NoiseQuality noiseQuality, int octaveCount, double persistence, int seed)
 		{
-			if (octaveCount < 1 || octaveCount > BillowMaxOctave)
+			if(octaveCount < 1 || octaveCount > BillowMaxOctave)
 				throw new ArgumentException("Count was too high, above " + BillowMaxOctave, "octaveCount");
 			Frequency = frequency;
 			Lacunarity = lacunarity;
@@ -101,8 +101,8 @@ namespace Noise.Modules
 			get { return octaveCount; }
 			set
 			{
-				if (value < 1 || value > BillowMaxOctave)
-					throw new ArgumentException("Count was too high, above " + BillowMaxOctave, "value"); 
+				if(value < 1 || value > BillowMaxOctave)
+					throw new ArgumentException("Count was too high, above " + BillowMaxOctave, "value");
 				octaveCount = value;
 			}
 		}
@@ -124,39 +124,42 @@ namespace Noise.Modules
 		/// <param name="y">The y coordinate of the input value.</param>
 		/// <param name="z">The z coordinate of the input value.</param>
 		/// <returns>The output value.</returns>
-		public override double GetValue(double x, double y, double z)
+		public override double this[double x, double y, double z]
 		{
-			var value = 0.0;
-			var curPersistence = 1.0;
-
-			x *= Frequency;
-			y *= Frequency;
-			z *= Frequency;
-
-			for(var curOctave = 0; curOctave < OctaveCount; curOctave++)
+			get
 			{
-				// Make sure that these floating-point values have the same range as a 32-
-				// bit integer so that we can pass them to the coherent-noise functions.
-				var nx = NoiseGen.MakeInt32Range(x);
-				var ny = NoiseGen.MakeInt32Range(y);
-				var nz = NoiseGen.MakeInt32Range(z);
+				var value = 0.0;
+				var curPersistence = 1.0;
 
-				// Get the coherent-noise value from the input value and add it to the
-				// final result.
-				var seed = Seed + curOctave;
-				var signal = NoiseGen.GradientCoherentNoise3D(nx, ny, nz, seed, NoiseQuality);
-				signal = 2.0 * Math.Abs(signal) - 1.0;
-				value += signal * curPersistence;
+				x *= Frequency;
+				y *= Frequency;
+				z *= Frequency;
 
-				// Prepare the next octave.
-				x *= Lacunarity;
-				y *= Lacunarity;
-				z *= Lacunarity;
-				curPersistence *= Persistence;
+				for(var curOctave = 0; curOctave < OctaveCount; curOctave++)
+				{
+					// Make sure that these floating-point values have the same range as a 32-
+					// bit integer so that we can pass them to the coherent-noise functions.
+					var nx = NoiseGen.MakeInt32Range(x);
+					var ny = NoiseGen.MakeInt32Range(y);
+					var nz = NoiseGen.MakeInt32Range(z);
+
+					// Get the coherent-noise value from the input value and add it to the
+					// final result.
+					var seed = Seed + curOctave;
+					var signal = NoiseGen.GradientCoherentNoise3D(nx, ny, nz, seed, NoiseQuality);
+					signal = 2.0 * Math.Abs(signal) - 1.0;
+					value += signal * curPersistence;
+
+					// Prepare the next octave.
+					x *= Lacunarity;
+					y *= Lacunarity;
+					z *= Lacunarity;
+					curPersistence *= Persistence;
+				}
+				value += 0.5;
+
+				return value;
 			}
-			value += 0.5;
-
-			return value;
 		}
 	}
 }

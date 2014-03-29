@@ -25,35 +25,35 @@ namespace Noiselib.Models
 	public class Plane
 	{
 		/// <summary>
-		/// Constructor, does not bind a method.
+		/// Constructor, does not bind a module.
 		/// </summary>
 		public Plane() {}
 
 		/// <summary>
-		/// Constructor, binds a method to the plane.
+		/// Constructor, binds a module to the plane.
 		/// </summary>
-		/// <param name="sourceMethod">The method to be encapsulated.</param>
-		public Plane(Module sourceMethod)
+		/// <param name="sourceModule">The module to be encapsulated.</param>
+		public Plane(Module sourceModule)
 		{
-			SourceMethod = sourceMethod;
+			SourceModule = sourceModule;
 		}
 
 		/// <summary>
-		/// The method encapsulated by the plane.
+		/// The module encapsulated by the plane.
 		/// </summary>
-		public Module SourceMethod { get; set; }
+		public Module SourceModule { get; set; }
 
 		/// <summary>
-		/// Returns the output value from the noise method given the
+		/// Returns the output value from the noise module given the
 		/// ( x, z ) coordinates of the specified input value located
 		/// on the surface of the plane.
 		/// </summary>
 		/// <param name="x">The x coordinate of the input value.</param>
 		/// <param name="z">The z coordinate of the input value.</param>
-		/// <returns>The output value from the noise method.</returns>
+		/// <returns>The output value from the noise module.</returns>
 		public double GetValue(double x, double z)
 		{
-			return SourceMethod(x, 0, z);
+			return SourceModule.GetValue(x, 0, z);
 		}
 	}
 }

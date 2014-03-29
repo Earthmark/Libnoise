@@ -7,7 +7,7 @@ namespace Noiselib.Models
 	/// </summary>
 	/// <remarks>
 	/// <para>
-	/// This model returns an output value from a noise method given the
+	/// This model returns an output value from a noise module given the
 	/// one-dimensional coordinate of an input value located on a line
 	/// segment, which can be used as displacements.
 	/// </para>
@@ -28,12 +28,12 @@ namespace Noiselib.Models
 		public Line() {}
 
 		/// <summary>
-		/// Constructor, binds a method to the line.
+		/// Constructor, binds a module to the line.
 		/// </summary>
-		/// <param name="sourceMethod">The method to encapsulate.</param>
-		public Line(Module sourceMethod)
+		/// <param name="sourceModule">The module to encapsulate.</param>
+		public Line(Module sourceModule)
 		{
-			SourceMethod = sourceMethod;
+			SourceModule = sourceModule;
 		}
 
 		/// <summary>
@@ -56,18 +56,18 @@ namespace Noiselib.Models
 		}
 
 		/// <summary>
-		/// Constructor, binds a method, as well as sets the start and end points.
+		/// Constructor, binds a module, as well as sets the start and end points.
 		/// </summary>
-		/// <param name="sourceMethod">The method to encapsulate.</param>
+		/// <param name="sourceModule">The module to encapsulate.</param>
 		/// <param name="startX">The x coordinate of the start position.</param>
 		/// <param name="startY">The y coordinate of the start position.</param>
 		/// <param name="startZ">The z coordinate of the start position.</param>
 		/// <param name="endX">The x coordinate of the end position.</param>
 		/// <param name="endY">The y coordinate of the end position.</param>
 		/// <param name="endZ">The z coordinate of the end position.</param>
-		public Line(Module sourceMethod, double startX, double startY, double startZ, double endX, double endY, double endZ)
+		public Line(Module sourceModule, double startX, double startY, double startZ, double endX, double endY, double endZ)
 		{
-			SourceMethod = sourceMethod;
+			SourceModule = sourceModule;
 			StartX = startX;
 			StartY = startY;
 			StartZ = startZ;
@@ -77,14 +77,14 @@ namespace Noiselib.Models
 		}
 
 		/// <summary>
-		/// Constructor, binds a method as well as sets the attenuate flag.
+		/// Constructor, binds a module as well as sets the attenuate flag.
 		/// </summary>
-		/// <param name="sourceMethod">The method to encapsulate.</param>
+		/// <param name="sourceModule">The module to encapsulate.</param>
 		/// <param name="attenuate">Returns a flag indicating whether the output value is to be attenuated</param>
-		public Line(Module sourceMethod, bool attenuate)
+		public Line(Module sourceModule, bool attenuate)
 		{
 			Attenuate = attenuate;
-			SourceMethod = sourceMethod;
+			SourceModule = sourceModule;
 		}
 
 		/// <summary>
@@ -109,9 +109,9 @@ namespace Noiselib.Models
 		}
 
 		/// <summary>
-		/// Constructor, binds a method as well as setting the start and end points, while also setting the attenuate flag.
+		/// Constructor, binds a module as well as setting the start and end points, while also setting the attenuate flag.
 		/// </summary>
-		/// <param name="sourceMethod">The method to encapsulate.</param>
+		/// <param name="sourceModule">The module to encapsulate.</param>
 		/// <param name="startX">The x coordinate of the start position.</param>
 		/// <param name="startY">The y coordinate of the start position.</param>
 		/// <param name="startZ">The z coordinate of the start position.</param>
@@ -119,10 +119,10 @@ namespace Noiselib.Models
 		/// <param name="endY">The y coordinate of the end position.</param>
 		/// <param name="endZ">The z coordinate of the end position.</param>
 		/// <param name="attenuate">Returns a flag indicating whether the output value is to be attenuated</param>
-		public Line(Module sourceMethod, double startX, double startY, double startZ, double endX, double endY, double endZ, bool attenuate)
+		public Line(Module sourceModule, double startX, double startY, double startZ, double endX, double endY, double endZ, bool attenuate)
 		{
 			Attenuate = attenuate;
-			SourceMethod = sourceMethod;
+			SourceModule = sourceModule;
 			StartX = startX;
 			StartY = startY;
 			StartZ = startZ;
@@ -139,7 +139,7 @@ namespace Noiselib.Models
 		/// <summary>
 		/// The noise module that is encapsulated.
 		/// </summary>
-		public Module SourceMethod { get; set; }
+		public Module SourceModule { get; set; }
 
 		/// <summary>
 		/// x coordinate of the start of the line segment.
@@ -196,7 +196,7 @@ namespace Noiselib.Models
 		}
 
 		/// <summary>
-		/// Returns the output value from the noise method given the
+		/// Returns the output value from the noise module given the
 		/// one-dimensional coordinate of the specified input value located
 		/// on the line segment.
 		/// </summary>
@@ -213,13 +213,13 @@ namespace Noiselib.Models
 		/// </para>
 		/// </remarks>
 		/// <param name="p">The distance along the line segment (ranges from 0.0 to 1.0)</param>
-		/// <returns>The output value from the noise method.</returns>
+		/// <returns>The output value from the noise module.</returns>
 		public double GetValue(double p)
 		{
 			var x = (EndX - StartX) * p + StartX;
 			var y = (EndY - StartY) * p + StartY;
 			var z = (EndZ - StartZ) * p + StartZ;
-			var value = SourceMethod(x, y, z);
+			var value = SourceModule.GetValue(x, y, z);
 
 			return Attenuate ? p * (1.0 - p) * 4 * value : value;
 		}

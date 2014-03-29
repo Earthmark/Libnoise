@@ -12,6 +12,6 @@
 		/// <param name="y">The y coordinate of the input value.</param>
 		/// <param name="z">The z coordinate of the input value.</param>
 		/// <returns>The output value.</returns>
-		public abstract double GetValue(double x, double y, double z);
+		public abstract double this[double x, double y, double z] { get; }
 	}
 }

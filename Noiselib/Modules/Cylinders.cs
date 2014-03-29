@@ -2,7 +2,7 @@
 
 namespace Noiselib.Modules
 {
-	public sealed class Cylinders
+	public class Cylinders : Module
 	{
 		public const double DefaultCylindersFrequency = 1.0;
 
@@ -18,7 +18,7 @@ namespace Noiselib.Modules
 
 		public double Frequency { get; set; }
 
-		public double GetValue(double x, double z)
+		public override double GetValue(double x, double y, double z)
 		{
 			x *= Frequency;
 			z *= Frequency;

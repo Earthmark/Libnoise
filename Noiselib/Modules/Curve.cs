@@ -15,13 +15,31 @@ namespace Noiselib.Modules
 		public double OutputValue { get; set; }
 	}
 
-	public sealed class Curve
+	public class Curve : Module
 	{
 		private readonly SortedList<double, double> controlPoints;
 
 		public Curve()
 		{
 			controlPoints = new SortedList<double, double>();
+		}
+
+		public Curve(Module connectedModule, params ControlPoint[] points)
+		{
+			controlPoints = new SortedList<double, double>();
+			foreach (var point in points)
+				AddControlPoint(point);
+
+			ConnectedModule = connectedModule;
+		}
+
+		public Curve(Module connectedModule, IEnumerable<ControlPoint> points)
+		{
+			controlPoints = new SortedList<double, double>();
+			foreach (var point in points)
+				AddControlPoint(point);
+
+			ConnectedModule = connectedModule;
 		}
 
 		public Curve(params ControlPoint[] points)
@@ -38,6 +56,8 @@ namespace Noiselib.Modules
 				AddControlPoint(point);
 		}
 
+		public Module ConnectedModule { get; set; }
+
 		public SortedList<double, double> ControlPoints
 		{
 			get { return controlPoints; }
@@ -48,10 +68,10 @@ namespace Noiselib.Modules
 			controlPoints[point.InputValue] = point.OutputValue;
 		}
 
-		public double GetValue(double value)
+		public override double GetValue(double x, double y, double z)
 		{
 			// Get the output value from the source module.
-			var sourceModuleValue = value;
+			var sourceModuleValue = ConnectedModule.GetValue(x, y, z);
 
 			var inputs = controlPoints.Keys;
 			var outputs = controlPoints.Values;

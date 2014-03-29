@@ -41,11 +41,14 @@ namespace Noise.Modules
 		/// <param name="y">The y coordinate of the input value.</param>
 		/// <param name="z">The z coordinate of the input value.</param>
 		/// <returns>The output value.</returns>
-		public override double GetValue(double x, double y, double z)
+		public override double this[double x, double y, double z]
 		{
-			if(NoiseModule1 == null || NoiseModule2 == null)
-				throw new NullReferenceException("NoiseModule1 or NoiseModule2 are null.");
-			return NoiseModule1.GetValue(x, y, z) + NoiseModule2.GetValue(x, y, z);
+			get
+			{
+				if(NoiseModule1 == null || NoiseModule2 == null)
+					throw new NullReferenceException("NoiseModule1 or NoiseModule2 are null.");
+				return NoiseModule1[x, y, z] + NoiseModule2[x, y, z];
+			}
 		}
 	}
 }

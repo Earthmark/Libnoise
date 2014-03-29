@@ -62,7 +62,7 @@ namespace Noise.Models
 			var x = Math.Cos(angle * MathConsts.DegToRad);
 			var y = height;
 			var z = Math.Sin(angle * MathConsts.DegToRad);
-			return SourceModule.GetValue(x, y, z);
+			return SourceModule[x, y, z];
 		}
 	}
 }

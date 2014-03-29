@@ -57,10 +57,10 @@
 			YScale = yScale;
 			ZScale = zScale;
 		}
-
-		public override double GetValue(double x, double y, double z)
+		
+		public override double this[double x, double y, double z]
 		{
-			return ConnectedModule.GetValue(x * XScale, y * YScale, z * ZScale);
+			get { return ConnectedModule[x * XScale, y * YScale, z * ZScale]; }
 		}
 	}
 }

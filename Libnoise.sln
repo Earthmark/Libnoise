@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libnoise", "Libnoise\Libnoise.csproj", "{99111251-3198-4A4F-9182-A8CD95A17A1D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibTest", "LibTest\LibTest.csproj", "{E117B29F-3200-41B9-BA46-130F1D086528}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Noiselib", "Noiselib\Noiselib.csproj", "{E43ED525-1494-4698-9D5F-59F1B4E54278}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GNoise", "GNoise\GNoise.csproj", "{86BC35D7-254D-42DD-A85F-AC0FF2F28EB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +51,16 @@ Global
 		{E43ED525-1494-4698-9D5F-59F1B4E54278}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E43ED525-1494-4698-9D5F-59F1B4E54278}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E43ED525-1494-4698-9D5F-59F1B4E54278}.Release|Win32.ActiveCfg = Release|Any CPU
+		{86BC35D7-254D-42DD-A85F-AC0FF2F28EB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86BC35D7-254D-42DD-A85F-AC0FF2F28EB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86BC35D7-254D-42DD-A85F-AC0FF2F28EB4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{86BC35D7-254D-42DD-A85F-AC0FF2F28EB4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{86BC35D7-254D-42DD-A85F-AC0FF2F28EB4}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{86BC35D7-254D-42DD-A85F-AC0FF2F28EB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86BC35D7-254D-42DD-A85F-AC0FF2F28EB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86BC35D7-254D-42DD-A85F-AC0FF2F28EB4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{86BC35D7-254D-42DD-A85F-AC0FF2F28EB4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{86BC35D7-254D-42DD-A85F-AC0FF2F28EB4}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

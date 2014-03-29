@@ -1,8 +1,6 @@
-﻿using Noiselib.Generators;
-
-namespace Noiselib.Modules
+﻿namespace Noiselib.Modules
 {
-	public sealed class Turbulence
+	public class Turbulence : Module
 	{
 		public const double DefaultTurbulenceFrequency = Perlin.DefaultPerlinFrequency;
 		public const double DefaultTurbulencePower = 1.0;
@@ -24,6 +22,12 @@ namespace Noiselib.Modules
 			Roughness = DefaultTurbulenceRoughness;
 		}
 
+		public Turbulence(Module sourceModule)
+			: this()
+		{
+			SourceModule = sourceModule;
+		}
+
 		public Turbulence(double power, double frequency, int roughness, int seed)
 		{
 			zDistortModule = new Perlin();
@@ -34,6 +38,20 @@ namespace Noiselib.Modules
 			Frequency = frequency;
 			Roughness = roughness;
 		}
+
+		public Turbulence(Module sourceModule, double power, double frequency, int roughness, int seed)
+		{
+			SourceModule = sourceModule;
+			zDistortModule = new Perlin();
+			yDistortModule = new Perlin();
+			xDistortModule = new Perlin();
+			Power = power;
+			Seed = seed;
+			Frequency = frequency;
+			Roughness = roughness;
+		}
+
+		public Module SourceModule { get; set; }
 
 		/// The power (scale) of the displacement.
 		public double Power { get; set; }
@@ -71,7 +89,7 @@ namespace Noiselib.Modules
 			}
 		}
 
-		public void GetValue(double x, double y, double z, out double outX, out double outY, out double outZ)
+		public override double GetValue(double x, double y, double z)
 		{
 			// Get the values from the three noise::module::Perlin noise modules and
 			// add each value to each coordinate of the input value.  There are also
@@ -89,9 +107,13 @@ namespace Noiselib.Modules
 			var x2 = x + (53820.0 / 65536.0);
 			var y2 = y + (11213.0 / 65536.0);
 			var z2 = z + (44845.0 / 65536.0);
-			outX = x + (xDistortModule.GetValue(x0, y0, z0) * Power);
-			outY = y + (yDistortModule.GetValue(x1, y1, z1) * Power);
-			outZ = z + (zDistortModule.GetValue(x2, y2, z2) * Power);
+			var xDistort = x + (xDistortModule.GetValue(x0, y0, z0)  * Power);
+			var yDistort = y + (yDistortModule.GetValue(x1, y1, z1)  * Power);
+			var zDistort = z + (zDistortModule.GetValue(x2, y2, z2) * Power);
+
+			// Retrieve the output value at the offsetted input value instead of the
+			// original input value.
+			return SourceModule.GetValue(xDistort, yDistort, zDistort);
 		}
 	}
 }

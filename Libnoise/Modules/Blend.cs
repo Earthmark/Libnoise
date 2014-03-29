@@ -49,12 +49,15 @@
 		/// <param name="y">The y coordinate of the input value.</param>
 		/// <param name="z">The z coordinate of the input value.</param>
 		/// <returns>The output value.</returns>
-		public override double GetValue(double x, double y, double z)
+		public override double this[double x, double y, double z]
 		{
-			var v0 = NoiseModule1.GetValue(x, y, z);
-			var v1 = NoiseModule2.GetValue(x, y, z);
-			var alpha = (ControlModule.GetValue(x, y, z) + 1.0) / 2.0;
-			return Interp.LinearInterp(v0, v1, alpha);
+			get
+			{
+				var v0 = NoiseModule1[x, y, z];
+				var v1 = NoiseModule2[x, y, z];
+				var alpha = (ControlModule[x, y, z] + 1.0) / 2.0;
+				return Interp.LinearInterp(v0, v1, alpha);
+			}
 		}
 	}
 }

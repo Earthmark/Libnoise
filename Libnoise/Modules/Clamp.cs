@@ -33,6 +33,7 @@ namespace Noise.Modules
 		/// noise module.
 		/// </summary>
 		public const double DefaultClampLowerBound = -1.0;
+
 		/// <summary>
 		/// Default upper bound of the clamping range for the noise.modules.Clamp
 		/// noise module.
@@ -74,6 +75,7 @@ namespace Noise.Modules
 		/// Lower bound of the clamping range.
 		/// </summary>
 		public double LowerBound { get; set; }
+
 		/// <summary>
 		/// Upper bound of the clamping range.
 		/// </summary>
@@ -100,10 +102,13 @@ namespace Noise.Modules
 			UpperBound = upperBound;
 		}
 
-		public override double GetValue(double x, double y, double z)
+		public override double this[double x, double y, double z]
 		{
-			var value = SourceModule.GetValue(x, y, z);
-			return value < LowerBound ? LowerBound : (value > UpperBound ? UpperBound : value);
+			get
+			{
+				var value = SourceModule[x, y, z];
+				return value < LowerBound ? LowerBound : (value > UpperBound ? UpperBound : value);
+			}
 		}
 	}
 }

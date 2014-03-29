@@ -67,7 +67,7 @@ namespace Noise.Models
 		{
 			double x, y, z;
 			Misc.LatLonToXYZ(lat, lon, out x, out y, out z);
-			return SourceModule.GetValue(x, y, z);
+			return SourceModule[x, y, z];
 		}
 	}
 }

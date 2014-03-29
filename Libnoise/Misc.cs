@@ -10,7 +10,7 @@ namespace Noise
 		/// <summary>
 		/// A table made of psudorandom values, seperated into sets of 4. Each W chord is 0.
 		/// </summary>
-		public static readonly double[] RandomVectors = new[]
+		public static readonly double[] RandomVectors =
 
 			#region RandomVecs
 

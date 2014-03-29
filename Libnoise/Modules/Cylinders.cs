@@ -18,16 +18,19 @@ namespace Noise.Modules
 
 		public double Frequency { get; set; }
 
-		public override double GetValue(double x, double y, double z)
+		public override double this[double x, double y, double z]
 		{
-			x *= Frequency;
-			z *= Frequency;
+			get
+			{
+				x *= Frequency;
+				z *= Frequency;
 
-			var distFromCenter = Math.Sqrt(x * x + z * z);
-			var distFromSmallerSphere = distFromCenter - Math.Floor(distFromCenter);
-			var distFromLargerSphere = 1.0 - distFromSmallerSphere;
-			var nearestDist = Math.Min(distFromSmallerSphere, distFromLargerSphere);
-			return 1.0 - (nearestDist * 4.0); // Puts it in the -1.0 to +1.0 range.
+				var distFromCenter = Math.Sqrt(x * x + z * z);
+				var distFromSmallerSphere = distFromCenter - Math.Floor(distFromCenter);
+				var distFromLargerSphere = 1.0 - distFromSmallerSphere;
+				var nearestDist = Math.Min(distFromSmallerSphere, distFromLargerSphere);
+				return 1.0 - (nearestDist * 4.0); // Puts it in the -1.0 to +1.0 range.
+			}
 		}
 	}
 }

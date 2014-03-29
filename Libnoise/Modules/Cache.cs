@@ -55,10 +55,12 @@ namespace Noise.Modules
 		/// The x coordinate of the cached input value.
 		/// </summary>
 		public double XCache { get; private set; }
+
 		/// <summary>
 		/// The y coordinate of the cached input value.
 		/// </summary>
 		public double YCache { get; private set; }
+
 		/// <summary>
 		/// The z coordinate of the cached input value.
 		/// </summary>
@@ -98,17 +100,20 @@ namespace Noise.Modules
 		/// <param name="y">The y coordinate of the input value.</param>
 		/// <param name="z">The z coordinate of the input value.</param>
 		/// <returns>The output value.</returns>
-		public override double GetValue(double x, double y, double z)
+		public override double this[double x, double y, double z]
 		{
-			if(!(IsCached && Math.Abs(x - XCache) < Epsilon && Math.Abs(y - YCache) < Epsilon && Math.Abs(z - ZCache) < Epsilon))
+			get
 			{
-				CachedValue = SourceModule.GetValue(x, y, z);
-				XCache = x;
-				YCache = y;
-				ZCache = z;
+				if(!(IsCached && Math.Abs(x - XCache) < Epsilon && Math.Abs(y - YCache) < Epsilon && Math.Abs(z - ZCache) < Epsilon))
+				{
+					CachedValue = SourceModule[x, y, z];
+					XCache = x;
+					YCache = y;
+					ZCache = z;
+				}
+				IsCached = true;
+				return CachedValue;
 			}
-			IsCached = true;
-			return CachedValue;
 		}
 	}
 }

@@ -99,12 +99,15 @@ namespace Noise.Modules
 			ZAngle = zAng;
 		}
 
-		public override double GetValue(double x, double y, double z)
+		public override double this[double x, double y, double z]
 		{
-			var nx = (x1Matrix * x) + (y1Matrix * y) + (z1Matrix * z);
-			var ny = (x2Matrix * x) + (y2Matrix * y) + (z2Matrix * z);
-			var nz = (x3Matrix * x) + (y3Matrix * y) + (z3Matrix * z);
-			return ConnectedModule.GetValue(nx, ny, nz);
+			get
+			{
+				var nx = (x1Matrix * x) + (y1Matrix * y) + (z1Matrix * z);
+				var ny = (x2Matrix * x) + (y2Matrix * y) + (z2Matrix * z);
+				var nz = (x3Matrix * x) + (y3Matrix * y) + (z3Matrix * z);
+				return ConnectedModule[nx, ny, nz];
+			}
 		}
 	}
 }

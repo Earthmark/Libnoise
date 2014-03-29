@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Noiselib.Modules
 {
-	public sealed class Terrace
+	public class Terrace : Module
 	{
 		private double[] controlPoints;
 
@@ -12,9 +12,23 @@ namespace Noiselib.Modules
 			controlPoints = new double[0];
 		}
 
+		public Terrace(Module sourceModule)
+		{
+			controlPoints = new double[0];
+			SourceModule = sourceModule;
+		}
+
 		public Terrace(IEnumerable<double> points)
 		{
 			controlPoints = new double[0];
+			foreach (var point in points)
+				AddControlPoint(point);
+		}
+
+		public Terrace(Module sourceModule, IEnumerable<double> points)
+		{
+			controlPoints = new double[0];
+			SourceModule = sourceModule;
 			foreach (var point in points)
 				AddControlPoint(point);
 		}
@@ -26,7 +40,17 @@ namespace Noiselib.Modules
 				AddControlPoint(point);
 		}
 
+		public Terrace(Module sourceModule, params double[] points)
+		{
+			controlPoints = new double[0];
+			SourceModule = sourceModule;
+			foreach (var point in points)
+				AddControlPoint(point);
+		}
+
 		private bool InvertTerraces { get; set; }
+
+		public Module SourceModule { get; set; }
 
 		public void AddControlPoint(double value)
 		{
@@ -60,10 +84,10 @@ namespace Noiselib.Modules
 			controlPoints = null;
 		}
 
-		public double GetValue(double value)
+		public override double GetValue(double x, double y, double z)
 		{
 			// Get the output value from the source module.
-			double sourceModuleValue = value;
+			double sourceModuleValue = SourceModule.GetValue(x, y, z);
 
 			// Find the first element in the control point array that has a value
 			// larger than the output value from the source module.
